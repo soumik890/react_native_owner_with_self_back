@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "458668937189",
+    "project_id": "quanateams",
+    "storage_bucket": "quanateams.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458668937189:android:c8ca0eb3d2730ac3e0e90c",
+        "android_client_info": {
+          "package_name": "com.quanateams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458668937189-781v0rp589163k010ctf51e363n57gcj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quanateams",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "458668937189-5grpcq7ec805vg2ud387dheksedm8ept.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnAY8z0va3FkH6W4Z2Pld2Z7psLrTu-n4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458668937189-5grpcq7ec805vg2ud387dheksedm8ept.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
