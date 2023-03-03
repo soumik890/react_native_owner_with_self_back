@@ -8,7 +8,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import LogoTitle from './LogoTitle';
 import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
@@ -21,8 +21,9 @@ const Publish = () => {
   const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
   const {UserID} = useContext(exportvalues);
+  const [url, setUrl] = useState();
 
-  const url = 'https://quana-menumaster.netlify.app/?id=1';
+  // const url = 'https://quana-menumaster.netlify.app/?id=1';
 
   useEffect(() => {
     apiAxios1('allmenu', {
@@ -31,6 +32,7 @@ const Publish = () => {
       action: 'build',
     }).then(Response => {
       // setDispMenu(Response?.data);
+      setUrl(Response?.data?.data?.restaurant[0].url);
       console.log(Response?.data?.data?.restaurant[0].url);
     });
   }, []);
@@ -62,6 +64,7 @@ const Publish = () => {
           }}
           style={{height: 250, width: 250, alignSelf: 'center'}}
         />
+        <Text>{url}</Text>
       </View>
 
       <View style={styles.bottomView}>
