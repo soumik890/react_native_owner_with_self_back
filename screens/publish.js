@@ -8,10 +8,11 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import LogoTitle from './LogoTitle';
 import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
+import apiAxios1 from '../ApiCaller/apiAxios1';
 
 const Publish = () => {
   const navigation = useNavigation();
@@ -19,8 +20,21 @@ const Publish = () => {
   const DeviceHeight = Dimensions.get('window').height;
   const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
+  const {UserID} = useContext(exportvalues);
 
   const url = 'https://quana-menumaster.netlify.app/?id=1';
+
+  useEffect(() => {
+    apiAxios1('allmenu', {
+      userid: UserID,
+      restid: Rest.restid,
+      action: 'build',
+    }).then(Response => {
+      // setDispMenu(Response?.data);
+      console.log(Response?.data?.data?.restaurant[0].url);
+    });
+  }, []);
+
   return (
     <View style={styles.containerMain}>
       <LogoTitle />
