@@ -22,16 +22,13 @@ const Menu = () => {
   const [DispMenu, setDispMenu] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
   const [UpdateId, setUpdateId] = useState(null);
-  const [action, setaction] = useState(false);
   const [Name, setName] = useState();
   const [Desc, setDesc] = useState();
   const [Price, setPrice] = useState();
-  // const [Spice, setSpice] = useState();
   const [Ingred, setIngred] = useState();
   const [UpName, setUpName] = useState();
   const [UpDesc, setUpDesc] = useState();
   const [UpPrice, setUpPrice] = useState();
-  // const [UpSpice, setUpSpice] = useState();
   const [UpIngred, setUpIngred] = useState();
   const {UserID} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
@@ -50,6 +47,8 @@ const Menu = () => {
 
   const [AddSpice, setAddSpice] = useState(4);
   const [AddVeg, setAddVeg] = useState(1);
+  const [Img, setImg] = useState();
+  const {action, setaction} = useContext(exportvalues);
 
   useEffect(() => {
     apiAxios1('menu', {
@@ -59,10 +58,6 @@ const Menu = () => {
       mtid: MenuType.mtid,
       action: 'read',
     }).then(Response => {
-      // if (Response?.data?.status) {
-      //   setDispMenu(Response?.data?.data);
-      // }
-
       setDispMenu(Response?.data);
     });
   }, [AddFlag, action, Rest, MenuType]);
@@ -70,16 +65,6 @@ const Menu = () => {
   const AddMenu = () => {
     setAddFlag(true);
     setBackFlag(true);
-  };
-  const UpdateMenu = item => {
-    setBackFlag(true);
-    setUpdateId(item?.menuid);
-    setUpName(item?.menu);
-    setUpDesc(item?.description);
-    setUpPrice(item?.price);
-    setSpiceInfo(item?.spice);
-    setVegInfo(item?.veg);
-    setUpIngred(item?.ingredients);
   };
 
   const submitMenu = () => {
@@ -103,7 +88,7 @@ const Menu = () => {
       catid: Cat.catid,
       userid: user,
       notes: 'blah',
-      MImage: 'Demo image',
+      MImage: 'null',
       veg: AddVeg,
       spice: AddSpice,
       price: Price,
@@ -131,13 +116,6 @@ const Menu = () => {
   const deleteMenu = item => {
     console.log(item);
     apiAxios1('menu', {
-      // xversion: 'hRs6',
-      // xuserid: user,
-      // xaction: 'menu_item_delete',
-      // RestaurantId: Rest.Id,
-      // Id: item?.Id,
-      // TypeId: MenuType.Id,
-
       menuid: item.menuid,
       action: 'delete',
     }).then(res => {
@@ -146,29 +124,24 @@ const Menu = () => {
       setaction(!action);
     });
   };
-
+  const UpdateMenu = item => {
+    console.log('item recived', item.price);
+    setBackFlag(true);
+    setUpdateId(item?.menuid);
+    setUpName(item?.menu);
+    // setUpName('demo');
+    setUpDesc(item?.description);
+    setUpPrice(item.price);
+    // setUpPrice('500');
+    setSpiceInfo(item?.spice);
+    setVegInfo(item?.veg);
+    setUpIngred(item?.ingredients);
+    setImg(item?.MImage);
+  };
   const UpdateItem = () => {
-    // console.log('Veg info is', VegInfo);
     apiAxios1('menu', {
-      // xversion: 'hRs6',
-      // xuserid: user,
-      // xaction: 'menu_item_update',
-      // RestaurantId: Rest.Id,
-      // TypeId: MenuType.Id,
-      // CatId: 1,
-      // SpiceId: SpiceInfo,
-      // VegId: VegInfo,
-      // Name: UpName,
-      // Price: UpPrice,
-      // DiscountTye: 'amount or percent',
-      // DiscountValue: '22',
-      // Ingredients: UpIngred,
-      // Id: UpdateId,
-      // Description: UpDesc,
-      // Rank: '5',
-      // Status: '1',
-
       menu: UpName,
+      MImage: Img,
       spice: SpiceInfo,
       price: UpPrice,
       veg: VegInfo,
@@ -184,7 +157,8 @@ const Menu = () => {
     });
   };
 
-  console.log(DispMenu);
+  // console.log(DispMenu);
+  // console.log('Price is', UpPrice);
   return (
     <View style={styles.containerMain}>
       <Modal
@@ -206,7 +180,7 @@ const Menu = () => {
             alignSelf: 'center',
             borderWidth: 3,
             borderColor: 'red',
-            borderRadius: 10,
+            borderRadius: 5,
           }}>
           <View
             style={{
@@ -260,7 +234,7 @@ const Menu = () => {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -285,7 +259,7 @@ const Menu = () => {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -308,7 +282,7 @@ const Menu = () => {
       <View
         style={{
           width: DeviceWidth,
-          backgroundColor: '#62982d',
+          backgroundColor: '#ecba5c',
           height: 40,
           flexDirection: 'row',
           // flex: 1,
@@ -330,35 +304,38 @@ const Menu = () => {
             <TouchableOpacity
               onPress={AddMenu}
               style={{
-                marginLeft: 150,
-              }}>
-              <Image
-                source={require('../assets/add-icon.jpeg')}
-                style={{height: 30, width: 35}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{
-                marginLeft: 10,
+                marginLeft: 180,
               }}>
               <View
                 style={{
-                  backgroundColor: '#f84200',
-                  height: 30,
-                  width: 90,
-                  borderRadius: 10,
+                  width: 35,
+                  height: 35,
+                  backgroundColor: '#0c9de6',
+                  borderRadius: 5,
                   justifyContent: 'center',
                 }}>
                 <Text
                   style={{
-                    color: 'black',
+                    color: 'white',
+                    fontSize: 50,
                     alignSelf: 'center',
-                    fontWeight: 'bold',
+                    marginTop: -19,
                   }}>
-                  PUBLISH QR
+                  +
                 </Text>
               </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('publish');
+              }}
+              style={{
+                marginLeft: 20,
+              }}>
+              <Image
+                source={require('../assets/QR.png')}
+                style={{height: 40, width: 40}}
+              />
             </TouchableOpacity>
           </View>
         ) : (
@@ -451,54 +428,93 @@ const Menu = () => {
                     width: DeviceWidth - 40,
                     backgroundColor: '#ffffff',
                     elevation: 15,
-                    borderRadius: 20,
+                    borderRadius: 5,
                     alignSelf: 'center',
                     // marginBottom: UpdateId == item?.Id ? 350 : 10,
                   }}>
                   <View
                     style={{
                       flexDirection: 'row',
-                      // justifyContent: 'flex-end',
-                      marginLeft: 250,
+                      marginLeft: 200,
                       marginTop: 10,
                       marginBottom: -30,
                       marginRight: 10,
                     }}>
                     <TouchableOpacity
                       onPress={() => {
-                        // deleteMenu(item);
                         ButtonAlert(item);
+                      }}
+                      style={{
+                        // marginLeft: 250,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: '#ec8c8c',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/del.png')}
-                        style={{width: 20, height: 25}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        Delete
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      style={{
-                        marginLeft: 30,
-                      }}
                       onPress={() => {
                         UpdateMenu(item);
+                      }}
+                      style={{
+                        marginLeft: 20,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: 'skyblue',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/edit.png')}
-                        style={{width: 25, height: 25}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        edit
+                      </Text>
                     </TouchableOpacity>
                   </View>
+
                   <View style={{flexDirection: 'row', marginTop: 30}}>
                     <View>
-                      {/* <Text>{item.Id}</Text> */}
-                      <Image
-                        // source={require('../assets/MT.png')}
-                        source={{uri: item.Image}}
-                        style={{width: 100, height: 100, marginLeft: 10}}
-                      />
+                      {item.MImage !== 'null' ? (
+                        <Image
+                          source={{uri: item.MImage}}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            marginLeft: 10,
+                            borderRadius: 5,
+                            marginRight: 20,
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={require('../assets/noimg.png')}
+                          style={{width: 100, height: 100, marginLeft: 10}}
+                        />
+                      )}
+
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate('upload', {data: item});
+                          navigation.navigate('upload', {
+                            page: 'menu',
+                            data: item,
+                          });
                         }}>
                         <Image
                           source={require('../assets/imgedit.png')}
@@ -614,7 +630,7 @@ const Menu = () => {
                               width: 300,
                               borderWidth: 1,
                               color: 'black',
-                              borderRadius: 10,
+                              borderRadius: 5,
                             }}
                             multiline={true}
                             value={UpName}
@@ -631,6 +647,7 @@ const Menu = () => {
                             }}>
                             Price:{' '}
                           </Text>
+
                           <TextInput
                             style={{
                               height: 35,
@@ -638,12 +655,12 @@ const Menu = () => {
                               width: 300,
                               borderWidth: 1,
                               color: 'black',
-                              borderRadius: 10,
+                              borderRadius: 5,
                             }}
                             multiline={true}
-                            value={UpPrice}
+                            value={`${UpPrice}`}
                             onChangeText={text => {
-                              setUpPrice(text);
+                              setUpName(text);
                             }}
                           />
 
@@ -791,7 +808,7 @@ const Menu = () => {
                               width: 300,
                               borderWidth: 1,
                               color: 'black',
-                              borderRadius: 10,
+                              borderRadius: 5,
                             }}
                             multiline={true}
                             value={UpDesc}
@@ -815,7 +832,7 @@ const Menu = () => {
                               width: 300,
                               borderWidth: 1,
                               color: 'black',
-                              borderRadius: 10,
+                              borderRadius: 5,
                             }}
                             multiline={true}
                             value={UpIngred}
@@ -1214,7 +1231,7 @@ const Menu = () => {
               justifyContent: 'center',
               width: DeviceWidth - 20,
               alignSelf: 'center',
-              borderRadius: 10,
+              borderRadius: 5,
               // marginBottom: 50,
               // marginTop: 50,
             }}>

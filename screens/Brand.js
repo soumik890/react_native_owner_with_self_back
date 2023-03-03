@@ -21,16 +21,18 @@ function Brand() {
   const [Types, setTypes] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
   const [UpdateId, setUpdateId] = useState(null);
-  const [action, setaction] = useState(false);
+  // const [action, setaction] = useState(false);
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
   const {UserID} = useContext(exportvalues);
   const user = parseInt(UserID);
+  const {action, setaction} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
   const {Brands, setBrands} = useContext(exportvalues);
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
+  const [Img, setImg] = useState();
 
   const DeviceWidth = Dimensions.get('window').width;
 
@@ -54,6 +56,7 @@ function Brand() {
     console.log('item at update', item);
     setUpdateId(item?.brandid);
     setUpType(item?.brand);
+    setImg(item?.BImage);
   };
 
   const ButtonAlert = item => {
@@ -67,6 +70,7 @@ function Brand() {
       userid: user,
       action: 'update',
       brand: UpType,
+      BImage: Img,
       brandid: UpdateId,
     }).then(res => {
       console.log(res.data);
@@ -83,7 +87,7 @@ function Brand() {
     console.log(Name);
     apiAxios1('brand', {
       brand: Name,
-      BImage: 'blahblah',
+      BImage: 'null',
       userid: user,
       rank1: 1,
       cUser: user,
@@ -191,7 +195,7 @@ function Brand() {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -215,7 +219,7 @@ function Brand() {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -238,7 +242,8 @@ function Brand() {
       <View
         style={{
           width: DeviceWidth,
-          backgroundColor: '#62982d',
+          // backgroundColor: '#62982d',
+          backgroundColor: '#ecba5c',
 
           height: 40,
           flexDirection: 'row',
@@ -256,16 +261,30 @@ function Brand() {
         </Text>
 
         {AddFlag == false ? (
-          <View style={{marginTop: 2, alignSelf: 'center'}}>
+          <View style={{marginTop: -1, alignSelf: 'center'}}>
             <TouchableOpacity
               onPress={AddType}
               style={{
                 marginLeft: 190,
               }}>
-              <Image
-                source={require('../assets/add-icon.jpeg')}
-                style={{height: 30, width: 35}}
-              />
+              <View
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: '#0c9de6',
+                  borderRadius: 5,
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 50,
+                    alignSelf: 'center',
+                    marginTop: -19,
+                  }}>
+                  +
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         ) : (
@@ -273,7 +292,7 @@ function Brand() {
         )}
       </View>
       <ScrollView
-        style={{marginBottom: 50}}
+        style={{marginBottom: 100}}
         keyboardShouldPersistTaps={'always'}>
         {AddFlag == false ? (
           Types.map((item, index) => {
@@ -292,20 +311,36 @@ function Brand() {
                   // backgroundColor: '#b0bec5',
                   backgroundColor: '#ffffff',
                   elevation: 15,
-                  borderRadius: 20,
+                  borderRadius: 5,
 
                   // marginBottom: UpdateId == item?.Id ? 50 : 0,
                 }}>
                 <View>
                   <View style={{flexDirection: 'row', marginTop: 10}}>
                     <View>
-                      <Image
-                        source={require('../assets/brand.png')}
-                        style={{width: 100, height: 100, marginLeft: 10}}
-                      />
+                      {item.BImage !== 'null' ? (
+                        <Image
+                          source={{uri: item.BImage}}
+                          style={{
+                            width: 100,
+                            height: 100,
+                            marginLeft: 10,
+                            borderRadius: 5,
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          source={require('../assets/noimg.png')}
+                          style={{width: 100, height: 100, marginLeft: 10}}
+                        />
+                      )}
+
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate('upload');
+                          navigation.navigate('upload', {
+                            page: 'brand',
+                            data: item,
+                          });
                         }}>
                         <Image
                           source={require('../assets/imgedit.png')}
@@ -314,31 +349,53 @@ function Brand() {
                       </TouchableOpacity>
                     </View>
 
-                    <View style={{flexDirection: 'row', marginLeft: 160}}>
+                    <View style={{flexDirection: 'row', marginLeft: 120}}>
                       <TouchableOpacity
-                        // onPress={() => {
-                        //   deleteType(item);
-                        // }}
                         onPress={() => {
                           ButtonAlert(item);
+                        }}
+                        style={{
+                          // marginLeft: 250,
+                          width: 50,
+                          height: 25,
+                          backgroundColor: '#ec8c8c',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
                         }}>
-                        <Image
-                          source={require('../assets/del.png')}
-                          style={{width: 25, height: 30}}
-                        />
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                          }}>
+                          Delete
+                        </Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity
-                        style={{
-                          marginLeft: 30,
-                        }}
                         onPress={() => {
                           UpdateType(item);
+                        }}
+                        style={{
+                          marginLeft: 20,
+                          width: 50,
+                          height: 25,
+                          backgroundColor: 'skyblue',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
                         }}>
-                        <Image
-                          source={require('../assets/edit.png')}
-                          style={{width: 30, height: 30}}
-                        />
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                          }}>
+                          edit
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -371,7 +428,8 @@ function Brand() {
                               width: 350,
                               borderWidth: 1,
                               color: 'black',
-                              borderRadius: 10,
+                              borderRadius: 5,
+                              borderColor: 'grey',
                             }}
                             onChangeText={text => setUpType(text)}
                             value={UpType}
@@ -472,6 +530,8 @@ function Brand() {
                     borderWidth: 1,
                     padding: 10,
                     color: 'black',
+                    // backgroundColor: 'grey',
+                    borderColor: 'grey',
                   }}
                   multiline={true}
                   onChangeText={text => setName(text)}

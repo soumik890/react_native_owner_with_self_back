@@ -24,9 +24,14 @@ const Upload = ({route}) => {
   const [ImgURL, setImgURL] = useState(null);
   const [Loading, setLoading] = useState(false);
   const {UserID} = useContext(exportvalues);
+  const {action, setaction} = useContext(exportvalues);
   let user = parseInt(UserID);
 
-  // console.log(route.params.data);
+  console.log(route.params.page);
+  console.log(route.params.data);
+
+  let page = route.params.page;
+  let data = route.params.data;
 
   const docPic = async () => {
     try {
@@ -56,20 +61,102 @@ const Upload = ({route}) => {
     const path = await storage().ref(`/uploads/${Cid}`).getDownloadURL();
     console.log('Image url is', path);
     setImgURL(path);
-    UploadPathToQuana(path);
+    // UploadPathToQuana(path);
+
+    switch (page) {
+      case 'brand':
+        console.log('brand hit');
+        UpdateImgBrand(path);
+        break;
+      case 'rest':
+        console.log('rest hit');
+        UpdateImgRest(path);
+        break;
+      case 'MT':
+        console.log('MT hit');
+        UpdateImgMT(path);
+        break;
+      case 'cat':
+        console.log('cat hit');
+        UpdateImgCat(path);
+        break;
+      case 'menu':
+        console.log('menu hit');
+        UpdateImgMenu(path);
+        break;
+      default:
+        console.log('Invalid image edit request');
+    }
   };
 
-  const UploadPathToQuana = path => {
-    apiAxios1({
-      xuserid: user,
-      xaction: 'menu_item_image_upload',
-      RestaurantId: route.params.data.RestaurantId,
-      TypeId: route.params.data.TypeId,
-      ItemId: route.params.data.Id,
-      Image: path,
-      Status: '1',
-    }).then(response => {
-      console.log('Response from image Api', response);
+  const UpdateImgBrand = path => {
+    apiAxios1('brand', {
+      userid: user,
+      action: 'update',
+      brand: data.brand,
+      BImage: path,
+      brandid: data.brandid,
+    }).then(res => {
+      console.log(res.data);
+      Alert.alert('Image upload complete');
+      setaction(!action);
+    });
+  };
+
+  const UpdateImgRest = path => {
+    apiAxios1('rest', {
+      action: 'update',
+      rest: data.rest,
+      RImage: path,
+      restid: data.restid,
+    }).then(res => {
+      console.log(res.data);
+      Alert.alert('Image upload complete');
+      setaction(!action);
+    });
+  };
+
+  const UpdateImgMT = path => {
+    apiAxios1('menutype', {
+      menutype: data.menutype,
+      MTImage: path,
+      mtid: data.mtid,
+      action: 'update',
+    }).then(res => {
+      console.log(res.data);
+      Alert.alert('Image upload complete');
+      setaction(!action);
+    });
+  };
+
+  const UpdateImgCat = path => {
+    apiAxios1('cat', {
+      cat: data.cat,
+      CImage: path,
+      catid: data.catid,
+      action: 'update',
+    }).then(res => {
+      console.log(res.data);
+      Alert.alert('Image upload complete');
+      setaction(!action);
+    });
+  };
+
+  const UpdateImgMenu = path => {
+    apiAxios1('menu', {
+      menu: data.menu,
+      MImage: path,
+      spice: data.spice,
+      price: data.price,
+      veg: data.veg,
+      description: data.description,
+      ingredients: data.ingredients,
+      menuid: data.menuid,
+      action: 'update',
+    }).then(res => {
+      console.log(res.data);
+      Alert.alert('Image upload complete');
+      setaction(!action);
     });
   };
 

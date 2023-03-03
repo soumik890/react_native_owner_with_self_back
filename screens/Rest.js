@@ -21,7 +21,6 @@ function Rest() {
   const [Types, setTypes] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
   const [UpdateId, setUpdateId] = useState(null);
-  const [action, setaction] = useState(false);
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
   const {UserID} = useContext(exportvalues);
@@ -32,6 +31,8 @@ function Rest() {
   const DeviceHeight = Dimensions.get('window').height;
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
+  const [Img, setImg] = useState();
+  const {action, setaction} = useContext(exportvalues);
 
   useEffect(() => {
     apiAxios1('rest', {
@@ -50,6 +51,7 @@ function Rest() {
   const UpdateType = item => {
     setUpdateId(item?.restid);
     setUpType(item?.rest);
+    setImg(item?.RImage);
   };
 
   const ButtonAlert = item => {
@@ -62,6 +64,7 @@ function Rest() {
     apiAxios1('rest', {
       action: 'update',
       rest: UpType,
+      RImage: Img,
       restid: UpdateId,
     }).then(res => {
       console.log(res.data);
@@ -82,7 +85,7 @@ function Rest() {
       rest: Name,
       userid: user,
       brandid: Brand.brandid,
-      RImage: 'demo url',
+      RImage: 'null',
       notes: 'nill',
       favourite: 0,
       status1: 1,
@@ -135,7 +138,7 @@ function Rest() {
             alignSelf: 'center',
             borderWidth: 3,
             borderColor: 'red',
-            borderRadius: 10,
+            borderRadius: 5,
           }}>
           <View
             style={{
@@ -189,7 +192,7 @@ function Rest() {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -213,7 +216,7 @@ function Rest() {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -236,7 +239,7 @@ function Rest() {
       <View
         style={{
           width: DeviceWidth,
-          backgroundColor: '#62982d',
+          backgroundColor: '#ecba5c',
           height: 40,
           flexDirection: 'row',
           // flex: 1,
@@ -254,16 +257,31 @@ function Rest() {
         </Text>
 
         {AddFlag == false ? (
-          <View style={{marginTop: 2, alignSelf: 'center'}}>
+          <View
+            style={{marginTop: 2, alignSelf: 'center', flexDirection: 'row'}}>
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 130,
+                marginLeft: 120,
               }}>
-              <Image
-                source={require('../assets/add-icon.jpeg')}
-                style={{height: 30, width: 35}}
-              />
+              <View
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: '#0c9de6',
+                  borderRadius: 5,
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 50,
+                    alignSelf: 'center',
+                    marginTop: -19,
+                  }}>
+                  +
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         ) : (
@@ -297,22 +315,35 @@ function Rest() {
                   marginLeft: 10,
                   marginBottom: 10,
                   width: DeviceWidth - 20,
-                  // height: 150,
                   backgroundColor: '#ffffff',
                   elevation: 15,
-                  borderRadius: 20,
-                  // marginBottom: UpdateId == item?.Id ? 50 : 0,
-                  // marginBottom: 10,
+                  borderRadius: 5,
                 }}>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
                   <View>
-                    <Image
-                      source={require('../assets/rest.png')}
-                      style={{width: 100, height: 100, marginLeft: 10}}
-                    />
+                    {item.RImage !== 'null' ? (
+                      <Image
+                        source={{uri: item.RImage}}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          marginLeft: 10,
+                          borderRadius: 5,
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        source={require('../assets/noimg.png')}
+                        style={{width: 100, height: 100, marginLeft: 10}}
+                      />
+                    )}
+
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate('upload');
+                        navigation.navigate('upload', {
+                          page: 'rest',
+                          data: item,
+                        });
                       }}>
                       <Image
                         source={require('../assets/imgedit.png')}
@@ -321,29 +352,53 @@ function Rest() {
                     </TouchableOpacity>
                   </View>
 
-                  <View style={{flexDirection: 'row', marginLeft: 160}}>
+                  <View style={{flexDirection: 'row', marginLeft: 120}}>
                     <TouchableOpacity
                       onPress={() => {
-                        // deleteType(item);
                         ButtonAlert(item);
+                      }}
+                      style={{
+                        // marginLeft: 250,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: '#ec8c8c',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/del.png')}
-                        style={{width: 25, height: 30}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        Delete
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      style={{
-                        marginLeft: 30,
-                      }}
                       onPress={() => {
                         UpdateType(item);
+                      }}
+                      style={{
+                        marginLeft: 20,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: 'skyblue',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/edit.png')}
-                        style={{width: 30, height: 30}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        edit
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -366,7 +421,8 @@ function Rest() {
                             width: 350,
                             borderWidth: 1,
                             color: 'black',
-                            borderRadius: 10,
+                            borderRadius: 5,
+                            borderColor: 'grey',
                           }}
                           multiline={true}
                           onChangeText={text => setUpType(text)}
@@ -463,6 +519,7 @@ function Rest() {
                     borderWidth: 1,
                     padding: 10,
                     color: 'black',
+                    borderColor: 'grey',
                   }}
                   multiline={true}
                   onChangeText={text => setName(text)}
@@ -529,7 +586,7 @@ function Rest() {
             justifyContent: 'center',
             width: DeviceWidth - 20,
             alignSelf: 'center',
-            borderRadius: 10,
+            borderRadius: 5,
             marginTop: 700,
           }}>
           <Text

@@ -9,6 +9,7 @@ import Brand from './screens/Brand';
 import Rest from './screens/Rest';
 import Cat from './screens/cat';
 import Upload from './screens/Upload';
+import Publish from './screens/publish';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -49,6 +50,11 @@ const App = () => {
           <Stack.Screen
             name="upload"
             component={Upload}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="publish"
+            component={Publish}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

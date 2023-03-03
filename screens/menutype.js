@@ -21,7 +21,6 @@ const MenuType = () => {
   const [Types, setTypes] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
   const [UpdateId, setUpdateId] = useState(null);
-  const [action, setaction] = useState(false);
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
   const {UserID} = useContext(exportvalues);
@@ -33,6 +32,8 @@ const MenuType = () => {
   let user = parseInt(UserID);
   const DeviceWidth = Dimensions.get('window').width;
   const DeviceHeight = Dimensions.get('window').height;
+  const [Img, setImg] = useState();
+  const {action, setaction} = useContext(exportvalues);
 
   useEffect(() => {
     apiAxios1('menutype', {
@@ -52,11 +53,13 @@ const MenuType = () => {
   const UpdateType = item => {
     setUpdateId(item?.mtid);
     setUpType(item?.menutype);
+    setImg(item?.MTImage);
   };
 
   const UpdateTypeName = () => {
     apiAxios1('menutype', {
       menutype: UpType,
+      MTImage: Img,
       mtid: UpdateId,
       action: 'update',
     }).then(res => {
@@ -78,7 +81,7 @@ const MenuType = () => {
       restid: Rest.restid,
       userid: user,
       notes: 'notes',
-      MTImage: 'demo image',
+      MTImage: 'null',
       favourite: 1,
       status1: 1,
       rank1: 1,
@@ -141,7 +144,7 @@ const MenuType = () => {
             alignSelf: 'center',
             borderWidth: 3,
             borderColor: 'red',
-            borderRadius: 10,
+            borderRadius: 5,
           }}>
           <View
             style={{
@@ -195,7 +198,7 @@ const MenuType = () => {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -219,7 +222,7 @@ const MenuType = () => {
                 width: 60,
                 height: 20,
                 // backgroundColor: 'yellow',
-                borderRadius: 10,
+                borderRadius: 5,
                 borderWidth: 2,
                 borderColor: 'red',
                 justifyContent: 'center',
@@ -242,7 +245,7 @@ const MenuType = () => {
       <View
         style={{
           width: DeviceWidth,
-          backgroundColor: '#62982d',
+          backgroundColor: '#ecba5c',
           height: 40,
           flexDirection: 'row',
           // flex: 1,
@@ -259,15 +262,42 @@ const MenuType = () => {
         </Text>
 
         {AddFlag == false ? (
-          <View style={{marginTop: 2, alignSelf: 'center'}}>
+          <View
+            style={{marginTop: 2, alignSelf: 'center', flexDirection: 'row'}}>
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 180,
+                marginLeft: 120,
+              }}>
+              <View
+                style={{
+                  width: 35,
+                  height: 35,
+                  backgroundColor: '#0c9de6',
+                  borderRadius: 5,
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 50,
+                    alignSelf: 'center',
+                    marginTop: -19,
+                  }}>
+                  +
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('publish');
+              }}
+              style={{
+                marginLeft: 20,
               }}>
               <Image
-                source={require('../assets/add-icon.jpeg')}
-                style={{height: 30, width: 35}}
+                source={require('../assets/QR.png')}
+                style={{height: 40, width: 40}}
               />
             </TouchableOpacity>
           </View>
@@ -326,18 +356,30 @@ const MenuType = () => {
                   // height: 150,
                   backgroundColor: '#ffffff',
                   elevation: 15,
-                  borderRadius: 20,
+                  borderRadius: 5,
                   // marginBottom: UpdateId == item?.Id ? 60 : 0,
                 }}>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
                   <View>
-                    <Image
-                      source={require('../assets/menu.png')}
-                      style={{width: 100, height: 100, marginLeft: 10}}
-                    />
+                    {item.MTImage !== 'null' ? (
+                      <Image
+                        source={{uri: item.MTImage}}
+                        style={{
+                          width: 100,
+                          height: 100,
+                          marginLeft: 10,
+                          borderRadius: 5,
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        source={require('../assets/noimg.png')}
+                        style={{width: 100, height: 100, marginLeft: 10}}
+                      />
+                    )}
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate('upload');
+                        navigation.navigate('upload', {page: 'MT', data: item});
                       }}>
                       <Image
                         source={require('../assets/imgedit.png')}
@@ -345,29 +387,53 @@ const MenuType = () => {
                       />
                     </TouchableOpacity>
                   </View>
-                  <View style={{flexDirection: 'row', marginLeft: 160}}>
+                  <View style={{flexDirection: 'row', marginLeft: 120}}>
                     <TouchableOpacity
                       onPress={() => {
-                        // deleteType(item);
                         ButtonAlert(item);
+                      }}
+                      style={{
+                        // marginLeft: 250,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: '#ec8c8c',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/del.png')}
-                        style={{width: 25, height: 30}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        Delete
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      style={{
-                        marginLeft: 30,
-                      }}
                       onPress={() => {
                         UpdateType(item);
+                      }}
+                      style={{
+                        marginLeft: 20,
+                        width: 50,
+                        height: 25,
+                        backgroundColor: 'skyblue',
+                        borderRadius: 5,
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}>
-                      <Image
-                        source={require('../assets/edit.png')}
-                        style={{width: 30, height: 30}}
-                      />
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          fontSize: 15,
+                        }}>
+                        edit
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -391,7 +457,8 @@ const MenuType = () => {
                             width: 350,
                             borderWidth: 1,
                             color: 'black',
-                            borderRadius: 10,
+                            borderRadius: 5,
+                            borderColor: 'grey',
                           }}
                           multiline={true}
                           onChangeText={text => setUpType(text)}
@@ -491,6 +558,7 @@ const MenuType = () => {
                     borderWidth: 1,
                     padding: 10,
                     color: 'black',
+                    borderColor: 'grey',
                   }}
                   multiline={true}
                   onChangeText={text => setName(text)}
@@ -556,7 +624,7 @@ const MenuType = () => {
             justifyContent: 'center',
             width: DeviceWidth - 20,
             alignSelf: 'center',
-            borderRadius: 10,
+            borderRadius: 5,
           }}>
           <Text
             style={{

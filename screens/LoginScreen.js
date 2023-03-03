@@ -90,7 +90,7 @@ const LoginScreen = () => {
                 text: 'Logged In Sucessfull',
                 duration: Snackbar.LENGTH_SHORT,
               });
-              navigation.replace('Home');
+              navigation.replace('brand');
             });
           }
         }),
