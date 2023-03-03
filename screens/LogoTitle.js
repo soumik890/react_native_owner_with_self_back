@@ -42,19 +42,20 @@ function LogoTitle() {
   console.log('Email', Email);
   let user = parseInt(UserID);
 
+  // console.log('restaurants are', Rests);
+
   const BrandSelector = item => {
     console.log('BrandSelector called %%%%%%%%%', item);
     setBrand(item);
-    apiAxios1({
-      xuserid: user,
-      xaction: 'restaurant_list',
-      AccountId: item?.Id,
-      Status: '1',
+    apiAxios1('rest', {
+      userid: user,
+      action: 'read',
+      brandid: item?.brandid,
     }).then(res => {
-      console.log('Rest list', res.data.data);
-      setRests(res.data.data);
+      console.log('Rest list', res.data);
+      setRests(res.data);
     });
-    setBrandId(item?.Id);
+    setBrandId(item?.brandid);
   };
 
   const RestSelector = item => {
@@ -90,109 +91,6 @@ function LogoTitle() {
 
   return (
     <View style={{flexDirection: 'row', backgroundColor: 'black', height: 50}}>
-      {/* {isShowTextBox ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'center',
-            justifyContent: 'center',
-            alignContent: 'center',
-            marginLeft: 20,
-          }}>
-          <TouchableOpacity
-            onPress={() => {
-              setIsShowTextBox(false);
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                fontSize: 18,
-                marginRight: 10,
-                marginTop: 10,
-              }}>
-              Back
-            </Text>
-          </TouchableOpacity>
-
-          <Image
-            style={styles.searchImage}
-            source={require('../assets/search.png')}
-          />
-          <TextInput
-            autoFocus={true}
-            name="Searchbox"
-            value={Search}
-            placeholder="Search here"
-            onChangeText={text => setSearch(text)}
-            style={styles.searchTextBox}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              {
-                setSearch('');
-              }
-            }}>
-            <Image
-              source={require('../assets/wrong.png')}
-              style={styles.searchWhiteImage}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              setIsShowTextBox(false);
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                fontSize: 18,
-                marginLeft: 15,
-                marginTop: 10,
-              }}>
-              Go
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={{flexDirection: 'row', marginLeft: 5}}>
-          <TouchableOpacity
-            onPress={() => {
-              setIsOpen(true);
-            }}>
-            <Image
-              style={{width: 30, height: 30, marginTop: 10, marginLeft: 10}}
-              source={require('../assets/ham.png')}
-            />
-          </TouchableOpacity>
-          <Image
-            style={{width: 45, height: 45, marginLeft: 15}}
-            source={require('../assets/logo.png')}
-          />
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: 10,
-              marginLeft: 10,
-            }}>
-            Menu Master
-          </Text>
-          <TouchableOpacity onPress={() => setIsShowTextBox(true)}>
-            <Image
-              style={{height: 25, width: 25, marginTop: 10, marginLeft: 90}}
-              source={require('../assets/searchWhite.png')}
-            />
-          </TouchableOpacity>
-        </View>
-      )} */}
-
       <View style={{flexDirection: 'row', marginLeft: 5}}>
         <TouchableOpacity
           onPress={() => {
@@ -373,10 +271,10 @@ function LogoTitle() {
                             alignSelf: 'center',
                             marginTop: 5,
                           }}>
-                          {item?.Account}
+                          {item?.brand}
                         </Text>
                       </TouchableOpacity>
-                      {brandId == item?.Id ? (
+                      {brandId == item?.brandid ? (
                         <TouchableOpacity
                           onPress={() => {
                             setBrandId(null);
@@ -398,7 +296,7 @@ function LogoTitle() {
                       )}
                     </View>
 
-                    {brandId == item?.Id ? (
+                    {brandId == item?.brandid ? (
                       <View style={{marginLeft: 10}}>
                         <TouchableOpacity
                           style={{
@@ -446,7 +344,7 @@ function LogoTitle() {
                                     fontSize: 15,
                                     padding: 5,
                                   }}>
-                                  {index + 1}.{item?.Restaurant}
+                                  {index + 1}.{item?.rest}
                                 </Text>
                               </TouchableOpacity>
                             </View>
