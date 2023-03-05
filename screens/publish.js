@@ -64,7 +64,7 @@ const Publish = () => {
           }}
           style={{height: 250, width: 250, alignSelf: 'center'}}
         />
-        <Text>{url}</Text>
+        <Text style={{color: 'black'}}>{url}</Text>
       </View>
 
       <View style={styles.bottomView}>

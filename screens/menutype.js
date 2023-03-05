@@ -307,13 +307,14 @@ const MenuType = () => {
       </View>
 
       <View>
-        <ScrollView horizontal={true}>
-          <View
-            style={{
-              flexDirection: 'row',
-              height: 30,
-              backgroundColor: '#b5b5b5',
-            }}>
+        <ScrollView
+          horizontal={true}
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#b5b5b5',
+            height: 30,
+          }}>
+          <View style={{flexDirection: 'row'}}>
             <Text
               style={{
                 color: 'black',
