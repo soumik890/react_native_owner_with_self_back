@@ -288,7 +288,7 @@ const MenuType = () => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 navigation.navigate('publish');
               }}
@@ -299,7 +299,7 @@ const MenuType = () => {
                 source={require('../assets/QR.png')}
                 style={{height: 40, width: 40}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         ) : (
           <View></View>

@@ -40,6 +40,12 @@ const Upload = ({route}) => {
         copyTo: 'documentDirectory',
         type: [DocumentPicker.types.images],
       });
+
+      console.log(
+        'Image file size is@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@',
+        res,
+      );
+
       const data = res[0].fileCopyUri;
       var Cid = 'Image' + Date.now();
       const uploadTask = storage().ref().child(`/uploads/${Cid}`).putFile(data);

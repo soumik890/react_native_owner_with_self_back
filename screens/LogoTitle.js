@@ -6,7 +6,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {Alert} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
@@ -31,6 +31,7 @@ function LogoTitle() {
   const {Search, setSearch} = useContext(exportvalues);
   const {Rests, setRests} = useContext(exportvalues);
   const [isOpen, setIsOpen] = useState(false);
+  const {action, setaction} = useContext(exportvalues);
 
   const [brandId, setBrandId] = useState(null);
   // const [Rests, setRests] = useState([]);
@@ -43,6 +44,22 @@ function LogoTitle() {
   let user = parseInt(UserID);
 
   // console.log('restaurants are', Rests);
+
+  useEffect(() => {
+    apiAxios1('brand', {
+      userid: user,
+      action: 'read',
+    }).then(res => {
+      console.log(res.data);
+      setBrands(res?.data);
+      // setTypes(res?.data);
+
+      // if (res?.data?.status) {
+      //   setBrands(res?.data?.data);
+      //   setTypes(res?.data?.data);
+      // }
+    });
+  }, [action]);
 
   const BrandSelector = item => {
     console.log('BrandSelector called %%%%%%%%%', item);

@@ -33,16 +33,17 @@ function Brand() {
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
+  const [Tray, setTray] = useState({});
 
   const DeviceWidth = Dimensions.get('window').width;
 
   useEffect(() => {
-    apiAxios1('brand', {
+    apiAxios1('brandrest', {
       userid: user,
-      action: 'read',
+      // action: 'read',
     }).then(res => {
       console.log(res.data);
-      setBrands(res?.data);
+      // setBrands(res?.data);
       setTypes(res?.data);
 
       // if (res?.data?.status) {
@@ -120,6 +121,11 @@ function Brand() {
     // setIsOpen(false);
   };
 
+  const traySelector = item => {
+    console.log('item in tray', item);
+    setTray(item);
+  };
+
   return (
     <View style={{backgroundColor: '#f2f2f2'}}>
       <Modal
@@ -140,13 +146,13 @@ function Brand() {
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: 'red',
+            borderColor: '#9e4848',
             borderRadius: 10,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: 'red',
+              backgroundColor: '#9e4848',
               justifyContent: 'center',
             }}>
             <Text
@@ -251,13 +257,13 @@ function Brand() {
         }}>
         <Text
           style={{
-            color: 'black',
+            color: 'red',
             fontWeight: 'bold',
             fontSize: 20,
             alignSelf: 'center',
             marginLeft: 20,
           }}>
-          MY BRANDS
+          Dashboard
         </Text>
 
         {AddFlag == false ? (
@@ -265,24 +271,35 @@ function Brand() {
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 190,
+                marginLeft: 150,
               }}>
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#0c9de6',
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                }}>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    width: 25,
+                    height: 25,
+                    backgroundColor: '#ee6601',
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 40,
+                      alignSelf: 'center',
+                      marginTop: -17,
+                    }}>
+                    +
+                  </Text>
+                </View>
                 <Text
                   style={{
-                    color: 'white',
-                    fontSize: 50,
-                    alignSelf: 'center',
-                    marginTop: -19,
+                    color: 'black',
+                    marginLeft: 5,
+                    fontSize: 15,
+                    textTransform: 'uppercase',
                   }}>
-                  +
+                  Brand
                 </Text>
               </View>
             </TouchableOpacity>
@@ -309,97 +326,104 @@ function Brand() {
                   width: DeviceWidth - 20,
                   // height: 150,
                   // backgroundColor: '#b0bec5',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: '#38b05f',
                   elevation: 15,
                   borderRadius: 5,
 
                   // marginBottom: UpdateId == item?.Id ? 50 : 0,
                 }}>
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: 10}}>
+                <View style={{flex: 1}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: 10,
+                      marginBottom: 10,
+                    }}>
                     <View>
                       {item.BImage !== 'null' ? (
-                        <Image
-                          source={{uri: item.BImage}}
-                          style={{
-                            width: 100,
-                            height: 100,
-                            marginLeft: 10,
-                            borderRadius: 5,
-                          }}
-                        />
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate('upload', {
+                              page: 'brand',
+                              data: item,
+                            });
+                          }}>
+                          <Image
+                            source={{uri: item.BImage}}
+                            style={{
+                              width: 50,
+                              height: 50,
+                              marginLeft: 10,
+                              borderRadius: 5,
+                            }}
+                          />
+                        </TouchableOpacity>
                       ) : (
-                        <Image
-                          source={require('../assets/noimg.png')}
-                          style={{width: 100, height: 100, marginLeft: 10}}
-                        />
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate('upload', {
+                              page: 'brand',
+                              data: item,
+                            });
+                          }}>
+                          <Image
+                            source={require('../assets/noimg.png')}
+                            style={{width: 50, height: 50, marginLeft: 10}}
+                          />
+                        </TouchableOpacity>
                       )}
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate('upload', {
-                            page: 'brand',
-                            data: item,
-                          });
-                        }}>
-                        <Image
-                          source={require('../assets/imgedit.png')}
-                          style={{width: 20, height: 20, marginLeft: 50}}
-                        />
-                      </TouchableOpacity>
                     </View>
 
-                    <View style={{flexDirection: 'row', marginLeft: 120}}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          ButtonAlert(item);
-                        }}
+                    <View style={{marginLeft: 10, flexDirection: 'row'}}>
+                      <Text
                         style={{
-                          // marginLeft: 250,
-                          width: 50,
-                          height: 25,
-                          backgroundColor: '#ec8c8c',
-                          borderRadius: 5,
-                          alignContent: 'center',
-                          justifyContent: 'center',
+                          color: '#eaebeb',
+                          fontWeight: 'bold',
+                          textTransform: 'uppercase',
+                          fontSize: 18,
                         }}>
-                        <Text
+                        {item.brand}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        position: 'absolute',
+                        marginLeft: 300,
+                      }}>
+                      {/* <TouchableOpacity
+                        onPress={() => {
+
+                        }}>
+                        <Image
+                          source={require('../assets/bell.png')}
                           style={{
-                            color: 'black',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                          }}>
-                          Delete
-                        </Text>
-                      </TouchableOpacity>
+                            width: 35,
+                            height: 35,
+                            marginLeft: 10,
+                            marginTop: -5,
+
+                          }}
+                        />
+                      </TouchableOpacity> */}
 
                       <TouchableOpacity
                         onPress={() => {
-                          UpdateType(item);
-                        }}
-                        style={{
-                          marginLeft: 20,
-                          width: 50,
-                          height: 25,
-                          backgroundColor: 'skyblue',
-                          borderRadius: 5,
-                          alignContent: 'center',
-                          justifyContent: 'center',
+                          traySelector(item);
                         }}>
-                        <Text
+                        <Image
+                          source={require('../assets/ham2.png')}
                           style={{
-                            color: 'black',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                          }}>
-                          edit
-                        </Text>
+                            width: 25,
+                            height: 25,
+                            marginLeft: 20,
+                            // borderRadius: 5,
+                          }}
+                        />
                       </TouchableOpacity>
                     </View>
                   </View>
-                  <View></View>
                 </View>
 
                 {UpdateId == item?.brandid ? (
@@ -491,7 +515,7 @@ function Brand() {
                   </View>
                 ) : (
                   <View>
-                    <View style={{marginLeft: 10, flexDirection: 'row'}}>
+                    {/* <View style={{marginLeft: 10, flexDirection: 'row'}}>
                       <Text
                         style={{
                           marginBottom: 10,
@@ -499,12 +523,100 @@ function Brand() {
                           fontSize: 18,
                           fontWeight: 'bold',
                         }}>
-                        Brand :{' '}
-                        <Text style={{color: '#0d47a1', fontWeight: 'bold'}}>
-                          {item?.brand}
+                        <Text
+                          style={{
+                            color: '#0d47a1',
+                            fontWeight: 'bold',
+                            textTransform: 'uppercase',
+                          }}>
+                          {item.brand}
                         </Text>
                       </Text>
-                    </View>
+                    </View> */}
+                    {Tray == item ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-end',
+                          marginRight: 20,
+                          marginBottom: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            ButtonAlert(item);
+                          }}
+                          style={{
+                            // marginLeft: 250,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: '#ec8c8c',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            Delete
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            UpdateType(item);
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'skyblue',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            edit
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            // UpdateType(item);
+                            setTray({});
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'pink',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            cancel
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View></View>
+                    )}
                   </View>
                 )}
               </TouchableOpacity>
