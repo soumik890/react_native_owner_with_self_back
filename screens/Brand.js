@@ -38,18 +38,40 @@ function Brand() {
   const DeviceWidth = Dimensions.get('window').width;
 
   useEffect(() => {
-    apiAxios1('brandrest', {
+    apiAxios1('brand', {
       userid: user,
-      // action: 'read',
+      action: 'read',
     }).then(res => {
       console.log(res.data);
-      // setBrands(res?.data);
       setTypes(res?.data);
+    });
+  }, [action]);
 
-      // if (res?.data?.status) {
-      //   setBrands(res?.data?.data);
-      //   setTypes(res?.data?.data);
-      // }
+  function groupBy(objectArray, property) {
+    return objectArray.reduce((acc, obj) => {
+      const final = [];
+      const key = obj[property];
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      // Add object to list for given key's value
+      acc[key].push(obj);
+
+      return acc;
+    }, {});
+  }
+
+  const groupedData = groupBy(Types, 'brand');
+
+  console.log(groupedData);
+
+  useEffect(() => {
+    apiAxios1('brand', {
+      userid: user,
+      action: 'read',
+    }).then(res => {
+      // console.log(res.data);
+      setBrands(res?.data);
     });
   }, [action]);
 
@@ -108,11 +130,25 @@ function Brand() {
       action: 'delete',
       brandid: item?.brandid,
     }).then(res => {
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       console.log(res.data);
       setIsOpen(false);
       setaction(!action);
     });
   };
+
+  // const deleteType = item => {
+  //   console.log(item);
+  //   apiAxios1('rest', {
+  //     action: 'delete',
+  //     restid: item?.restid,
+  //   }).then(res => {
+  //     console.log(res.data);
+  //     setIsOpen(false);
+  //     setaction(!action);
+  //   });
+  // };
+
   const BrandSelector = item => {
     console.log(item);
     // setRest(item);
@@ -202,8 +238,9 @@ function Brand() {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                // borderWidth: 2,
+                // borderColor: 'red',
+                backgroundColor: '#ee8b8d',
                 justifyContent: 'center',
               }}>
               <Text
@@ -226,9 +263,10 @@ function Brand() {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                // borderWidth: 2,
+                // borderColor: 'red',
                 justifyContent: 'center',
+                backgroundColor: '#88cdea',
               }}>
               <Text
                 style={{
@@ -259,7 +297,7 @@ function Brand() {
           style={{
             color: 'red',
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: 15,
             alignSelf: 'center',
             marginLeft: 20,
           }}>
@@ -267,13 +305,28 @@ function Brand() {
         </Text>
 
         {AddFlag == false ? (
-          <View style={{marginTop: -1, alignSelf: 'center'}}>
+          <View
+            style={{marginTop: -1, alignSelf: 'center', position: 'absolute'}}>
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 150,
+                marginLeft: 280,
               }}>
               <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontWeight: 'bold',
+                    color: 'red',
+                    // fontStyle: 'italic',
+                    fontSize: 10,
+                    alignSelf: 'center',
+                    // marginLeft: 5,
+                    marginRight: 5,
+                    textTransform: 'capitalize',
+                  }}>
+                  Brands
+                </Text>
                 <View
                   style={{
                     width: 25,
@@ -292,15 +345,6 @@ function Brand() {
                     +
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    color: 'black',
-                    marginLeft: 5,
-                    fontSize: 15,
-                    textTransform: 'uppercase',
-                  }}>
-                  Brand
-                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -374,40 +418,32 @@ function Brand() {
                       )}
                     </View>
 
-                    <View style={{marginLeft: 10, flexDirection: 'row'}}>
+                    <View style={{marginLeft: 10, flexDirection: 'column'}}>
                       <Text
                         style={{
                           color: '#eaebeb',
                           fontWeight: 'bold',
                           textTransform: 'uppercase',
-                          fontSize: 18,
+                          fontSize: 15,
                         }}>
                         {item.brand}
                       </Text>
+                      {/* <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 25,
+                          textTransform: 'capitalize',
+                        }}>
+                        {item.rest}
+                      </Text> */}
                     </View>
 
                     <View
                       style={{
                         flexDirection: 'row',
                         position: 'absolute',
-                        marginLeft: 300,
+                        marginLeft: 280,
                       }}>
-                      {/* <TouchableOpacity
-                        onPress={() => {
-
-                        }}>
-                        <Image
-                          source={require('../assets/bell.png')}
-                          style={{
-                            width: 35,
-                            height: 35,
-                            marginLeft: 10,
-                            marginTop: -5,
-
-                          }}
-                        />
-                      </TouchableOpacity> */}
-
                       <TouchableOpacity
                         onPress={() => {
                           traySelector(item);
@@ -515,24 +551,6 @@ function Brand() {
                   </View>
                 ) : (
                   <View>
-                    {/* <View style={{marginLeft: 10, flexDirection: 'row'}}>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                        }}>
-                        <Text
-                          style={{
-                            color: '#0d47a1',
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                          }}>
-                          {item.brand}
-                        </Text>
-                      </Text>
-                    </View> */}
                     {Tray == item ? (
                       <View
                         style={{

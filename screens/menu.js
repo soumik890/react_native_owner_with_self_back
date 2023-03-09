@@ -49,6 +49,7 @@ const Menu = () => {
   const [AddVeg, setAddVeg] = useState(1);
   const [Img, setImg] = useState();
   const {action, setaction} = useContext(exportvalues);
+  const [Tray, setTray] = useState({});
 
   useEffect(() => {
     apiAxios1('menu', {
@@ -56,6 +57,7 @@ const Menu = () => {
       restid: Rest.restid,
       brandid: Brand.brandid,
       mtid: MenuType.mtid,
+      catid: Cat.catid,
       action: 'read',
     }).then(Response => {
       setDispMenu(Response?.data);
@@ -157,6 +159,10 @@ const Menu = () => {
     });
   };
 
+  const traySelector = item => {
+    console.log('item in tray', item);
+    setTray(item);
+  };
   // console.log(DispMenu);
   // console.log('Price is', UpPrice);
   return (
@@ -179,13 +185,13 @@ const Menu = () => {
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: 'red',
+            borderColor: '#9e4848',
             borderRadius: 5,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: 'red',
+              backgroundColor: '#9e4848',
               justifyContent: 'center',
             }}>
             <Text
@@ -235,8 +241,7 @@ const Menu = () => {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                backgroundColor: '#ee8b8d',
                 justifyContent: 'center',
               }}>
               <Text
@@ -260,8 +265,7 @@ const Menu = () => {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                backgroundColor: '#88cdea',
                 justifyContent: 'center',
               }}>
               <Text
@@ -287,95 +291,167 @@ const Menu = () => {
           flexDirection: 'row',
           // flex: 1,
         }}>
+        <View>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              color: 'white',
+              // fontStyle: 'italic',
+              fontSize: 15,
+              alignSelf: 'center',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {Brand.brand}
+          </Text>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              color: 'black',
+              // fontStyle: 'italic',
+              fontSize: 15,
+              alignSelf: 'center',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {Rest.rest}
+          </Text>
+        </View>
+        {/* <Text
+          style={{
+            color: 'black',
+            fontWeight: 'bold',
+            color: 'black',
+            // fontStyle: 'italic',
+            fontSize: 10,
+            alignSelf: 'center',
+            marginLeft: 5,
+            textTransform: 'uppercase',
+          }}>
+          /{MenuType.menutype}
+        </Text>
         <Text
           style={{
             color: 'black',
             fontWeight: 'bold',
-            fontSize: 20,
+            color: 'black',
+            fontSize: 10,
             alignSelf: 'center',
-            marginLeft: 20,
+            marginLeft: 5,
+            textTransform: 'uppercase',
           }}>
-          MENU
-        </Text>
+          /{Cat.cat}
+        </Text> */}
 
         {AddFlag == false ? (
           <View
-            style={{marginTop: 2, alignSelf: 'center', flexDirection: 'row'}}>
+            style={{
+              marginTop: 2,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              position: 'absolute',
+            }}>
             <TouchableOpacity
               onPress={AddMenu}
               style={{
-                marginLeft: 180,
+                marginLeft: 250,
               }}>
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#0c9de6',
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                }}>
+              <View style={{flexDirection: 'row'}}>
                 <Text
                   style={{
-                    color: 'white',
-                    fontSize: 50,
+                    color: 'black',
+                    fontWeight: 'bold',
+                    color: 'red',
+                    fontSize: 10,
                     alignSelf: 'center',
-                    marginTop: -19,
+                    // marginLeft: 5,
+                    marginRight: 5,
+                    textTransform: 'capitalize',
                   }}>
-                  +
+                  menus
                 </Text>
+
+                <View
+                  style={{
+                    width: 25,
+                    height: 25,
+                    backgroundColor: '#ee6601',
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                    marginTop: 5,
+                    // flexDirection: 'row',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 40,
+                      alignSelf: 'center',
+                      marginTop: -17,
+                    }}>
+                    +
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('publish');
-              }}
-              style={{
-                marginLeft: 20,
-              }}>
-              <Image
-                source={require('../assets/QR.png')}
-                style={{height: 40, width: 40}}
-              />
-            </TouchableOpacity>
+
+            {DispMenu.length > 0 ? (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('publish');
+                  }}
+                  style={{
+                    marginLeft: 20,
+                  }}>
+                  <Image
+                    source={require('../assets/QR.png')}
+                    style={{height: 35, width: 35}}
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View />
+            )}
           </View>
         ) : (
           <View></View>
         )}
       </View>
 
-      <View>
-        <ScrollView
-          horizontal={true}
+      <View style={{backgroundColor: '#f5e1b6'}}>
+        <View
           style={{
             flexDirection: 'row',
-            backgroundColor: '#b5b5b5',
-            height: 30,
+            alignSelf: 'flex-end',
+            marginRight: 30,
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 20,
-              }}>
-              Brand : {Brand.brand}
-            </Text>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 10,
-                marginRight: 10,
-              }}>
-              Restaurant : {Rest.rest}
-            </Text>
-          </View>
-        </ScrollView>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 15,
+              fontWeight: 'bold',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {MenuType.menutype}
+          </Text>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 15,
+              fontWeight: 'bold',
+              marginLeft: 1,
+              marginRight: 10,
+              textTransform: 'uppercase',
+            }}>
+            /{Cat.cat}
+          </Text>
+        </View>
       </View>
 
-      <View>
+      {/* <View>
         <ScrollView
           horizontal={true}
           style={{
@@ -409,7 +485,7 @@ const Menu = () => {
             </Text>
           </View>
         </ScrollView>
-      </View>
+      </View> */}
 
       <ScrollView
         style={{marginBottom: 50}}
@@ -424,18 +500,41 @@ const Menu = () => {
                     marginTop: 10,
                     // marginLeft: 30,
                     // marginLeft: 10,
+                    marginTop: 10,
+                    marginLeft: 10,
                     marginBottom: 10,
-                    width: DeviceWidth - 40,
-                    backgroundColor: '#ffffff',
+                    width: DeviceWidth - 20,
+                    backgroundColor: '#38b05f',
                     elevation: 15,
                     borderRadius: 5,
-                    alignSelf: 'center',
                     // marginBottom: UpdateId == item?.Id ? 350 : 10,
                   }}>
+                  {/* <View
+                    style={{
+                      flexDirection: 'row',
+                      position: 'absolute',
+                      marginLeft: 280,
+                      marginTop: 10,
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        traySelector(item);
+                      }}>
+                      <Image
+                        source={require('../assets/ham2.png')}
+                        style={{
+                          width: 25,
+                          height: 25,
+                          marginLeft: 20,
+                          // borderRadius: 5,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View> */}
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginLeft: 200,
+                      marginLeft: 220,
                       marginTop: 10,
                       marginBottom: -30,
                       marginRight: 10,
@@ -492,35 +591,38 @@ const Menu = () => {
                   <View style={{flexDirection: 'row', marginTop: 30}}>
                     <View>
                       {item.MImage !== 'null' ? (
-                        <Image
-                          source={{uri: item.MImage}}
-                          style={{
-                            width: 100,
-                            height: 100,
-                            marginLeft: 10,
-                            borderRadius: 5,
-                            marginRight: 20,
-                          }}
-                        />
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate('upload', {
+                              page: 'menu',
+                              data: item,
+                            });
+                          }}>
+                          <Image
+                            source={{uri: item.MImage}}
+                            style={{
+                              width: 100,
+                              height: 100,
+                              marginLeft: 10,
+                              borderRadius: 5,
+                              marginRight: 20,
+                            }}
+                          />
+                        </TouchableOpacity>
                       ) : (
-                        <Image
-                          source={require('../assets/noimg.png')}
-                          style={{width: 100, height: 100, marginLeft: 10}}
-                        />
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate('upload', {
+                              page: 'menu',
+                              data: item,
+                            });
+                          }}>
+                          <Image
+                            source={require('../assets/noimg.png')}
+                            style={{width: 100, height: 100, marginLeft: 10}}
+                          />
+                        </TouchableOpacity>
                       )}
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate('upload', {
-                            page: 'menu',
-                            data: item,
-                          });
-                        }}>
-                        <Image
-                          source={require('../assets/imgedit.png')}
-                          style={{width: 20, height: 20, marginLeft: 50}}
-                        />
-                      </TouchableOpacity>
                     </View>
                     <View>
                       <Text
@@ -907,7 +1009,7 @@ const Menu = () => {
                           Description:{' '}
                           <Text
                             style={{
-                              marginBottom: 10,
+                              // marginBottom: 10,
                               color: 'black',
                               fontWeight: 'bold',
                             }}>

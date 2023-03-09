@@ -33,6 +33,7 @@ function Rest() {
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
   const {action, setaction} = useContext(exportvalues);
+  const [Tray, setTray] = useState({});
 
   useEffect(() => {
     apiAxios1('rest', {
@@ -117,6 +118,11 @@ function Rest() {
     // console.log(item);
   };
 
+  const traySelector = item => {
+    console.log('item in tray', item);
+    setTray(item);
+  };
+
   return (
     <View style={styles.containerMain}>
       <Modal
@@ -137,13 +143,13 @@ function Rest() {
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: 'red',
+            borderColor: '#9e4848',
             borderRadius: 5,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: 'red',
+              backgroundColor: '#9e4848',
               justifyContent: 'center',
             }}>
             <Text
@@ -193,9 +199,10 @@ function Rest() {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                // borderWidth: 2,
+                // borderColor: 'red',
                 justifyContent: 'center',
+                backgroundColor: '#ee8b8d',
               }}>
               <Text
                 style={{
@@ -217,8 +224,7 @@ function Rest() {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                backgroundColor: '#88cdea',
                 justifyContent: 'center',
               }}>
               <Text
@@ -246,41 +252,75 @@ function Rest() {
         }}>
         <Text
           style={{
+            fontWeight: 'bold',
+            color: 'white',
+            // fontStyle: 'italic',
+            fontSize: 15,
+            alignSelf: 'center',
+            marginLeft: 25,
+            textTransform: 'uppercase',
+          }}>
+          {Brand.brand}
+        </Text>
+        {/* <Text
+          style={{
             color: 'black',
             fontWeight: 'bold',
+            color: 'red',
             // fontStyle: 'italic',
-            fontSize: 20,
+            fontSize: 15,
             alignSelf: 'center',
-            marginLeft: 20,
+            marginLeft: 5,
+            textTransform: 'capitalize',
           }}>
-          MY RESTAURANTS
-        </Text>
-
+          Restaurants
+        </Text> */}
         {AddFlag == false ? (
           <View
-            style={{marginTop: 2, alignSelf: 'center', flexDirection: 'row'}}>
+            style={{
+              marginTop: 2,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              position: 'absolute',
+            }}>
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 120,
+                marginLeft: 280,
               }}>
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#0c9de6',
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                }}>
+              <View style={{flexDirection: 'row'}}>
                 <Text
                   style={{
-                    color: 'white',
-                    fontSize: 50,
+                    color: 'black',
+                    fontWeight: 'bold',
+                    color: 'red',
+                    // fontStyle: 'italic',
+                    fontSize: 10,
                     alignSelf: 'center',
-                    marginTop: -19,
+                    // marginLeft: 5,
+                    marginRight: 5,
+                    textTransform: 'capitalize',
                   }}>
-                  +
+                  Restaurants
                 </Text>
+                <View
+                  style={{
+                    width: 25,
+                    height: 25,
+                    backgroundColor: '#ee6601',
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 40,
+                      alignSelf: 'center',
+                      marginTop: -17,
+                    }}>
+                    +
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
           </View>
@@ -289,19 +329,7 @@ function Rest() {
         )}
       </View>
 
-      <View style={{backgroundColor: '#b5b5b5', height: 30}}>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 18,
-            fontWeight: 'bold',
-            marginLeft: 20,
-          }}>
-          Brand : {Brand.brand}
-        </Text>
-      </View>
-
-      <ScrollView style={{marginBottom: 50}}>
+      <ScrollView style={{marginBottom: 100}}>
         {AddFlag == false ? (
           Types.map((item, index) => {
             console.log(item);
@@ -315,92 +343,85 @@ function Rest() {
                   marginLeft: 10,
                   marginBottom: 10,
                   width: DeviceWidth - 20,
-                  backgroundColor: '#ffffff',
+                  backgroundColor: '#38b05f',
                   elevation: 15,
                   borderRadius: 5,
                 }}>
-                <View style={{flexDirection: 'row', marginTop: 10}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 10,
+                    marginBottom: 10,
+                  }}>
                   <View>
                     {item.RImage !== 'null' ? (
-                      <Image
-                        source={{uri: item.RImage}}
-                        style={{
-                          width: 100,
-                          height: 100,
-                          marginLeft: 10,
-                          borderRadius: 5,
-                        }}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'rest',
+                            data: item,
+                          });
+                        }}>
+                        <Image
+                          source={{uri: item.RImage}}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            marginLeft: 10,
+                            borderRadius: 5,
+                          }}
+                        />
+                      </TouchableOpacity>
                     ) : (
-                      <Image
-                        source={require('../assets/noimg.png')}
-                        style={{width: 100, height: 100, marginLeft: 10}}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'rest',
+                            data: item,
+                          });
+                        }}>
+                        <Image
+                          source={require('../assets/noimg.png')}
+                          style={{width: 50, height: 50, marginLeft: 10}}
+                        />
+                      </TouchableOpacity>
                     )}
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate('upload', {
-                          page: 'rest',
-                          data: item,
-                        });
-                      }}>
-                      <Image
-                        source={require('../assets/imgedit.png')}
-                        style={{width: 20, height: 20, marginLeft: 50}}
-                      />
-                    </TouchableOpacity>
                   </View>
 
-                  <View style={{flexDirection: 'row', marginLeft: 120}}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        ButtonAlert(item);
-                      }}
+                  <View style={{marginLeft: 10, flexDirection: 'column'}}>
+                    <Text
                       style={{
-                        // marginLeft: 250,
-                        width: 50,
-                        height: 25,
-                        backgroundColor: '#ec8c8c',
-                        borderRadius: 5,
-                        alignContent: 'center',
-                        justifyContent: 'center',
+                        color: '#eaebeb',
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        fontSize: 15,
                       }}>
-                      <Text
-                        style={{
-                          color: 'black',
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          fontSize: 15,
-                        }}>
-                        Delete
-                      </Text>
-                    </TouchableOpacity>
+                      {item.rest}
+                    </Text>
+                  </View>
+                </View>
 
-                    <TouchableOpacity
-                      onPress={() => {
-                        UpdateType(item);
-                      }}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    position: 'absolute',
+                    marginLeft: 280,
+                    marginTop: 10,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      traySelector(item);
+                    }}>
+                    <Image
+                      source={require('../assets/ham2.png')}
                       style={{
+                        width: 25,
+                        height: 25,
                         marginLeft: 20,
-                        width: 50,
-                        height: 25,
-                        backgroundColor: 'skyblue',
-                        borderRadius: 5,
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          color: 'black',
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          fontSize: 15,
-                        }}>
-                        edit
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                        // borderRadius: 5,
+                      }}
+                    />
+                  </TouchableOpacity>
                 </View>
 
                 {UpdateId == item?.restid ? (
@@ -480,7 +501,7 @@ function Rest() {
                   </View>
                 ) : (
                   <View>
-                    <View style={{marginLeft: 10}}>
+                    {/* <View style={{marginLeft: 10}}>
                       <Text
                         style={{
                           marginBottom: 10,
@@ -493,7 +514,92 @@ function Rest() {
                           {item?.rest}
                         </Text>
                       </Text>
-                    </View>
+                    </View> */}
+
+                    {Tray == item ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-end',
+                          marginRight: 20,
+                          marginBottom: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            ButtonAlert(item);
+                          }}
+                          style={{
+                            // marginLeft: 250,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: '#ec8c8c',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            Delete
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            UpdateType(item);
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'skyblue',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            edit
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            // UpdateType(item);
+                            setTray({});
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'pink',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            cancel
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View></View>
+                    )}
                   </View>
                 )}
               </TouchableOpacity>

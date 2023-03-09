@@ -36,13 +36,10 @@ const Cat = () => {
   const DeviceHeight = Dimensions.get('window').height;
   const [Img, setImg] = useState();
   const {action, setaction} = useContext(exportvalues);
+  const [Tray, setTray] = useState({});
 
   useEffect(() => {
     apiAxios1('cat', {
-      // xuserid: user,
-      // xaction: 'menu_type_list',
-      // RestaurantId: Rest.Id,
-      // Status: '1',
       userid: user,
       restid: Rest.restid,
       brandid: Brand.brandid,
@@ -124,6 +121,11 @@ const Cat = () => {
     setCat(item);
     navigation.navigate('menu');
   };
+
+  const traySelector = item => {
+    console.log('item in tray', item);
+    setTray(item);
+  };
   return (
     <View style={styles.containerMain}>
       <Modal
@@ -144,13 +146,13 @@ const Cat = () => {
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: 'red',
+            borderColor: '#9e4848',
             borderRadius: 5,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: 'red',
+              backgroundColor: '#9e4848',
               justifyContent: 'center',
             }}>
             <Text
@@ -200,8 +202,7 @@ const Cat = () => {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                backgroundColor: '#ee8b8d',
                 justifyContent: 'center',
               }}>
               <Text
@@ -224,8 +225,7 @@ const Cat = () => {
                 height: 20,
                 // backgroundColor: 'yellow',
                 borderRadius: 5,
-                borderWidth: 2,
-                borderColor: 'red',
+                backgroundColor: '#88cdea',
                 justifyContent: 'center',
               }}>
               <Text
@@ -251,109 +251,145 @@ const Cat = () => {
           flexDirection: 'row',
           // flex: 1,
         }}>
-        <Text
+        <View>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              color: 'white',
+              // fontStyle: 'italic',
+              fontSize: 15,
+              alignSelf: 'center',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {Brand.brand}
+          </Text>
+          <Text
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              color: 'black',
+              // fontStyle: 'italic',
+              fontSize: 15,
+              alignSelf: 'center',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {Rest.rest}
+          </Text>
+        </View>
+        {/* <Text
           style={{
             color: 'black',
             fontWeight: 'bold',
-            fontSize: 20,
+            color: 'black',
+            // fontStyle: 'italic',
+            fontSize: 15,
             alignSelf: 'center',
-            marginLeft: 20,
+            marginLeft: 5,
+            textTransform: 'uppercase',
           }}>
-          CATEGORIES
-        </Text>
+          {MenuType.menutype}
+        </Text> */}
+
+        {/* <Text
+          style={{
+            color: 'black',
+            fontWeight: 'bold',
+            color: 'red',
+            // fontStyle: 'italic',
+            fontSize: 15,
+            alignSelf: 'center',
+            marginLeft: 5,
+            textTransform: 'capitalize',
+          }}>
+          categories
+        </Text> */}
 
         {AddFlag == false ? (
           <View
-            style={{marginTop: 2, alignSelf: 'center', flexDirection: 'row'}}>
+            style={{
+              marginTop: 2,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              position: 'absolute',
+            }}>
             <TouchableOpacity
               onPress={AddType}
               style={{
-                marginLeft: 120,
+                marginLeft: 280,
               }}>
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  backgroundColor: '#0c9de6',
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                }}>
+              <View style={{flexDirection: 'row'}}>
                 <Text
                   style={{
-                    color: 'white',
-                    fontSize: 50,
+                    color: 'black',
+                    fontWeight: 'bold',
+                    color: 'red',
+                    // fontStyle: 'italic',
+                    fontSize: 10,
                     alignSelf: 'center',
-                    marginTop: -19,
+                    // marginLeft: 5,
+                    marginRight: 5,
+                    textTransform: 'capitalize',
                   }}>
-                  +
+                  categories
                 </Text>
+                <View
+                  style={{
+                    width: 25,
+                    height: 25,
+                    backgroundColor: '#ee6601',
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 40,
+                      alignSelf: 'center',
+                      marginTop: -17,
+                    }}>
+                    +
+                  </Text>
+                </View>
               </View>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('publish');
-              }}
-              style={{
-                marginLeft: 20,
-              }}>
-              <Image
-                source={require('../assets/QR.png')}
-                style={{height: 40, width: 40}}
-              />
-            </TouchableOpacity> */}
           </View>
         ) : (
           <View></View>
         )}
       </View>
 
-      <View>
-        <ScrollView
-          horizontal={true}
+      <View style={{backgroundColor: '#f5e1b6'}}>
+        <View
           style={{
             flexDirection: 'row',
-            backgroundColor: '#b5b5b5',
-            height: 30,
+            alignSelf: 'flex-end',
+            marginRight: 30,
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 20,
-              }}>
-              Brand : {Brand.brand}
-            </Text>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 10,
-                marginRight: 10,
-              }}>
-              Restaurant : {Rest.rest}
-            </Text>
-          </View>
-        </ScrollView>
-      </View>
-
-      <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: '#d0d0d0',
-          height: 25,
-        }}>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 18,
-            fontWeight: 'bold',
-            marginLeft: 20,
-          }}>
-          Menu Type : {MenuType?.menutype}
-        </Text>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 15,
+              fontWeight: 'bold',
+              marginLeft: 25,
+              textTransform: 'uppercase',
+            }}>
+            {MenuType.menutype}
+          </Text>
+          {/* <Text
+            style={{
+              color: 'black',
+              fontSize: 15,
+              fontWeight: 'bold',
+              marginLeft: 1,
+              marginRight: 10,
+              textTransform: 'uppercase',
+            }}>
+            /{Cat.cat}
+          </Text> */}
+        </View>
       </View>
 
       <ScrollView
@@ -368,12 +404,10 @@ const Cat = () => {
                 }}
                 style={{
                   marginTop: 10,
-                  marginBottom: 10,
                   marginLeft: 10,
+                  marginBottom: 10,
                   width: DeviceWidth - 20,
-                  flex: 1,
-                  // height: 150,
-                  backgroundColor: '#ffffff',
+                  backgroundColor: '#38b05f',
                   elevation: 15,
                   borderRadius: 5,
                   // marginBottom: UpdateId == item?.Id ? 60 : 0,
@@ -381,35 +415,74 @@ const Cat = () => {
                 <View style={{flexDirection: 'row', marginTop: 10}}>
                   <View>
                     {item.CImage !== 'null' ? (
-                      <Image
-                        source={{uri: item.CImage}}
-                        style={{
-                          width: 100,
-                          height: 100,
-                          marginLeft: 10,
-                          borderRadius: 5,
-                        }}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'cat',
+                            data: item,
+                          });
+                        }}>
+                        <Image
+                          source={{uri: item.CImage}}
+                          style={{
+                            width: 50,
+                            height: 50,
+                            marginLeft: 10,
+                            borderRadius: 5,
+                          }}
+                        />
+                      </TouchableOpacity>
                     ) : (
-                      <Image
-                        source={require('../assets/noimg.png')}
-                        style={{width: 100, height: 100, marginLeft: 10}}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'cat',
+                            data: item,
+                          });
+                        }}>
+                        <Image
+                          source={require('../assets/noimg.png')}
+                          style={{width: 50, height: 50, marginLeft: 10}}
+                        />
+                      </TouchableOpacity>
                     )}
+                  </View>
+
+                  <View style={{marginLeft: 10, flexDirection: 'column'}}>
+                    <Text
+                      style={{
+                        color: '#eaebeb',
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        fontSize: 15,
+                      }}>
+                      {item.cat}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      position: 'absolute',
+                      marginLeft: 280,
+                      marginTop: 10,
+                    }}>
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate('upload', {
-                          page: 'cat',
-                          data: item,
-                        });
+                        traySelector(item);
                       }}>
                       <Image
-                        source={require('../assets/imgedit.png')}
-                        style={{width: 20, height: 20, marginLeft: 50}}
+                        source={require('../assets/ham2.png')}
+                        style={{
+                          width: 25,
+                          height: 25,
+                          marginLeft: 20,
+                          // borderRadius: 5,
+                        }}
                       />
                     </TouchableOpacity>
                   </View>
-                  <View style={{flexDirection: 'row', marginLeft: 120}}>
+                  {/* <View style={{flexDirection: 'row', marginLeft: 120}}>
                     <TouchableOpacity
                       onPress={() => {
                         ButtonAlert(item);
@@ -457,7 +530,92 @@ const Cat = () => {
                         edit
                       </Text>
                     </TouchableOpacity>
-                  </View>
+                  </View> */}
+
+                  {/* {Tray == item ? (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                        marginRight: 20,
+                        marginBottom: 10,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          ButtonAlert(item);
+                        }}
+                        style={{
+                          // marginLeft: 250,
+                          width: 50,
+                          height: 25,
+                          backgroundColor: '#ec8c8c',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                          }}>
+                          Delete
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          UpdateType(item);
+                        }}
+                        style={{
+                          marginLeft: 20,
+                          width: 50,
+                          height: 25,
+                          backgroundColor: 'skyblue',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                          }}>
+                          edit
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          // UpdateType(item);
+                          setTray({});
+                        }}
+                        style={{
+                          marginLeft: 20,
+                          width: 50,
+                          height: 25,
+                          backgroundColor: 'pink',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                          }}>
+                          cancel
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View></View>
+                  )} */}
                 </View>
 
                 {UpdateId == item?.catid ? (
@@ -541,7 +699,7 @@ const Cat = () => {
                   </View>
                 ) : (
                   <View>
-                    <View style={{marginLeft: 10}}>
+                    {/* <View style={{marginLeft: 10}}>
                       <Text
                         style={{
                           marginBottom: 10,
@@ -554,7 +712,91 @@ const Cat = () => {
                           {item?.cat}
                         </Text>
                       </Text>
-                    </View>
+                    </View> */}
+                    {Tray == item ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-end',
+                          marginRight: 20,
+                          marginBottom: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            ButtonAlert(item);
+                          }}
+                          style={{
+                            // marginLeft: 250,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: '#ec8c8c',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            Delete
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            UpdateType(item);
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'skyblue',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            edit
+                          </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            // UpdateType(item);
+                            setTray({});
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 50,
+                            height: 25,
+                            backgroundColor: 'pink',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            cancel
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View></View>
+                    )}
                   </View>
                 )}
               </TouchableOpacity>

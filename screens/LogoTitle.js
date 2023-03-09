@@ -43,23 +43,7 @@ function LogoTitle() {
   console.log('Email', Email);
   let user = parseInt(UserID);
 
-  // console.log('restaurants are', Rests);
-
-  useEffect(() => {
-    apiAxios1('brand', {
-      userid: user,
-      action: 'read',
-    }).then(res => {
-      console.log(res.data);
-      setBrands(res?.data);
-      // setTypes(res?.data);
-
-      // if (res?.data?.status) {
-      //   setBrands(res?.data?.data);
-      //   setTypes(res?.data?.data);
-      // }
-    });
-  }, [action]);
+  // console.log('restaurants are', Rests);s
 
   const BrandSelector = item => {
     console.log('BrandSelector called %%%%%%%%%', item);
