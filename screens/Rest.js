@@ -85,7 +85,7 @@ function Rest() {
     apiAxios1('rest', {
       rest: Name,
       userid: user,
-      plan_id: 1,
+      plan_id: 4,
       brandid: Brand.brandid,
       RImage: 'null',
       notes: 'nill',
