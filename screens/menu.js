@@ -762,7 +762,7 @@ const Menu = () => {
                             multiline={true}
                             value={`${UpPrice}`}
                             onChangeText={text => {
-                              setUpName(text);
+                              setUpPrice(text);
                             }}
                           />
 
