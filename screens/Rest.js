@@ -41,10 +41,6 @@ function Rest() {
       action: 'read',
       brandid: Brand.brandid,
     }).then(res => {
-      // if (res?.data?.status) {
-      //   console.log('Rests are', res.data.data);
-      //   setTypes(res?.data?.data);
-      // }
       setTypes(res?.data);
     });
   }, [action, Brand]);
@@ -96,7 +92,7 @@ function Rest() {
       action: 'create',
     }).then(res => {
       console.log(res.data.status);
-      setAddFlag(false);
+      // setAddFlag(false);
       setaction(!action);
     });
   };
@@ -241,9 +237,9 @@ function Rest() {
           </View>
         </View>
       </Modal>
-      <LogoTitle />
+      {/* <LogoTitle /> */}
 
-      <View
+      {/* <View
         style={{
           width: DeviceWidth,
           backgroundColor: '#ecba5c',
@@ -263,19 +259,6 @@ function Rest() {
           }}>
           {Brand.brand}
         </Text>
-        {/* <Text
-          style={{
-            color: 'black',
-            fontWeight: 'bold',
-            color: 'red',
-            // fontStyle: 'italic',
-            fontSize: 15,
-            alignSelf: 'center',
-            marginLeft: 5,
-            textTransform: 'capitalize',
-          }}>
-          Restaurants
-        </Text> */}
         {AddFlag == false ? (
           <View
             style={{
@@ -328,9 +311,9 @@ function Rest() {
         ) : (
           <View></View>
         )}
-      </View>
+      </View> */}
 
-      <ScrollView style={{marginBottom: 100}}>
+      <ScrollView style={{marginBottom: 10}}>
         {AddFlag == false ? (
           Types.map((item, index) => {
             console.log(item);
@@ -343,8 +326,9 @@ function Rest() {
                   marginTop: 10,
                   marginLeft: 10,
                   marginBottom: 10,
-                  width: DeviceWidth - 20,
-                  backgroundColor: '#38b05f',
+                  width: DeviceWidth - 60,
+                  // backgroundColor: '#38b05f',
+                  backgroundColor: '#dba801',
                   elevation: 15,
                   borderRadius: 5,
                 }}>
@@ -406,7 +390,7 @@ function Rest() {
                   style={{
                     flexDirection: 'row',
                     position: 'absolute',
-                    marginLeft: 280,
+                    marginLeft: 250,
                     marginTop: 10,
                   }}>
                   <TouchableOpacity
@@ -440,7 +424,7 @@ function Rest() {
                         <TextInput
                           style={{
                             height: 35,
-                            width: 350,
+                            width: 300,
                             borderWidth: 1,
                             color: 'black',
                             borderRadius: 5,
@@ -453,13 +437,17 @@ function Rest() {
                       </View>
                     </View>
                     <View
-                      style={{flexDirection: 'row', justifyContent: 'center'}}>
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: 10,
+                      }}>
                       <TouchableOpacity
                         onPress={UpdateTypeName}
                         style={{
                           // marginLeft: 200,
-                          width: 80,
-                          height: 40,
+                          width: 50,
+                          height: 25,
                           backgroundColor: 'skyblue',
                           borderRadius: 5,
                           alignContent: 'center',
@@ -470,20 +458,20 @@ function Rest() {
                             color: 'black',
                             alignSelf: 'center',
                             fontWeight: 'bold',
-                            fontSize: 18,
+                            fontSize: 15,
                           }}>
                           Save
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{
-                          marginLeft: 50,
-                          width: 80,
-                          height: 40,
-                          backgroundColor: 'skyblue',
+                          width: 50,
+                          height: 25,
+                          backgroundColor: '#ec8c8c',
                           borderRadius: 5,
                           alignContent: 'center',
                           justifyContent: 'center',
+                          marginLeft: 20,
                         }}
                         onPress={() => {
                           setUpdateId(null);
@@ -493,9 +481,9 @@ function Rest() {
                             color: 'black',
                             alignSelf: 'center',
                             fontWeight: 'bold',
-                            fontSize: 18,
+                            fontSize: 15,
                           }}>
-                          cancel
+                          Cancel
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -521,7 +509,8 @@ function Rest() {
                       <View
                         style={{
                           flexDirection: 'row',
-                          justifyContent: 'flex-end',
+                          // justifyContent: 'flex-end',
+                          marginLeft: 100,
                           marginRight: 20,
                           marginBottom: 10,
                         }}>
@@ -681,7 +670,7 @@ function Rest() {
           </View>
         )}
       </ScrollView>
-      <View style={styles.bottomView} keyboardShouldPersistTaps={'always'}>
+      {/* <View style={styles.bottomView} keyboardShouldPersistTaps={'always'}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('brand');
@@ -706,7 +695,7 @@ function Rest() {
             BACK TO MY BRANDS
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }

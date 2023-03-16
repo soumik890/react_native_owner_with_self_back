@@ -61,8 +61,9 @@ const Menu = () => {
       action: 'read',
     }).then(Response => {
       setDispMenu(Response?.data);
+      console.log('Disp Menu Exceuted', Response?.data);
     });
-  }, [AddFlag, action, Rest, MenuType]);
+  }, [AddFlag, action, Rest, MenuType, Cat, Brand]);
 
   const AddMenu = () => {
     setAddFlag(true);
@@ -281,7 +282,7 @@ const Menu = () => {
           </View>
         </View>
       </Modal>
-      <LogoTitle />
+      {/* <LogoTitle /> */}
 
       <View
         style={{
@@ -319,31 +320,6 @@ const Menu = () => {
             {Rest.rest}
           </Text>
         </View>
-        {/* <Text
-          style={{
-            color: 'black',
-            fontWeight: 'bold',
-            color: 'black',
-            // fontStyle: 'italic',
-            fontSize: 10,
-            alignSelf: 'center',
-            marginLeft: 5,
-            textTransform: 'uppercase',
-          }}>
-          /{MenuType.menutype}
-        </Text>
-        <Text
-          style={{
-            color: 'black',
-            fontWeight: 'bold',
-            color: 'black',
-            fontSize: 10,
-            alignSelf: 'center',
-            marginLeft: 5,
-            textTransform: 'uppercase',
-          }}>
-          /{Cat.cat}
-        </Text> */}
 
         {AddFlag == false ? (
           <View
@@ -1321,7 +1297,7 @@ const Menu = () => {
           </View>
         )}
       </ScrollView>
-      <View style={styles.bottomView}>
+      {/* <View style={styles.bottomView}>
         {!BackFlag ? (
           <TouchableOpacity
             onPress={() => {
@@ -1350,7 +1326,7 @@ const Menu = () => {
         ) : (
           <View></View>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };

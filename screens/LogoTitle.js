@@ -240,7 +240,32 @@ function LogoTitle() {
                     alignSelf: 'center',
                     fontWeight: 'bold',
                   }}>
-                  Go To My Brands
+                  Go To Dashboard
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={BrandCaller}
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: 10,
+                  flexDirection: 'row',
+                  marginTop: 10,
+                  // marginLeft: 10,
+                  marginBottom: 10,
+                  width: 160,
+                  height: 30,
+                  backgroundColor: 'violet',
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    alignSelf: 'center',
+                    fontWeight: 'bold',
+                  }}>
+                  Add a New Brand
                 </Text>
               </TouchableOpacity>
 

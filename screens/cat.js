@@ -46,9 +46,6 @@ const Cat = () => {
       mtid: MenuType.mtid,
       action: 'read',
     }).then(res => {
-      // if (res?.data?.status) {
-      //   setTypes(res?.data?.data);
-      // }
       setTypes(res?.data);
     });
   }, [action, Rest]);

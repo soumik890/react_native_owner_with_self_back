@@ -12,7 +12,7 @@ const ContextTab = ({children}) => {
   const [Rests, setRests] = useState([]);
   const [Brand, setBrand] = useState([]);
   const [Rest, setRest] = useState([]);
-  const [MenuType, setMenuType] = useState();
+  const [MenuType, setMenuType] = useState([]);
   const [Cat, setCat] = useState();
   const [action, setaction] = useState(false);
 
