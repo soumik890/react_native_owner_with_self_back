@@ -43,7 +43,7 @@ const Menu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
 
-  const [BackFlag, setBackFlag] = useState(false);
+  // const [BackFlag, setBackFlag] = useState(false);
 
   const [AddSpice, setAddSpice] = useState(4);
   const [AddVeg, setAddVeg] = useState(1);
@@ -67,7 +67,6 @@ const Menu = () => {
 
   const AddMenu = () => {
     setAddFlag(true);
-    setBackFlag(true);
   };
 
   const submitMenu = () => {
@@ -106,7 +105,6 @@ const Menu = () => {
       console.log(res.data);
       setaction(!action);
       setAddFlag(false);
-      setBackFlag(false);
     });
   };
 
@@ -129,7 +127,7 @@ const Menu = () => {
   };
   const UpdateMenu = item => {
     console.log('item recived', item.price);
-    setBackFlag(true);
+    // setBackFlag(true);
     setUpdateId(item?.menuid);
     setUpName(item?.menu);
     // setUpName('demo');
@@ -155,7 +153,7 @@ const Menu = () => {
     }).then(res => {
       console.log(res.data);
       setUpdateId(null);
-      setBackFlag(false);
+      // setBackFlag(false);
       setaction(!action);
     });
   };
@@ -284,7 +282,7 @@ const Menu = () => {
       </Modal>
       {/* <LogoTitle /> */}
 
-      <View
+      {/* <View
         style={{
           width: DeviceWidth,
           backgroundColor: '#ecba5c',
@@ -394,77 +392,10 @@ const Menu = () => {
         ) : (
           <View></View>
         )}
-      </View>
-
-      <View style={{backgroundColor: '#f5e1b6'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-            marginRight: 30,
-          }}>
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 15,
-              fontWeight: 'bold',
-              marginLeft: 25,
-              textTransform: 'uppercase',
-            }}>
-            {MenuType.menutype}
-          </Text>
-          <Text
-            style={{
-              color: 'black',
-              fontSize: 15,
-              fontWeight: 'bold',
-              marginLeft: 1,
-              marginRight: 10,
-              textTransform: 'uppercase',
-            }}>
-            /{Cat.cat}
-          </Text>
-        </View>
-      </View>
-
-      {/* <View>
-        <ScrollView
-          horizontal={true}
-          style={{
-            flexDirection: 'row',
-            backgroundColor: '#d0d0d0',
-            height: 30,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: '#d0d0d0',
-              height: 25,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 20,
-              }}>
-              Menu Type : {MenuType?.menutype}
-            </Text>
-            <Text
-              style={{
-                color: 'black',
-                fontSize: 18,
-                fontWeight: 'bold',
-                marginLeft: 20,
-              }}>
-              Category : {Cat?.cat}
-            </Text>
-          </View>
-        </ScrollView>
       </View> */}
 
       <ScrollView
-        style={{marginBottom: 50}}
+        style={{marginBottom: 10}}
         keyboardShouldPersistTaps={'always'}>
         {AddFlag == false ? (
           DispMenu.map((item, index) => {
@@ -479,38 +410,16 @@ const Menu = () => {
                     marginTop: 10,
                     marginLeft: 10,
                     marginBottom: 10,
-                    width: DeviceWidth - 20,
-                    backgroundColor: '#38b05f',
+                    width: DeviceWidth - 80,
+                    backgroundColor: '#dba801',
                     elevation: 15,
                     borderRadius: 5,
                     // marginBottom: UpdateId == item?.Id ? 350 : 10,
                   }}>
-                  {/* <View
-                    style={{
-                      flexDirection: 'row',
-                      position: 'absolute',
-                      marginLeft: 280,
-                      marginTop: 10,
-                    }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        traySelector(item);
-                      }}>
-                      <Image
-                        source={require('../assets/ham2.png')}
-                        style={{
-                          width: 25,
-                          height: 25,
-                          marginLeft: 20,
-                          // borderRadius: 5,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </View> */}
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginLeft: 220,
+                      marginLeft: 180,
                       marginTop: 10,
                       marginBottom: -30,
                       marginRight: 10,
@@ -958,7 +867,7 @@ const Menu = () => {
                           }}
                           onPress={() => {
                             setUpdateId(null);
-                            setBackFlag(false);
+                            // setBackFlag(false);
                           }}>
                           <Text
                             style={{
@@ -1272,7 +1181,7 @@ const Menu = () => {
               <TouchableOpacity
                 onPress={() => {
                   setAddFlag(false);
-                  setBackFlag(false);
+                  // setBackFlag(false);
                 }}
                 style={{
                   marginLeft: 50,
@@ -1297,36 +1206,6 @@ const Menu = () => {
           </View>
         )}
       </ScrollView>
-      {/* <View style={styles.bottomView}>
-        {!BackFlag ? (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('cat');
-            }}
-            style={{
-              backgroundColor: '#4c6aff',
-              height: 40,
-              justifyContent: 'center',
-              width: DeviceWidth - 20,
-              alignSelf: 'center',
-              borderRadius: 5,
-              // marginBottom: 50,
-              // marginTop: 50,
-            }}>
-            <Text
-              style={{
-                alignSelf: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: 17,
-              }}>
-              BACK TO CATEGORIES
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <View></View>
-        )}
-      </View> */}
     </View>
   );
 };

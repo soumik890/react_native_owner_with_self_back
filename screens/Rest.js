@@ -237,81 +237,6 @@ function Rest() {
           </View>
         </View>
       </Modal>
-      {/* <LogoTitle /> */}
-
-      {/* <View
-        style={{
-          width: DeviceWidth,
-          backgroundColor: '#ecba5c',
-          height: 40,
-          flexDirection: 'row',
-          // flex: 1,
-        }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: 'white',
-            // fontStyle: 'italic',
-            fontSize: 15,
-            alignSelf: 'center',
-            marginLeft: 25,
-            textTransform: 'uppercase',
-          }}>
-          {Brand.brand}
-        </Text>
-        {AddFlag == false ? (
-          <View
-            style={{
-              marginTop: 2,
-              alignSelf: 'center',
-              flexDirection: 'row',
-              position: 'absolute',
-            }}>
-            <TouchableOpacity
-              onPress={AddType}
-              style={{
-                marginLeft: 280,
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    color: 'red',
-                    // fontStyle: 'italic',
-                    fontSize: 10,
-                    alignSelf: 'center',
-                    // marginLeft: 5,
-                    marginRight: 5,
-                    textTransform: 'capitalize',
-                  }}>
-                  Restaurants
-                </Text>
-                <View
-                  style={{
-                    width: 25,
-                    height: 25,
-                    backgroundColor: '#ee6601',
-                    borderRadius: 5,
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 40,
-                      alignSelf: 'center',
-                      marginTop: -17,
-                    }}>
-                    +
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View></View>
-        )}
-      </View> */}
 
       <ScrollView style={{marginBottom: 10}}>
         {AddFlag == false ? (
@@ -326,7 +251,7 @@ function Rest() {
                   marginTop: 10,
                   marginLeft: 10,
                   marginBottom: 10,
-                  width: DeviceWidth - 60,
+                  width: DeviceWidth - 80,
                   // backgroundColor: '#38b05f',
                   backgroundColor: '#dba801',
                   elevation: 15,
@@ -490,21 +415,6 @@ function Rest() {
                   </View>
                 ) : (
                   <View>
-                    {/* <View style={{marginLeft: 10}}>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                        }}>
-                        Restaurant :{' '}
-                        <Text style={{color: '#33691e', fontWeight: 'bold'}}>
-                          {item?.rest}
-                        </Text>
-                      </Text>
-                    </View> */}
-
                     {Tray == item ? (
                       <View
                         style={{

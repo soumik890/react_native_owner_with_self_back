@@ -37,6 +37,7 @@ const MenuType = () => {
   const {action, setaction} = useContext(exportvalues);
   const [Tray, setTray] = useState({});
   const {Cat, setCat} = useContext(exportvalues);
+  const [AddMenuFlag, setAddMenuFlag] = useState(false);
 
   useEffect(() => {
     apiAxios1('menutype', {
@@ -124,12 +125,6 @@ const MenuType = () => {
   const deleteType = item => {
     console.log(item);
     apiAxios1('menutype', {
-      // xuserid: user,
-      // xaction: 'menu_type_delete',
-      // RestaurantId: Rest.Id,
-      // Id: item?.Id,
-      // Status: '1',
-
       mtid: item.mtid,
       action: 'delete',
     }).then(res => {
@@ -140,30 +135,80 @@ const MenuType = () => {
   };
 
   const selectMenuType = item => {
-    console.log(item);
-    setMenuType(item);
-
-    apiAxios1('cat', {
-      userid: user,
-      restid: Rest.restid,
-      brandid: Brand.brandid,
-      mtid: item.mtid,
-      action: 'read',
-    }).then(res => {
-      // console.log(res.data);
-      res.data.map(item => {
-        if (item.cat == '@$DeveloperDefaultCategory$@') {
-          setCat(item);
-          console.log('Found the default');
-        }
+    // console.log(item);
+    if (item) {
+      apiAxios1('cat', {
+        userid: user,
+        restid: Rest.restid,
+        brandid: Brand.brandid,
+        mtid: item.mtid,
+        action: 'read',
+      }).then(res => {
+        console.log(res.data);
+        res.data.map(i => {
+          if (i.cat == '@$DeveloperDefaultCategory$@') {
+            setCat(i);
+            setMenuType(item);
+            console.log('Found the default', i);
+          }
+        });
       });
-    });
+    } else {
+      setMenuType();
+      setTray({});
+    }
     // navigation.navigate('cat');
   };
 
   const traySelector = item => {
     console.log('item in tray', item);
+    selectMenuType(item);
     setTray(item);
+  };
+
+  const AddMenu = () => {
+    // setAddFlag(true);
+    setAddMenuFlag(true);
+  };
+
+  const submitMenu = () => {
+    console.log(
+      MenuType.mtid,
+      Brand.brandid,
+      Rest.restid,
+      Cat.catid,
+      user,
+      AddVeg,
+      AddSpice,
+      Price,
+      Desc,
+      Ingred,
+    );
+    apiAxios1('menu', {
+      menu: Name,
+      mtid: MenuType.mtid,
+      brandid: Brand.brandid,
+      restid: Rest.restid,
+      catid: Cat.catid,
+      userid: user,
+      notes: 'blah',
+      MImage: 'null',
+      veg: AddVeg,
+      spice: AddSpice,
+      price: Price,
+      description: Desc,
+      ingredients: Ingred,
+      favourite: 1,
+      status1: 1,
+      rank1: 1,
+      cUser: user,
+      action: 'create',
+    }).then(res => {
+      console.log(res.data);
+      setaction(!action);
+      // setAddFlag(false);
+      setAddMenuFlag(false);
+    });
   };
 
   return (
@@ -568,7 +613,7 @@ const MenuType = () => {
                   style={{
                     flexDirection: 'row',
                     position: 'absolute',
-                    marginLeft: 300,
+                    marginLeft: 260,
                     marginTop: 10,
                   }}>
                   <TouchableOpacity
@@ -585,6 +630,28 @@ const MenuType = () => {
                       }}
                     />
                   </TouchableOpacity>
+                  {MenuType == item ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        // traySelector(item);
+                        // BrandSelector();
+                        selectMenuType();
+                      }}
+                      onPressIn={() => {
+                        setTray({});
+                      }}>
+                      <Image
+                        source={require('../assets/wrong.png')}
+                        style={{
+                          width: 20,
+                          height: 20,
+                          marginLeft: 20,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  ) : (
+                    <View></View>
+                  )}
                 </View>
               </View>
 
@@ -727,12 +794,12 @@ const MenuType = () => {
 
                       <TouchableOpacity
                         onPress={() => {
-                          // UpdateType(item);
-                          setTray({});
+                          // setTray({});
+                          // AddRest();
                         }}
                         style={{
                           marginLeft: 20,
-                          width: 50,
+                          width: 80,
                           height: 25,
                           backgroundColor: 'pink',
                           borderRadius: 5,
@@ -746,7 +813,7 @@ const MenuType = () => {
                             fontWeight: 'bold',
                             fontSize: 15,
                           }}>
-                          cancel
+                          Add menu
                         </Text>
                       </TouchableOpacity>
                     </View>
