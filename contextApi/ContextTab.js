@@ -14,7 +14,10 @@ const ContextTab = ({children}) => {
   const [Rest, setRest] = useState([]);
   const [MenuType, setMenuType] = useState([]);
   const [Cat, setCat] = useState();
-  const [action, setaction] = useState(false);
+  const [actionB, setactionB] = useState(false);
+  const [actionR, setactionR] = useState(false);
+  const [actionMT, setactionMT] = useState(false);
+  const [actionM, setactionM] = useState(false);
 
   return (
     <exportvalues.Provider
@@ -41,8 +44,14 @@ const ContextTab = ({children}) => {
         setMenuType,
         Cat,
         setCat,
-        action,
-        setaction,
+        actionB,
+        setactionB,
+        actionR,
+        setactionR,
+        actionMT,
+        setactionMT,
+        actionM,
+        setactionM,
       }}>
       {children}
     </exportvalues.Provider>

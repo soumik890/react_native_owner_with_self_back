@@ -16,7 +16,7 @@ import {exportvalues} from '../contextApi/ContextTab';
 import LogoTitle from './LogoTitle';
 import Modal from 'react-native-modal';
 
-const Menu = () => {
+const Menu = ({brandInfo}) => {
   const navigation = useNavigation();
 
   const [DispMenu, setDispMenu] = useState([]);
@@ -48,14 +48,16 @@ const Menu = () => {
   const [AddSpice, setAddSpice] = useState(4);
   const [AddVeg, setAddVeg] = useState(1);
   const [Img, setImg] = useState();
-  const {action, setaction} = useContext(exportvalues);
+  const {actionM, setactionM} = useContext(exportvalues);
   const [Tray, setTray] = useState({});
+
+  console.log('Brand info from menu page', brandInfo);
 
   useEffect(() => {
     apiAxios1('menu', {
       userid: user,
       restid: Rest.restid,
-      brandid: Brand.brandid,
+      brandid: brandInfo.brandid,
       mtid: MenuType.mtid,
       catid: Cat.catid,
       action: 'read',
@@ -63,29 +65,17 @@ const Menu = () => {
       setDispMenu(Response?.data);
       console.log('Disp Menu Exceuted', Response?.data);
     });
-  }, [AddFlag, action, Rest, MenuType, Cat, Brand]);
+  }, [AddFlag, actionM, Rest, MenuType, Cat, Brand]);
 
   const AddMenu = () => {
     setAddFlag(true);
   };
 
   const submitMenu = () => {
-    console.log(
-      MenuType.mtid,
-      Brand.brandid,
-      Rest.restid,
-      Cat.catid,
-      user,
-      AddVeg,
-      AddSpice,
-      Price,
-      Desc,
-      Ingred,
-    );
     apiAxios1('menu', {
       menu: Name,
       mtid: MenuType.mtid,
-      brandid: Brand.brandid,
+      brandid: brandInfo.brandid,
       restid: Rest.restid,
       catid: Cat.catid,
       userid: user,
@@ -103,7 +93,7 @@ const Menu = () => {
       action: 'create',
     }).then(res => {
       console.log(res.data);
-      setaction(!action);
+      setactionM(!actionM);
       setAddFlag(false);
     });
   };
@@ -122,7 +112,7 @@ const Menu = () => {
     }).then(res => {
       console.log(res.data);
       setIsOpen(false);
-      setaction(!action);
+      setactionM(!actionM);
     });
   };
   const UpdateMenu = item => {
@@ -154,7 +144,7 @@ const Menu = () => {
       console.log(res.data);
       setUpdateId(null);
       // setBackFlag(false);
-      setaction(!action);
+      setactionM(!actionM);
     });
   };
 

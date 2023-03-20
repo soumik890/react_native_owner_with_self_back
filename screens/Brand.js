@@ -30,7 +30,8 @@ function Brand() {
   const [RName, setRName] = useState('');
   const {UserID} = useContext(exportvalues);
   const user = parseInt(UserID);
-  const {action, setaction} = useContext(exportvalues);
+  const {actionB, setactionB} = useContext(exportvalues);
+  const {actionR, setactionR} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
   // const {Rest, setRest} = useContext(exportvalues);
   const {Brands, setBrands} = useContext(exportvalues);
@@ -50,7 +51,7 @@ function Brand() {
       setBrands(res?.data);
       setTypes(res?.data);
     });
-  }, [action]);
+  }, [actionB]);
 
   const UpdateType = item => {
     console.log('item at update', item);
@@ -74,7 +75,7 @@ function Brand() {
       brandid: UpdateId,
     }).then(res => {
       console.log(res.data);
-      setaction(!action);
+      setactionB(!actionB);
       setUpdateId(null);
     });
   };
@@ -96,7 +97,7 @@ function Brand() {
     }).then(res => {
       console.log(res.data.status);
       setAddFlag(false);
-      setaction(!action);
+      setactionB(!actionB);
     });
   };
 
@@ -110,15 +111,13 @@ function Brand() {
       console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       console.log(res.data);
       setIsOpen(false);
-      setaction(!action);
+      setactionB(!actionB);
     });
   };
 
-  const BrandSelector = item => {
-    // console.log(item);
-    setBrand(item);
-    // navigation.navigate('rest');
-  };
+  // const BrandSelector = item => {
+  //   setBrand(item);
+  // };
 
   const traySelector = item => {
     console.log('item in tray', item);
@@ -147,7 +146,7 @@ function Brand() {
     }).then(res => {
       console.log(res.data.status);
       setAddRestFlag(false);
-      setaction(!action);
+      setactionR(!actionR);
     });
   };
 
@@ -587,10 +586,11 @@ function Brand() {
         keyboardShouldPersistTaps={'always'}>
         {Types.map((item, index) => {
           // console.log(item);
+          // BrandSelector(item);
           return (
             <TouchableOpacity
               onPress={() => {
-                BrandSelector(item);
+                // BrandSelector(item);
               }}
               style={{
                 marginTop: 10,
@@ -675,13 +675,11 @@ function Brand() {
                         }}
                       />
                     </TouchableOpacity>
-
-                    {Brand == item ? (
+                    {Tray == item ? (
                       <TouchableOpacity
-                        onPress={() => {
-                          // traySelector(item);
-                          BrandSelector();
-                        }}
+                        // onPress={() => {
+                        //   BrandSelector();
+                        // }}
                         onPressIn={() => {
                           setTray({});
                         }}>
@@ -879,17 +877,19 @@ function Brand() {
                     <View></View>
                   )}
 
-                  {Brand == item ? (
-                    <View
-                      style={{
-                        width: '95%',
-                        alignSelf: 'flex-end',
-                      }}>
-                      <Rest />
-                    </View>
-                  ) : (
+                  {/* {Brand == item ? ( */}
+
+                  <View
+                    style={{
+                      width: '95%',
+                      alignSelf: 'flex-end',
+                    }}>
+                    <Rest data={item} />
+                  </View>
+
+                  {/* ) : (
                     <View></View>
-                  )}
+                  )} */}
                 </View>
               )}
             </TouchableOpacity>

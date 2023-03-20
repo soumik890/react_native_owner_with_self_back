@@ -16,7 +16,7 @@ import {exportvalues} from '../contextApi/ContextTab';
 import LogoTitle from './LogoTitle';
 import Modal from 'react-native-modal';
 
-function Rest() {
+function Rest({data}) {
   const navigation = useNavigation();
   const [Types, setTypes] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
@@ -32,18 +32,19 @@ function Rest() {
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
-  const {action, setaction} = useContext(exportvalues);
+  const {actionR, setactionR} = useContext(exportvalues);
   const [Tray, setTray] = useState({});
 
   useEffect(() => {
     apiAxios1('rest', {
       userid: user,
       action: 'read',
-      brandid: Brand.brandid,
+      // brandid: Brand.brandid,
+      brandid: data.brandid,
     }).then(res => {
       setTypes(res?.data);
     });
-  }, [action, Brand]);
+  }, [actionR, Brand]);
 
   const UpdateType = item => {
     setUpdateId(item?.restid);
@@ -65,7 +66,7 @@ function Rest() {
       restid: UpdateId,
     }).then(res => {
       console.log(res.data);
-      setaction(!action);
+      setactionR(!actionR);
       setUpdateId(null);
     });
   };
@@ -82,7 +83,8 @@ function Rest() {
       rest: Name,
       userid: user,
       plan_id: 4,
-      brandid: Brand.brandid,
+      // brandid: Brand.brandid,
+      brandid: data.brandid,
       RImage: 'null',
       notes: 'nill',
       favourite: 0,
@@ -93,7 +95,7 @@ function Rest() {
     }).then(res => {
       console.log(res.data.status);
       // setAddFlag(false);
-      setaction(!action);
+      setactionR(!actionR);
     });
   };
 
@@ -105,14 +107,17 @@ function Rest() {
     }).then(res => {
       console.log(res.data);
       setIsOpen(false);
-      setaction(!action);
+      setactionR(!actionR);
     });
   };
 
   const RestSelector = item => {
     setRest(item);
-    navigation.navigate('menuType');
-    // console.log(item);
+    // console.log(
+    //   '***************************************************item in rest selector',
+    //   item,
+    // );
+    navigation.navigate('menuType', {data: item, brandInfo: data});
   };
 
   const traySelector = item => {
