@@ -33,6 +33,9 @@ function Rest({data}) {
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
   const {actionR, setactionR} = useContext(exportvalues);
+  const {restCounter, setRestCounter} = useContext(exportvalues);
+  const {brandCounter, setBrandCounter} = useContext(exportvalues);
+
   const [Tray, setTray] = useState({});
 
   useEffect(() => {
@@ -43,6 +46,16 @@ function Rest({data}) {
       brandid: data.brandid,
     }).then(res => {
       setTypes(res?.data);
+      setRestCounter(res.data.length);
+      // console.log('rest length is', res.data.length);
+
+      // if (brandCounter == 1 && restCounter == 1) {
+      //   setRest(res?.data[0]);
+
+      //   navigation.navigate('menuType', {data: res?.data[0], brandInfo: data});
+      // } else {
+      //   console.log('not found 1');
+      // }
     });
   }, [actionR, Brand]);
 
@@ -258,7 +271,7 @@ function Rest({data}) {
                   marginBottom: 10,
                   width: DeviceWidth - 80,
                   // backgroundColor: '#38b05f',
-                  backgroundColor: '#dba801',
+                  backgroundColor: 'white',
                   elevation: 15,
                   borderRadius: 5,
                 }}>
@@ -306,7 +319,7 @@ function Rest({data}) {
                   <View style={{marginLeft: 10, flexDirection: 'column'}}>
                     <Text
                       style={{
-                        color: '#eaebeb',
+                        color: 'black',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
                         fontSize: 15,

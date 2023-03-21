@@ -18,6 +18,9 @@ const ContextTab = ({children}) => {
   const [actionR, setactionR] = useState(false);
   const [actionMT, setactionMT] = useState(false);
   const [actionM, setactionM] = useState(false);
+  const [brandCounter, setBrandCounter] = useState(null);
+  const [restCounter, setRestCounter] = useState(null);
+  const [countController, setCountroller] = useState(false);
 
   return (
     <exportvalues.Provider
@@ -52,6 +55,12 @@ const ContextTab = ({children}) => {
         setactionMT,
         actionM,
         setactionM,
+        brandCounter,
+        setBrandCounter,
+        restCounter,
+        setRestCounter,
+        countController,
+        setCountroller,
       }}>
       {children}
     </exportvalues.Provider>

@@ -245,7 +245,7 @@ function LogoTitle() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                onPress={BrandCaller}
+                onPress={() => {}}
                 style={{
                   flexDirection: 'row',
                   marginBottom: 10,
@@ -265,11 +265,11 @@ function LogoTitle() {
                     alignSelf: 'center',
                     fontWeight: 'bold',
                   }}>
-                  Add a New Brand
+                  Go To Access{' '}
                 </Text>
               </TouchableOpacity>
 
-              {Brands.map(item => {
+              {/* {Brands.map(item => {
                 return (
                   <View>
                     <View style={{flexDirection: 'row'}}>
@@ -382,7 +382,7 @@ function LogoTitle() {
                     )}
                   </View>
                 );
-              })}
+              })} */}
             </View>
           </ScrollView>
         </View>

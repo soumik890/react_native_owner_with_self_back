@@ -40,6 +40,8 @@ function Brand() {
   const [Img, setImg] = useState();
   const [Tray, setTray] = useState({});
 
+  const {brandCounter, setBrandCounter} = useContext(exportvalues);
+
   const DeviceWidth = Dimensions.get('window').width;
 
   useEffect(() => {
@@ -50,6 +52,7 @@ function Brand() {
       console.log(res.data);
       setBrands(res?.data);
       setTypes(res?.data);
+      setBrandCounter(res.data.length);
     });
   }, [actionB]);
 
@@ -521,6 +524,7 @@ function Brand() {
           width: DeviceWidth,
           // backgroundColor: '#62982d',
           backgroundColor: '#f5d378',
+          // backgroundColor: '#b7b7b7',
 
           height: 40,
           flexDirection: 'row',
@@ -582,7 +586,7 @@ function Brand() {
         </View>
       </View>
       <ScrollView
-        style={{marginBottom: 100}}
+        style={{marginBottom: 10}}
         keyboardShouldPersistTaps={'always'}>
         {Types.map((item, index) => {
           // console.log(item);
@@ -594,10 +598,11 @@ function Brand() {
               }}
               style={{
                 marginTop: 10,
-                marginBottom: 10,
+                // marginBottom: 10,
                 marginLeft: 10,
                 width: DeviceWidth - 20,
-                backgroundColor: '#38b05f',
+                // backgroundColor: '#38b05f',
+                backgroundColor: '#b7b7b7',
                 elevation: 15,
                 borderRadius: 5,
               }}>
@@ -606,7 +611,7 @@ function Brand() {
                   style={{
                     flexDirection: 'row',
                     marginTop: 10,
-                    marginBottom: 10,
+                    // marginBottom: 10,
                   }}>
                   <View>
                     {item.BImage !== 'null' ? (
@@ -646,7 +651,7 @@ function Brand() {
                   <View style={{marginLeft: 10, flexDirection: 'column'}}>
                     <Text
                       style={{
-                        color: '#eaebeb',
+                        color: 'black',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
                         fontSize: 15,
@@ -886,10 +891,6 @@ function Brand() {
                     }}>
                     <Rest data={item} />
                   </View>
-
-                  {/* ) : (
-                    <View></View>
-                  )} */}
                 </View>
               )}
             </TouchableOpacity>

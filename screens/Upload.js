@@ -24,7 +24,10 @@ const Upload = ({route}) => {
   const [ImgURL, setImgURL] = useState(null);
   const [Loading, setLoading] = useState(false);
   const {UserID} = useContext(exportvalues);
-  const {action, setaction} = useContext(exportvalues);
+  const {actionB, setactionB} = useContext(exportvalues);
+  const {actionR, setactionR} = useContext(exportvalues);
+  const {actionM, setactionM} = useContext(exportvalues);
+  const {actionMT, setactionMT} = useContext(exportvalues);
   let user = parseInt(UserID);
 
   console.log(route.params.page);
@@ -105,7 +108,7 @@ const Upload = ({route}) => {
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
-      setaction(!action);
+      setactionB(!actionB);
     });
   };
 
@@ -118,7 +121,7 @@ const Upload = ({route}) => {
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
-      setaction(!action);
+      setactionR(!actionR);
     });
   };
 
@@ -131,7 +134,7 @@ const Upload = ({route}) => {
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
-      setaction(!action);
+      setactionMT(!actionMT);
     });
   };
 
@@ -144,7 +147,7 @@ const Upload = ({route}) => {
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
-      setaction(!action);
+      // setaction(!action);
     });
   };
 
@@ -162,7 +165,7 @@ const Upload = ({route}) => {
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
-      setaction(!action);
+      setactionM(!actionM);
     });
   };
 

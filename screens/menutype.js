@@ -15,7 +15,7 @@ import apiAxios1 from '../ApiCaller/apiAxios1';
 import {exportvalues} from '../contextApi/ContextTab';
 import LogoTitle from './LogoTitle';
 import Modal from 'react-native-modal';
-import Menu from './menu';
+import Menu1 from './menu';
 
 const MenuType = ({route}) => {
   const navigation = useNavigation();
@@ -565,7 +565,8 @@ const MenuType = ({route}) => {
                   marginLeft: 10,
                   marginBottom: 10,
                   width: DeviceWidth - 20,
-                  backgroundColor: '#38b05f',
+                  // backgroundColor: '#38b05f',
+                  backgroundColor: '#b7b7b7',
                   elevation: 15,
                   borderRadius: 5,
                   // marginBottom: UpdateId == item?.Id ? 60 : 0,
@@ -588,8 +589,8 @@ const MenuType = ({route}) => {
                         <Image
                           source={{uri: item.MTImage}}
                           style={{
-                            width: 50,
-                            height: 50,
+                            width: 25,
+                            height: 25,
                             marginLeft: 10,
                             borderRadius: 5,
                           }}
@@ -605,7 +606,7 @@ const MenuType = ({route}) => {
                         }}>
                         <Image
                           source={require('../assets/noimg.png')}
-                          style={{width: 50, height: 50, marginLeft: 10}}
+                          style={{width: 25, height: 25, marginLeft: 10}}
                         />
                       </TouchableOpacity>
                     )}
@@ -613,7 +614,7 @@ const MenuType = ({route}) => {
                   <View style={{marginLeft: 10, flexDirection: 'column'}}>
                     <Text
                       style={{
-                        color: '#eaebeb',
+                        color: 'black',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
                         fontSize: 15,
@@ -626,8 +627,8 @@ const MenuType = ({route}) => {
                     style={{
                       flexDirection: 'row',
                       position: 'absolute',
-                      marginLeft: 260,
-                      marginTop: 10,
+                      marginLeft: 280,
+                      marginTop: 5,
                     }}>
                     <TouchableOpacity
                       onPress={() => {
@@ -636,8 +637,8 @@ const MenuType = ({route}) => {
                       <Image
                         source={require('../assets/ham2.png')}
                         style={{
-                          width: 25,
-                          height: 25,
+                          width: 15,
+                          height: 15,
                           marginLeft: 20,
                           // borderRadius: 5,
                         }}
@@ -646,22 +647,16 @@ const MenuType = ({route}) => {
                     {MenuType == item ? (
                       <TouchableOpacity
                         onPress={() => {
-                          // traySelector(item);
-                          // BrandSelector();
                           selectMenuType();
                         }}
                         onPressIn={() => {
                           setTray({});
-                        }}
-                        // onPressOut={() => {
-                        //   setAddMenuFlag(false);
-                        // }}
-                      >
+                        }}>
                         <Image
                           source={require('../assets/wrong.png')}
                           style={{
-                            width: 20,
-                            height: 20,
+                            width: 15,
+                            height: 15,
                             marginLeft: 20,
                           }}
                         />
@@ -811,8 +806,6 @@ const MenuType = ({route}) => {
 
                         <TouchableOpacity
                           onPress={() => {
-                            // setTray({});
-                            // AddRest();
                             AddMenu();
                           }}
                           style={{
@@ -834,6 +827,30 @@ const MenuType = ({route}) => {
                             Add menu
                           </Text>
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            setTray({});
+                          }}
+                          style={{
+                            marginLeft: 20,
+                            width: 60,
+                            height: 25,
+                            backgroundColor: 'pink',
+                            borderRadius: 5,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              fontSize: 15,
+                            }}>
+                            Cancel
+                          </Text>
+                        </TouchableOpacity>
                       </View>
                     ) : (
                       <View></View>
@@ -843,11 +860,11 @@ const MenuType = ({route}) => {
                     {MenuType == item ? (
                       <View
                         style={{
-                          width: '95%',
+                          width: '100%',
                           alignSelf: 'flex-end',
                         }}>
                         {/* <Text>Hello</Text> */}
-                        <Menu brandInfo={route.params.brandInfo} />
+                        <Menu1 brandInfo={route.params.brandInfo} />
                       </View>
                     ) : (
                       <View></View>

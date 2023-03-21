@@ -9,14 +9,21 @@ import {
   ScrollView,
   Alert,
   StyleSheet,
+  TouchableHighlight,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import apiAxios1 from '../ApiCaller/apiAxios1';
 import {exportvalues} from '../contextApi/ContextTab';
 import LogoTitle from './LogoTitle';
 import Modal from 'react-native-modal';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
-const Menu = ({brandInfo}) => {
+const Menu1 = ({brandInfo}) => {
   const navigation = useNavigation();
 
   const [DispMenu, setDispMenu] = useState([]);
@@ -154,6 +161,50 @@ const Menu = ({brandInfo}) => {
   };
   // console.log(DispMenu);
   // console.log('Price is', UpPrice);
+
+  const triggerStyles = {
+    triggerText: {
+      color: 'black',
+      fontSize: 40,
+      fontWeight: 'bold',
+    },
+    triggerWrapper: {
+      // padding: 5,
+      // backgroundColor: 'blue',
+    },
+    triggerTouchable: {
+      // underlayColor: 'darkblue',
+      // activeOpacity: 70,
+    },
+    TriggerTouchableComponent: TouchableHighlight,
+  };
+
+  const blockStyles = {
+    optionText: {
+      color: 'black',
+      // fontSize: 40,
+      // fontWeight: 'bold',
+    },
+    optionsWrapper: {
+      // padding: 5,
+      // marginLeft: -10,
+    },
+
+    optionsContainer: {
+      // color: 'red',
+      // backgroundColor: 'red',
+      justifyContent: 'center',
+      // alignItems: 'center',
+
+      width: 100,
+      // height: 90,
+    },
+    optionTouchable: {
+      // underlayColor: 'darkblue',
+      // activeOpacity: 70,
+    },
+    TriggerTouchableComponent: TouchableHighlight,
+  };
   return (
     <View style={styles.containerMain}>
       <Modal
@@ -270,122 +321,13 @@ const Menu = ({brandInfo}) => {
           </View>
         </View>
       </Modal>
-      {/* <LogoTitle /> */}
-
-      {/* <View
-        style={{
-          width: DeviceWidth,
-          backgroundColor: '#ecba5c',
-          height: 40,
-          flexDirection: 'row',
-          // flex: 1,
-        }}>
-        <View>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              color: 'white',
-              // fontStyle: 'italic',
-              fontSize: 15,
-              alignSelf: 'center',
-              marginLeft: 25,
-              textTransform: 'uppercase',
-            }}>
-            {Brand.brand}
-          </Text>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              color: 'black',
-              // fontStyle: 'italic',
-              fontSize: 15,
-              alignSelf: 'center',
-              marginLeft: 25,
-              textTransform: 'uppercase',
-            }}>
-            {Rest.rest}
-          </Text>
-        </View>
-
-        {AddFlag == false ? (
-          <View
-            style={{
-              marginTop: 2,
-              alignSelf: 'center',
-              flexDirection: 'row',
-              position: 'absolute',
-            }}>
-            <TouchableOpacity
-              onPress={AddMenu}
-              style={{
-                marginLeft: 250,
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    fontWeight: 'bold',
-                    color: 'red',
-                    fontSize: 10,
-                    alignSelf: 'center',
-                    // marginLeft: 5,
-                    marginRight: 5,
-                    textTransform: 'capitalize',
-                  }}>
-                  menus
-                </Text>
-
-                <View
-                  style={{
-                    width: 25,
-                    height: 25,
-                    backgroundColor: '#ee6601',
-                    borderRadius: 5,
-                    justifyContent: 'center',
-                    marginTop: 5,
-                    // flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 40,
-                      alignSelf: 'center',
-                      marginTop: -17,
-                    }}>
-                    +
-                  </Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-
-            {DispMenu.length > 0 ? (
-              <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('publish');
-                  }}
-                  style={{
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={require('../assets/QR.png')}
-                    style={{height: 35, width: 35}}
-                  />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View />
-            )}
-          </View>
-        ) : (
-          <View></View>
-        )}
-      </View> */}
 
       <ScrollView
-        style={{marginBottom: 10}}
+        style={
+          {
+            // marginBottom: 10
+          }
+        }
         keyboardShouldPersistTaps={'always'}>
         {AddFlag == false ? (
           DispMenu.map((item, index) => {
@@ -394,14 +336,14 @@ const Menu = ({brandInfo}) => {
                 <TouchableOpacity
                   disabled={true}
                   style={{
-                    marginTop: 10,
+                    marginTop: 2,
                     // marginLeft: 30,
                     // marginLeft: 10,
-                    marginTop: 10,
-                    marginLeft: 10,
-                    marginBottom: 10,
-                    width: DeviceWidth - 80,
-                    backgroundColor: '#dba801',
+                    // marginTop: 10,
+                    // marginLeft: 10,
+                    // marginBottom: 10,
+                    // width: DeviceWidth - 20,
+                    backgroundColor: '#f7f7f7',
                     elevation: 15,
                     borderRadius: 5,
                     // marginBottom: UpdateId == item?.Id ? 350 : 10,
@@ -409,62 +351,13 @@ const Menu = ({brandInfo}) => {
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginLeft: 180,
-                      marginTop: 10,
-                      marginBottom: -30,
-                      marginRight: 10,
+                      flex: 1,
                     }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        ButtonAlert(item);
-                      }}
+                    <View
                       style={{
-                        // marginLeft: 250,
-                        width: 50,
-                        height: 25,
-                        backgroundColor: '#ec8c8c',
-                        borderRadius: 5,
-                        alignContent: 'center',
-                        justifyContent: 'center',
+                        // backgroundColor: 'red'
+                        flex: 2,
                       }}>
-                      <Text
-                        style={{
-                          color: 'black',
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          fontSize: 15,
-                        }}>
-                        Delete
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        UpdateMenu(item);
-                      }}
-                      style={{
-                        marginLeft: 20,
-                        width: 50,
-                        height: 25,
-                        backgroundColor: 'skyblue',
-                        borderRadius: 5,
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          color: 'black',
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          fontSize: 15,
-                        }}>
-                        edit
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View style={{flexDirection: 'row', marginTop: 30}}>
-                    <View>
                       {item.MImage !== 'null' ? (
                         <TouchableOpacity
                           onPress={() => {
@@ -476,11 +369,14 @@ const Menu = ({brandInfo}) => {
                           <Image
                             source={{uri: item.MImage}}
                             style={{
-                              width: 100,
-                              height: 100,
-                              marginLeft: 10,
+                              width: 50,
+                              height: 50,
+                              // marginLeft: 10,
                               borderRadius: 5,
-                              marginRight: 20,
+                              marginLeft: 5,
+                              marginTop: 5,
+
+                              // marginRight: 20,
                             }}
                           />
                         </TouchableOpacity>
@@ -494,54 +390,47 @@ const Menu = ({brandInfo}) => {
                           }}>
                           <Image
                             source={require('../assets/noimg.png')}
-                            style={{width: 100, height: 100, marginLeft: 10}}
+                            style={{
+                              width: 50,
+                              height: 50,
+                              marginLeft: 5,
+                            }}
                           />
                         </TouchableOpacity>
                       )}
                     </View>
-                    <View>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                        }}>
-                        Name:
+                    <View
+                      style={{
+                        // backgroundColor: 'pink',
+
+                        flex: 6,
+                      }}>
+                      <View style={{flexDirection: 'row'}}>
+                        <Image
+                          source={
+                            item?.veg == 1
+                              ? require('../assets/veg.png')
+                              : require('../assets/nonveg.png')
+                          }
+                          style={{
+                            width: 20,
+                            height: 20,
+                            marginTop: 2,
+                          }}
+                        />
+
                         <Text
                           style={{
                             marginBottom: 10,
                             color: 'black',
                             fontWeight: 'bold',
+                            fontSize: 15,
+                            marginLeft: 10,
+                            textTransform: 'capitalize',
                           }}>
                           {item?.menu}
                         </Text>
-                      </Text>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                        }}>
-                        Price:{' '}
-                        <Text
-                          style={{
-                            marginBottom: 10,
-                            color: 'black',
-                            fontWeight: 'bold',
-                          }}>
-                          {item?.price}
-                        </Text>
-                      </Text>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                        }}>
-                        Spice:{' '}
+
                         <Image
                           source={
                             item?.spice == 1
@@ -555,35 +444,110 @@ const Menu = ({brandInfo}) => {
                           style={{
                             width:
                               item?.spice == 1
-                                ? 20
+                                ? 10
                                 : item?.spice == 2
-                                ? 34
+                                ? 17
                                 : item?.spice == 3
-                                ? 48
-                                : 20,
-                            height: 20,
+                                ? 24
+                                : 10,
+                            height: 10,
+                            marginLeft: 10,
+                            marginTop: 2,
                           }}
                         />
-                      </Text>
+                      </View>
+
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            // marginBottom: 10,
+                            color: 'black',
+                            textTransform: 'capitalize',
+                            // fontWeight: 'bold',
+                          }}>
+                          {item?.description}{' '}
+                        </Text>
+
+                        <Text
+                          style={{
+                            marginBottom: 10,
+                            color: 'black',
+                            textTransform: 'capitalize',
+                            // fontWeight: 'bold',
+                          }}>
+                          {item?.ingredients}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        width: 50,
+                        // backgroundColor: 'grey',
+                        flex: 2,
+                        // alignSelf: 'center',
+                      }}>
+                      {/* *********************************************************************************************** */}
+                      <View style={{marginTop: -20, marginLeft: 10}}>
+                        <Menu>
+                          <MenuTrigger
+                            text="..."
+                            customStyles={triggerStyles}
+                          />
+
+                          {/* <Text>Hello</Text> */}
+                          <MenuOptions customStyles={blockStyles}>
+                            <MenuOption
+                              onSelect={() => {}}
+                              customStyles={blockStyles}>
+                              {/* <Text style={{color: 'red'}}>Share</Text> */}
+                              <TouchableOpacity
+                                // disabled={!filterEnabled}
+                                // style={[styles.dateContainer1, {marginLeft: 20}]}
+                                onPress={() => {
+                                  ButtonAlert(item);
+                                }}>
+                                <View
+                                  style={{flexDirection: 'row', marginTop: 10}}>
+                                  <Text style={{color: 'black'}}>Delete</Text>
+                                </View>
+                              </TouchableOpacity>
+                            </MenuOption>
+                            <MenuOption
+                              onSelect={() => {}}
+                              customStyles={blockStyles}>
+                              <TouchableOpacity
+                                onPress={() => {
+                                  UpdateMenu(item);
+                                }}>
+                                <View style={{flexDirection: 'row'}}>
+                                  {/* <Image
+                                    source={
+                                      Night
+                                        ? require('../../../assets/images/shareIcon.png')
+                                        : require('../../../assets/images/shareIcon.png')
+                                    }
+                                    style={{height: 25, width: 25}}
+                                  /> */}
+                                  <Text style={{color: 'black'}}>
+                                    Edit Menu
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
+                            </MenuOption>
+                          </MenuOptions>
+                        </Menu>
+                      </View>
+
+                      {/* *********************************************************************************************** */}
+
                       <Text
                         style={{
                           marginBottom: 10,
                           color: 'black',
-                          fontSize: 18,
                           fontWeight: 'bold',
+                          marginLeft: 10,
                         }}>
-                        Veg/Non-Veg:{' '}
-                        <Image
-                          source={
-                            item?.veg == 1
-                              ? require('../assets/veg.png')
-                              : require('../assets/nonveg.png')
-                          }
-                          style={{
-                            width: 20,
-                            height: 20,
-                          }}
-                        />
+                        {item?.price}/-
                       </Text>
                     </View>
                   </View>
@@ -873,42 +837,7 @@ const Menu = ({brandInfo}) => {
                     </View>
                   ) : (
                     <View>
-                      <View style={{marginLeft: 10}}>
-                        <Text
-                          style={{
-                            marginBottom: 10,
-                            color: 'black',
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                          }}>
-                          Description:{' '}
-                          <Text
-                            style={{
-                              // marginBottom: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            {item?.description}
-                          </Text>
-                        </Text>
-                        <Text
-                          style={{
-                            marginBottom: 10,
-                            color: 'black',
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                          }}>
-                          Ingredients:{' '}
-                          <Text
-                            style={{
-                              marginBottom: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            {item?.ingredients}
-                          </Text>
-                        </Text>
-                      </View>
+                      <View style={{marginLeft: 10}}></View>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -1200,7 +1129,7 @@ const Menu = ({brandInfo}) => {
   );
 };
 
-export default Menu;
+export default Menu1;
 
 const styles = StyleSheet.create({
   containerMain: {
