@@ -333,7 +333,7 @@ function Rest({data}) {
                   style={{
                     flexDirection: 'row',
                     position: 'absolute',
-                    marginLeft: 250,
+                    marginLeft: 210,
                     marginTop: 10,
                   }}>
                   <TouchableOpacity
@@ -438,7 +438,7 @@ function Rest({data}) {
                         style={{
                           flexDirection: 'row',
                           // justifyContent: 'flex-end',
-                          marginLeft: 100,
+                          marginLeft: 60,
                           marginRight: 20,
                           marginBottom: 10,
                         }}>

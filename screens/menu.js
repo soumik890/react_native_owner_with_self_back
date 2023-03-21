@@ -484,10 +484,11 @@ const Menu1 = ({brandInfo}) => {
                         width: 50,
                         // backgroundColor: 'grey',
                         flex: 2,
+                        // marginLeft
                         // alignSelf: 'center',
                       }}>
                       {/* *********************************************************************************************** */}
-                      <View style={{marginTop: -20, marginLeft: 10}}>
+                      <View style={{marginTop: -20, marginLeft: -20}}>
                         <Menu>
                           <MenuTrigger
                             text="..."
@@ -545,7 +546,7 @@ const Menu1 = ({brandInfo}) => {
                           marginBottom: 10,
                           color: 'black',
                           fontWeight: 'bold',
-                          marginLeft: 10,
+                          marginLeft: -20,
                         }}>
                         {item?.price}/-
                       </Text>

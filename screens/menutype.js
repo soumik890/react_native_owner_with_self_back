@@ -510,7 +510,7 @@ const MenuType = ({route}) => {
           <TouchableOpacity
             onPress={AddType}
             style={{
-              marginLeft: 280,
+              marginLeft: 215,
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text
@@ -546,6 +546,16 @@ const MenuType = ({route}) => {
                 </Text>
               </View>
             </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('publish');
+            }}>
+            <Image
+              source={require('../assets/QR.png')}
+              style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -627,7 +637,7 @@ const MenuType = ({route}) => {
                     style={{
                       flexDirection: 'row',
                       position: 'absolute',
-                      marginLeft: 280,
+                      marginLeft: 250,
                       marginTop: 5,
                     }}>
                     <TouchableOpacity

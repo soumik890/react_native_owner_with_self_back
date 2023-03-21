@@ -542,7 +542,12 @@ function Brand() {
         </Text>
 
         <View
-          style={{marginTop: -1, alignSelf: 'center', position: 'absolute'}}>
+          style={{
+            marginTop: -1,
+            alignSelf: 'center',
+            position: 'absolute',
+            flex: 1,
+          }}>
           <TouchableOpacity
             onPress={AddType}
             style={{
@@ -664,7 +669,7 @@ function Brand() {
                     style={{
                       flexDirection: 'row',
                       position: 'absolute',
-                      marginLeft: 260,
+                      marginLeft: 240,
                     }}>
                     <TouchableOpacity
                       onPress={() => {
@@ -802,7 +807,7 @@ function Brand() {
                         flexDirection: 'row',
                         // justifyContent: 'flex-end',
                         // marginRight: 10,
-                        marginLeft: 50,
+                        marginLeft: 20,
                         marginBottom: 10,
                       }}>
                       <TouchableOpacity

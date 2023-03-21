@@ -29,6 +29,8 @@ const Publish = () => {
     apiAxios1('allmenu', {
       userid: UserID,
       restid: Rest.restid,
+      userid: UserID,
+      restid: Rest.restid,
       action: 'build',
     }).then(Response => {
       // setDispMenu(Response?.data);
