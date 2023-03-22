@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LogoTitle from './LogoTitle';
@@ -39,6 +40,8 @@ function Brand() {
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
   const [Tray, setTray] = useState({});
+
+  const [plan, setPlan] = useState(1);
 
   const {brandCounter, setBrandCounter} = useContext(exportvalues);
 
@@ -137,7 +140,7 @@ function Brand() {
     apiAxios1('rest', {
       rest: RName,
       userid: user,
-      plan_id: 4,
+      plan_id: plan,
       brandid: Brand.brandid,
       RImage: 'null',
       notes: 'nill',
@@ -412,7 +415,7 @@ function Brand() {
         <View
           style={{
             width: 320,
-            height: 200,
+            height: 230,
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
@@ -462,8 +465,85 @@ function Brand() {
                   onChangeText={text => setRName(text)}
                 />
               </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 20,
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                  }}>
+                  Select Plan
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    setPlan(1);
+                  }}>
+                  <View
+                    style={{
+                      width: 30,
+                      height: 30,
+                      backgroundColor: plan == 1 ? 'yellow' : 'skyblue',
+                      marginLeft: 10,
+                    }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        marginLeft: 8,
+                      }}>
+                      1
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setPlan(2);
+                  }}>
+                  <View
+                    style={{
+                      width: 30,
+                      height: 30,
+                      backgroundColor: plan == 2 ? 'yellow' : 'skyblue',
+                      marginLeft: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        marginLeft: 8,
+                      }}>
+                      2
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setPlan(3);
+                  }}>
+                  <View
+                    style={{
+                      width: 30,
+                      height: 30,
+                      backgroundColor: plan == 3 ? 'yellow' : 'skyblue',
+                      marginLeft: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        marginLeft: 8,
+                      }}>
+                      3
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={{flexDirection: 'row', marginLeft: 80}}>
+            <View style={{flexDirection: 'row', marginLeft: 80, marginTop: 20}}>
               <TouchableOpacity
                 onPress={submitRest}
                 style={{

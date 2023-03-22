@@ -45,6 +45,11 @@ const MenuType = ({route}) => {
   const [Ingred, setIngred] = useState();
 
   const {actionM, setactionM} = useContext(exportvalues);
+  const {menuCounter, setMenuCounter} = useContext(exportvalues);
+  const {menuTypeCounter, setMenuTypeCounter} = useContext(exportvalues);
+
+  console.log('***************menu count is*******', menuCounter);
+  console.log('***************menu type count is*******', menuTypeCounter);
 
   console.log(
     '*********Values received in menutype**********',
@@ -62,7 +67,9 @@ const MenuType = ({route}) => {
       // if (res?.data?.status) {
       //   setTypes(res?.data?.data);
       // }
+
       setTypes(res?.data);
+      setMenuTypeCounter(res?.data.length);
     });
   }, [actionMT, Rest]);
 
@@ -548,15 +555,19 @@ const MenuType = ({route}) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('publish');
-            }}>
-            <Image
-              source={require('../assets/QR.png')}
-              style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
-            />
-          </TouchableOpacity>
+          {menuCounter > 0 && menuTypeCounter > 0 ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('publish');
+              }}>
+              <Image
+                source={require('../assets/QR.png')}
+                style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+              />
+            </TouchableOpacity>
+          ) : (
+            <View></View>
+          )}
         </View>
       </View>
 
@@ -762,8 +773,9 @@ const MenuType = ({route}) => {
                       <View
                         style={{
                           flexDirection: 'row',
-                          justifyContent: 'flex-end',
-                          marginRight: 20,
+                          justifyContent: 'flex-start',
+                          // marginRight: 10,
+                          marginLeft: 10,
                           marginBottom: 10,
                         }}>
                         <TouchableOpacity

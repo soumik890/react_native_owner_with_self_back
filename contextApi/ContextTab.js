@@ -21,6 +21,8 @@ const ContextTab = ({children}) => {
   const [brandCounter, setBrandCounter] = useState(null);
   const [restCounter, setRestCounter] = useState(null);
   const [countController, setCountroller] = useState(false);
+  const [menuCounter, setMenuCounter] = useState(null);
+  const [menuTypeCounter, setMenuTypeCounter] = useState(null);
 
   return (
     <exportvalues.Provider
@@ -61,6 +63,10 @@ const ContextTab = ({children}) => {
         setRestCounter,
         countController,
         setCountroller,
+        menuCounter,
+        setMenuCounter,
+        menuTypeCounter,
+        setMenuTypeCounter,
       }}>
       {children}
     </exportvalues.Provider>

@@ -56,6 +56,7 @@ const Menu1 = ({brandInfo}) => {
   const [AddVeg, setAddVeg] = useState(1);
   const [Img, setImg] = useState();
   const {actionM, setactionM} = useContext(exportvalues);
+  const {menuCounter, setMenuCounter} = useContext(exportvalues);
   const [Tray, setTray] = useState({});
 
   console.log('Brand info from menu page', brandInfo);
@@ -70,6 +71,7 @@ const Menu1 = ({brandInfo}) => {
       action: 'read',
     }).then(Response => {
       setDispMenu(Response?.data);
+      setMenuCounter(Response?.data.length);
       console.log('Disp Menu Exceuted', Response?.data);
     });
   }, [AddFlag, actionM, Rest, MenuType, Cat, Brand]);
@@ -402,6 +404,7 @@ const Menu1 = ({brandInfo}) => {
                     <View
                       style={{
                         // backgroundColor: 'pink',
+                        marginTop: 5,
 
                         flex: 6,
                       }}>
@@ -495,15 +498,11 @@ const Menu1 = ({brandInfo}) => {
                             customStyles={triggerStyles}
                           />
 
-                          {/* <Text>Hello</Text> */}
                           <MenuOptions customStyles={blockStyles}>
                             <MenuOption
                               onSelect={() => {}}
                               customStyles={blockStyles}>
-                              {/* <Text style={{color: 'red'}}>Share</Text> */}
                               <TouchableOpacity
-                                // disabled={!filterEnabled}
-                                // style={[styles.dateContainer1, {marginLeft: 20}]}
                                 onPress={() => {
                                   ButtonAlert(item);
                                 }}>
@@ -521,14 +520,6 @@ const Menu1 = ({brandInfo}) => {
                                   UpdateMenu(item);
                                 }}>
                                 <View style={{flexDirection: 'row'}}>
-                                  {/* <Image
-                                    source={
-                                      Night
-                                        ? require('../../../assets/images/shareIcon.png')
-                                        : require('../../../assets/images/shareIcon.png')
-                                    }
-                                    style={{height: 25, width: 25}}
-                                  /> */}
                                   <Text style={{color: 'black'}}>
                                     Edit Menu
                                   </Text>

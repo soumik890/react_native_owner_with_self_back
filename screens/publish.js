@@ -43,15 +43,15 @@ const Publish = () => {
     <View style={styles.containerMain}>
       <LogoTitle />
       <View style={{justifyContent: 'center', alignSelf: 'center'}}>
-        <Text style={{color: 'black', fontSize: 30, fontWeight: 'bold'}}>
+        <Text style={{color: 'grey', fontSize: 20, fontWeight: 'bold'}}>
           {Brand.brand}
         </Text>
       </View>
       <View style={{justifyContent: 'center', alignSelf: 'center'}}>
         <Text
           style={{
-            color: 'grey',
-            fontSize: 20,
+            color: 'black',
+            fontSize: 30,
             fontWeight: 'bold',
             marginBottom: 10,
           }}>
@@ -66,7 +66,7 @@ const Publish = () => {
           }}
           style={{height: 250, width: 250, alignSelf: 'center'}}
         />
-        <Text style={{color: 'black'}}>{url}</Text>
+        <Text style={{color: 'black', marginTop: 20}}>{url}</Text>
       </View>
 
       <View style={styles.bottomView}>
