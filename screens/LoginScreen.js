@@ -42,12 +42,12 @@ const LoginScreen = () => {
             }).then(Response => {
               console.log(
                 'Login Data£££££££££££££££££££',
-                Response.data[0].userid,
+                Response.data[0].user_id,
               );
               setEmail(user.email);
               setName(user.displayName);
               setPhotoUrl(user.photoURL);
-              setUserID(Response.data[0].userid);
+              setUserID(Response.data[0].user_id);
 
               Snackbar.show({
                 text: 'Logged In Sucessfull',
@@ -82,10 +82,10 @@ const LoginScreen = () => {
             }).then(Response => {
               console.log(
                 'Login Data@@@@@@@@@@@@@@@@@@@@@@@@@@',
-                Response.data[0].userid,
+                Response.data[0].user_id,
               );
 
-              setUserID(Response.data[0].userid);
+              setUserID(Response.data[0].user_id);
               Snackbar.show({
                 text: 'Logged In Sucessfull',
                 duration: Snackbar.LENGTH_SHORT,

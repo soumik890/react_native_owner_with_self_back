@@ -40,11 +40,12 @@ function Rest({data}) {
 
   useEffect(() => {
     apiAxios1('rest', {
-      userid: user,
+      user_id: user,
       action: 'read',
       // brandid: Brand.brandid,
-      brandid: data.brandid,
+      brand_id: data.brand_id,
     }).then(res => {
+      console.log('restaurant list', res);
       setTypes(res?.data);
       setRestCounter(res.data.length);
       // console.log('rest length is', res.data.length);
@@ -60,9 +61,9 @@ function Rest({data}) {
   }, [actionR, Brand]);
 
   const UpdateType = item => {
-    setUpdateId(item?.restid);
-    setUpType(item?.rest);
-    setImg(item?.RImage);
+    setUpdateId(item?.restaurant_id);
+    setUpType(item?.restaurant);
+    setImg(item?.restaurant_image);
   };
 
   const ButtonAlert = item => {
@@ -74,9 +75,9 @@ function Rest({data}) {
   const UpdateTypeName = () => {
     apiAxios1('rest', {
       action: 'update',
-      rest: UpType,
-      RImage: Img,
-      restid: UpdateId,
+      restaurant: UpType,
+      restaurant_image: Img,
+      restaurant_id: UpdateId,
     }).then(res => {
       console.log(res.data);
       setactionR(!actionR);
@@ -86,37 +87,35 @@ function Rest({data}) {
 
   // console.log('device height', DeviceHeight);
 
-  const AddType = () => {
-    setAddFlag(true);
-  };
+  // const AddType = () => {
+  //   setAddFlag(true);
+  // };
 
-  const submitType = () => {
-    console.log(Name);
-    apiAxios1('rest', {
-      rest: Name,
-      userid: user,
-      plan_id: 4,
-      // brandid: Brand.brandid,
-      brandid: data.brandid,
-      RImage: 'null',
-      notes: 'nill',
-      favourite: 0,
-      status1: 1,
-      rank1: 1,
-      cUser: user,
-      action: 'create',
-    }).then(res => {
-      console.log(res.data.status);
-      // setAddFlag(false);
-      setactionR(!actionR);
-    });
-  };
+  // const submitType = () => {
+  //   console.log(Name);
+  //   apiAxios1('rest', {
+  //     rest: Name,
+  //     userid: user,
+  //     plan_id: 4,
+  //     brandid: data.brandid,
+  //     RImage: 'null',
+  //     notes: 'nill',
+  //     favourite: 0,
+  //     status1: 1,
+  //     rank1: 1,
+  //     cUser: user,
+  //     action: 'create',
+  //   }).then(res => {
+  //     console.log(res.data.status);
+  //     setactionR(!actionR);
+  //   });
+  // };
 
   const deleteType = item => {
     console.log(item);
     apiAxios1('rest', {
       action: 'delete',
-      restid: item?.restid,
+      restaurant_id: item?.restaurant_id,
     }).then(res => {
       console.log(res.data);
       setIsOpen(false);
@@ -196,7 +195,7 @@ function Rest({data}) {
                 margin: 5,
               }}>
               This action will delete all data related to this Restaurant :{' '}
-              {DeleteItem?.rest} !!
+              {DeleteItem?.restaurant} !!
             </Text>
           </View>
           <View
@@ -282,7 +281,7 @@ function Rest({data}) {
                     marginBottom: 10,
                   }}>
                   <View>
-                    {item.RImage !== 'null' ? (
+                    {item.restaurant_image !== 'null' ? (
                       <TouchableOpacity
                         onPress={() => {
                           navigation.navigate('upload', {
@@ -291,7 +290,7 @@ function Rest({data}) {
                           });
                         }}>
                         <Image
-                          source={{uri: item.RImage}}
+                          source={{uri: item.restaurant_image}}
                           style={{
                             width: 50,
                             height: 50,
@@ -324,7 +323,7 @@ function Rest({data}) {
                         textTransform: 'uppercase',
                         fontSize: 15,
                       }}>
-                      {item.rest}
+                      {item.restaurant}
                     </Text>
                   </View>
                 </View>
@@ -352,7 +351,7 @@ function Rest({data}) {
                   </TouchableOpacity>
                 </View>
 
-                {UpdateId == item?.restid ? (
+                {UpdateId == item?.restaurant_id ? (
                   <View style={{marginTop: 15}}>
                     <View>
                       <View style={{marginLeft: 10}}>
@@ -550,7 +549,7 @@ function Rest({data}) {
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <TouchableOpacity
                 onPress={submitType}
                 style={{
@@ -594,7 +593,7 @@ function Rest({data}) {
                   cancel
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         )}
       </ScrollView>

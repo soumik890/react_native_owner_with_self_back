@@ -49,10 +49,10 @@ function Brand() {
 
   useEffect(() => {
     apiAxios1('brand', {
-      userid: user,
+      user_id: user,
       action: 'read',
     }).then(res => {
-      console.log(res.data);
+      console.log('brand read data', res.data);
       setBrands(res?.data);
       setTypes(res?.data);
       setBrandCounter(res.data.length);
@@ -61,9 +61,9 @@ function Brand() {
 
   const UpdateType = item => {
     console.log('item at update', item);
-    setUpdateId(item?.brandid);
+    setUpdateId(item?.brand_id);
     setUpType(item?.brand);
-    setImg(item?.BImage);
+    setImg(item?.brand_image);
   };
 
   const ButtonAlert = item => {
@@ -74,11 +74,11 @@ function Brand() {
 
   const UpdateTypeName = () => {
     apiAxios1('brand', {
-      userid: user,
+      user_id: user,
       action: 'update',
       brand: UpType,
-      BImage: Img,
-      brandid: UpdateId,
+      brand_image: Img,
+      brand_id: UpdateId,
     }).then(res => {
       console.log(res.data);
       setactionB(!actionB);
@@ -94,11 +94,11 @@ function Brand() {
     console.log(Name);
     apiAxios1('brand', {
       brand: Name,
-      BImage: 'null',
-      userid: user,
-      rank1: 1,
-      cUser: user,
-      status1: 1,
+      brand_image: 'null',
+      user_id: user,
+      rank_order: 1,
+      c_user: user,
+      is_active: 1,
       action: 'create',
     }).then(res => {
       console.log(res.data.status);
@@ -110,9 +110,9 @@ function Brand() {
   const deleteType = item => {
     console.log(item);
     apiAxios1('brand', {
-      userid: user,
+      user_id: user,
       action: 'delete',
-      brandid: item?.brandid,
+      brand_id: item?.brand_id,
     }).then(res => {
       console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       console.log(res.data);
@@ -136,21 +136,22 @@ function Brand() {
   };
 
   const submitRest = () => {
-    console.log(Name);
+    console.log('restaurant name at submit rest', RName);
     apiAxios1('rest', {
-      rest: RName,
-      userid: user,
+      restaurant: RName,
+      user_id: user,
       plan_id: plan,
-      brandid: Brand.brandid,
-      RImage: 'null',
+      plan_name: 'Basic',
+      menu_license_id: 1,
       notes: 'nill',
       favourite: 0,
-      status1: 1,
-      rank1: 1,
-      cUser: user,
+      is_active: 1,
+      rank_order: 1,
+      brand_id: Brand.brand_id,
+      restaurant_image: 'null',
       action: 'create',
     }).then(res => {
-      console.log(res.data.status);
+      console.log(res.data);
       setAddRestFlag(false);
       setactionR(!actionR);
     });
@@ -699,7 +700,7 @@ function Brand() {
                     // marginBottom: 10,
                   }}>
                   <View>
-                    {item.BImage !== 'null' ? (
+                    {item.brand_image !== 'null' ? (
                       <TouchableOpacity
                         onPress={() => {
                           navigation.navigate('upload', {
@@ -789,7 +790,7 @@ function Brand() {
                 </View>
               </View>
 
-              {UpdateId == item?.brandid ? (
+              {UpdateId == item?.brand_id ? (
                 <View style={{marginTop: 15}}>
                   <View>
                     <View>

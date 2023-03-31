@@ -48,26 +48,22 @@ const MenuType = ({route}) => {
   const {menuCounter, setMenuCounter} = useContext(exportvalues);
   const {menuTypeCounter, setMenuTypeCounter} = useContext(exportvalues);
 
-  console.log('***************menu count is*******', menuCounter);
-  console.log('***************menu type count is*******', menuTypeCounter);
+  // console.log('***************menu count is*******', menuCounter);
+  // console.log('***************menu type count is*******', menuTypeCounter);
 
-  console.log(
-    '*********Values received in menutype**********',
-    route.params.brandInfo,
-  );
+  // console.log(
+  //   '*********Values received in menutype**********',
+  //   route.params.brandInfo,
+  // );
 
   useEffect(() => {
     apiAxios1('menutype', {
-      userid: user,
+      user_id: user,
       action: 'read',
-      restid: Rest.restid,
-      brandid: route.params.data.brandid,
-      // Status: '1',
+      restaurant_id: Rest.restaurant_id,
+      brand_id: route.params.data.brand_id,
     }).then(res => {
-      // if (res?.data?.status) {
-      //   setTypes(res?.data?.data);
-      // }
-
+      console.log('read data at menutype', res.data);
       setTypes(res?.data);
       setMenuTypeCounter(res?.data.length);
     });
@@ -99,32 +95,30 @@ const MenuType = ({route}) => {
   const submitType = () => {
     console.log(Name);
     apiAxios1('menutype', {
-      menutype: Name,
-      brandid: 1,
-      restid: Rest.restid,
-      userid: user,
+      menu_type: Name,
+      brand_id: route.params.data.brand_id,
+      restaurant_id: Rest.restaurant_id,
+      user_id: user,
       notes: 'notes',
-      MTImage: 'null',
+      menu_type_image: 'null',
       favourite: 1,
-      status1: 1,
-      rank1: 1,
-      cUser: 1,
+      is_active: 1,
+      rank_order: 1,
       action: 'create',
     }).then(res => {
       console.log('response on insert new menutype', res.data[0].mtid);
 
       apiAxios1('cat', {
-        cat: '@$DeveloperDefaultCategory$@',
-        mtid: res.data[0].mtid,
-        brandid: route.params.data.brandid,
-        restid: Rest.restid,
-        userid: user,
+        category: '@$DeveloperDefaultCategory$@',
+        menutype_id: res.data[0].mtid,
+        brand_id: route.params.data.brandid,
+        restaurant_id: Rest.restid,
+        user_id: user,
         notes: 'notes',
-        CImage: 'null',
+        category_image: 'null',
         favourite: 1,
-        status1: 1,
-        rank1: 1,
-        cUser: 1,
+        is_active: 1,
+        rank_order: 1,
         action: 'create',
       }).then(res => {
         console.log('General category created', res.data);
@@ -154,18 +148,23 @@ const MenuType = ({route}) => {
   };
 
   const selectMenuType = item => {
-    // console.log(item);
+    console.log(item);
     if (item) {
       apiAxios1('cat', {
-        userid: user,
-        restid: Rest.restid,
-        brandid: route.params.data.brandid,
-        mtid: item.mtid,
+        // userid: user,
+        // restid: Rest.restid,
+        // brandid: route.params.data.brandid,
+        // mtid: item.mtid,
+        // action: 'read',
+        menutype_id: item.menutype_id,
+        brand_id: route.params.data.brand_id,
+        restaurant_id: Rest.restaurant_id,
         action: 'read',
+        user_id: user,
       }).then(res => {
         console.log(res.data);
         res.data.map(i => {
-          if (i.cat == '@$DeveloperDefaultCategory$@') {
+          if (i.category == '@$DeveloperDefaultCategory$@') {
             setCat(i);
             setMenuType(item);
             console.log('Found the default', i);
@@ -503,7 +502,7 @@ const MenuType = ({route}) => {
               marginLeft: 25,
               textTransform: 'uppercase',
             }}>
-            {Rest.rest}
+            {Rest.restaurant}
           </Text>
         </View>
 
@@ -599,7 +598,7 @@ const MenuType = ({route}) => {
                     marginBottom: 10,
                   }}>
                   <View>
-                    {item.MTImage !== 'null' ? (
+                    {item.menu_type_image !== 'null' ? (
                       <TouchableOpacity
                         onPress={() => {
                           navigation.navigate('upload', {
@@ -608,7 +607,7 @@ const MenuType = ({route}) => {
                           });
                         }}>
                         <Image
-                          source={{uri: item.MTImage}}
+                          source={{uri: item.menu_type_image}}
                           style={{
                             width: 25,
                             height: 25,
@@ -640,7 +639,7 @@ const MenuType = ({route}) => {
                         textTransform: 'uppercase',
                         fontSize: 15,
                       }}>
-                      {item.menutype}
+                      {item.menu_type}
                     </Text>
                   </View>
 
@@ -688,7 +687,7 @@ const MenuType = ({route}) => {
                   </View>
                 </View>
 
-                {UpdateId == item?.mtid ? (
+                {UpdateId == item?.menutype_id ? (
                   <View style={{marginTop: 15}}>
                     <View>
                       <View style={{marginLeft: 10}}>
