@@ -63,7 +63,7 @@ const MenuType = ({route}) => {
       restaurant_id: Rest.restaurant_id,
       brand_id: route.params.data.brand_id,
     }).then(res => {
-      console.log('read data at menutype', res.data);
+      // console.log('read data at menutype', res.data);
       setTypes(res?.data);
       setMenuTypeCounter(res?.data.length);
     });
@@ -106,13 +106,13 @@ const MenuType = ({route}) => {
       rank_order: 1,
       action: 'create',
     }).then(res => {
-      console.log('response on insert new menutype', res.data[0].mtid);
+      console.log('response on insert new menutype', res.data.insertId);
 
       apiAxios1('cat', {
         category: '@$DeveloperDefaultCategory$@',
-        menutype_id: res.data[0].mtid,
-        brand_id: route.params.data.brandid,
-        restaurant_id: Rest.restid,
+        menutype_id: res.data.insertId,
+        brand_id: route.params.data.brand_id,
+        restaurant_id: Rest.restaurant_id,
         user_id: user,
         notes: 'notes',
         category_image: 'null',
@@ -121,7 +121,7 @@ const MenuType = ({route}) => {
         rank_order: 1,
         action: 'create',
       }).then(res => {
-        console.log('General category created', res.data);
+        console.log('DeveloperDefaultCategory category created', res.data);
       });
 
       setAddFlag(false);
@@ -138,7 +138,7 @@ const MenuType = ({route}) => {
   const deleteType = item => {
     console.log(item);
     apiAxios1('menutype', {
-      mtid: item.mtid,
+      menutype_id: item.menutype_id,
       action: 'delete',
     }).then(res => {
       console.log(res.data);
@@ -148,28 +148,23 @@ const MenuType = ({route}) => {
   };
 
   const selectMenuType = item => {
-    console.log(item);
+    // console.log(item);
     if (item) {
       apiAxios1('cat', {
-        // userid: user,
-        // restid: Rest.restid,
-        // brandid: route.params.data.brandid,
-        // mtid: item.mtid,
-        // action: 'read',
         menutype_id: item.menutype_id,
         brand_id: route.params.data.brand_id,
         restaurant_id: Rest.restaurant_id,
         action: 'read',
         user_id: user,
       }).then(res => {
-        console.log(res.data);
-        res.data.map(i => {
-          if (i.category == '@$DeveloperDefaultCategory$@') {
-            setCat(i);
-            setMenuType(item);
-            console.log('Found the default', i);
-          }
-        });
+        console.log('response data from cat', res.data);
+        // res.data.map(i => {
+        //   if (i.category == '@$DeveloperDefaultCategory$@') {
+        //     setCat(i);
+        //     setMenuType(item);
+        //     console.log('Found the default', i);
+        //   }
+        // });
       });
     } else {
       setMenuType();
@@ -279,7 +274,7 @@ const MenuType = ({route}) => {
                 margin: 5,
                 fontWeight: 'bold',
               }}>
-              Do you want to delete this Menu Type : {DeleteItem?.menutype}?
+              Do you want to delete this Menu Type : {DeleteItem?.menu_type}?
             </Text>
             <Text
               style={{
@@ -289,7 +284,7 @@ const MenuType = ({route}) => {
                 margin: 5,
               }}>
               This action will delete all data related to this Menu Type :{' '}
-              {DeleteItem?.menutype} !!
+              {DeleteItem?.menu_type} !!
             </Text>
           </View>
           <View
