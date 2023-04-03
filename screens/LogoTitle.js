@@ -17,9 +17,9 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import apiAxios1 from '../ApiCaller/apiAxios1';
+
 function LogoTitle() {
   const navigation = useNavigation();
-
   // const {isShowTextBox, setIsShowTextBox} = useContext(exportvalues);
   const {Brands, setBrands} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
@@ -218,56 +218,22 @@ function LogoTitle() {
                 onPress={googleOut}>
                 SignOut
               </Button>
+              <Text>{'\n'}</Text>
 
-              <TouchableOpacity
-                onPress={BrandCaller}
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 10,
-                  flexDirection: 'row',
-                  marginTop: 10,
-                  // marginLeft: 10,
-                  marginBottom: 10,
-                  width: 160,
-                  height: 30,
-                  backgroundColor: 'violet',
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontWeight: 'bold',
-                  }}>
-                  Go To Dashboard
-                </Text>
-              </TouchableOpacity>
+              <Button
+                // icon="camera"
+                mode="contained"
+                onPress={BrandCaller}>
+                Go To Dashboards{' '}
+              </Button>
+              <Text>{'\n'}</Text>
 
-              <TouchableOpacity
-                onPress={() => {}}
-                style={{
-                  flexDirection: 'row',
-                  marginBottom: 10,
-                  flexDirection: 'row',
-                  marginTop: 10,
-                  // marginLeft: 10,
-                  marginBottom: 10,
-                  width: 160,
-                  height: 30,
-                  backgroundColor: 'violet',
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontWeight: 'bold',
-                  }}>
-                  Go To Access{' '}
-                </Text>
-              </TouchableOpacity>
+              <Button
+                // icon="camera"
+                mode="contained"
+                onPress={() => console.log('Pressed')}>
+                Go To Access{' '}
+              </Button>
 
               {/* {Brands.map(item => {
                 return (

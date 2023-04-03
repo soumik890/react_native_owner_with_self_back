@@ -709,7 +709,7 @@ function Brand() {
                           });
                         }}>
                         <Image
-                          source={{uri: item.BImage}}
+                          source={{uri: item.brand_image}}
                           style={{
                             width: 50,
                             height: 50,

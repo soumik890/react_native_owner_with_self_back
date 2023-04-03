@@ -54,7 +54,7 @@ const Menu1 = ({brandInfo}) => {
 
   const [AddSpice, setAddSpice] = useState(4);
   const [AddVeg, setAddVeg] = useState(1);
-  const [Img, setImg] = useState();
+  const [Img, setImg] = useState('');
   const {actionM, setactionM} = useContext(exportvalues);
   const {menuCounter, setMenuCounter} = useContext(exportvalues);
   const [Tray, setTray] = useState({});
@@ -63,11 +63,11 @@ const Menu1 = ({brandInfo}) => {
 
   useEffect(() => {
     apiAxios1('menu', {
-      userid: user,
-      restid: Rest.restid,
-      brandid: brandInfo.brandid,
-      mtid: MenuType.mtid,
-      catid: Cat.catid,
+      user_id: user,
+      restaurant_id: Rest.restaurant_id,
+      brand_id: brandInfo.brand_id,
+      menutype_id: MenuType.menutype_id,
+      category_id: Cat.category_id,
       action: 'read',
     }).then(Response => {
       setDispMenu(Response?.data);
@@ -76,36 +76,36 @@ const Menu1 = ({brandInfo}) => {
     });
   }, [AddFlag, actionM, Rest, MenuType, Cat, Brand]);
 
-  const AddMenu = () => {
-    setAddFlag(true);
-  };
+  // const AddMenu = () => {
+  //   setAddFlag(true);
+  // };
 
-  const submitMenu = () => {
-    apiAxios1('menu', {
-      menu: Name,
-      mtid: MenuType.mtid,
-      brandid: brandInfo.brandid,
-      restid: Rest.restid,
-      catid: Cat.catid,
-      userid: user,
-      notes: 'blah',
-      MImage: 'null',
-      veg: AddVeg,
-      spice: AddSpice,
-      price: Price,
-      description: Desc,
-      ingredients: Ingred,
-      favourite: 1,
-      status1: 1,
-      rank1: 1,
-      cUser: user,
-      action: 'create',
-    }).then(res => {
-      console.log(res.data);
-      setactionM(!actionM);
-      setAddFlag(false);
-    });
-  };
+  // const submitMenu = () => {
+  //   apiAxios1('menu', {
+  //     menu: Name,
+  //     mtid: MenuType.mtid,
+  //     brandid: brandInfo.brandid,
+  //     restid: Rest.restid,
+  //     catid: Cat.catid,
+  //     userid: user,
+  //     notes: 'blah',
+  //     MImage: 'null',
+  //     veg: AddVeg,
+  //     spice: AddSpice,
+  //     price: Price,
+  //     description: Desc,
+  //     ingredients: Ingred,
+  //     favourite: 1,
+  //     status1: 1,
+  //     rank1: 1,
+  //     cUser: user,
+  //     action: 'create',
+  //   }).then(res => {
+  //     console.log(res.data);
+  //     setactionM(!actionM);
+  //     setAddFlag(false);
+  //   });
+  // };
 
   const ButtonAlert = item => {
     console.log(item);
@@ -116,7 +116,7 @@ const Menu1 = ({brandInfo}) => {
   const deleteMenu = item => {
     console.log(item);
     apiAxios1('menu', {
-      menuid: item.menuid,
+      menu_id: item.menu_id,
       action: 'delete',
     }).then(res => {
       console.log(res.data);
@@ -125,9 +125,9 @@ const Menu1 = ({brandInfo}) => {
     });
   };
   const UpdateMenu = item => {
-    console.log('item recived', item.price);
+    console.log('item received at update menu', item);
     // setBackFlag(true);
-    setUpdateId(item?.menuid);
+    setUpdateId(item?.menu_id);
     setUpName(item?.menu);
     // setUpName('demo');
     setUpDesc(item?.description);
@@ -136,18 +136,18 @@ const Menu1 = ({brandInfo}) => {
     setSpiceInfo(item?.spice);
     setVegInfo(item?.veg);
     setUpIngred(item?.ingredients);
-    setImg(item?.MImage);
+    setImg(item?.menu_image);
   };
   const UpdateItem = () => {
     apiAxios1('menu', {
       menu: UpName,
-      MImage: Img,
+      menu_image: Img,
       spice: SpiceInfo,
       price: UpPrice,
       veg: VegInfo,
       description: UpDesc,
       ingredients: UpIngred,
-      menuid: UpdateId,
+      menu_id: UpdateId,
       action: 'update',
     }).then(res => {
       console.log(res.data);
@@ -157,10 +157,10 @@ const Menu1 = ({brandInfo}) => {
     });
   };
 
-  const traySelector = item => {
-    console.log('item in tray', item);
-    setTray(item);
-  };
+  // const traySelector = item => {
+  //   console.log('item in tray', item);
+  //   setTray(item);
+  // };
   // console.log(DispMenu);
   // console.log('Price is', UpPrice);
 
@@ -324,798 +324,499 @@ const Menu1 = ({brandInfo}) => {
         </View>
       </Modal>
 
-      <ScrollView
-        style={
-          {
-            // marginBottom: 10
-          }
-        }
-        keyboardShouldPersistTaps={'always'}>
-        {AddFlag == false ? (
-          DispMenu.map((item, index) => {
-            return (
-              <View>
-                <TouchableOpacity
-                  disabled={true}
+      <ScrollView style={{}} keyboardShouldPersistTaps={'always'}>
+        {DispMenu.map((item, index) => {
+          return (
+            <View>
+              <TouchableOpacity
+                disabled={true}
+                style={{
+                  marginTop: 2,
+                  backgroundColor: '#f7f7f7',
+                  elevation: 15,
+                  borderRadius: 5,
+                }}>
+                <View
                   style={{
-                    marginTop: 2,
-                    // marginLeft: 30,
-                    // marginLeft: 10,
-                    // marginTop: 10,
-                    // marginLeft: 10,
-                    // marginBottom: 10,
-                    // width: DeviceWidth - 20,
-                    backgroundColor: '#f7f7f7',
-                    elevation: 15,
-                    borderRadius: 5,
-                    // marginBottom: UpdateId == item?.Id ? 350 : 10,
+                    flexDirection: 'row',
+                    flex: 1,
                   }}>
                   <View
                     style={{
-                      flexDirection: 'row',
-                      flex: 1,
+                      // backgroundColor: 'red'
+                      flex: 2,
                     }}>
-                    <View
-                      style={{
-                        // backgroundColor: 'red'
-                        flex: 2,
-                      }}>
-                      {item.MImage !== 'null' ? (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.navigate('upload', {
-                              page: 'menu',
-                              data: item,
-                            });
-                          }}>
-                          <Image
-                            source={{uri: item.MImage}}
-                            style={{
-                              width: 50,
-                              height: 50,
-                              // marginLeft: 10,
-                              borderRadius: 5,
-                              marginLeft: 5,
-                              marginTop: 5,
-
-                              // marginRight: 20,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity
-                          onPress={() => {
-                            navigation.navigate('upload', {
-                              page: 'menu',
-                              data: item,
-                            });
-                          }}>
-                          <Image
-                            source={require('../assets/noimg.png')}
-                            style={{
-                              width: 50,
-                              height: 50,
-                              marginLeft: 5,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                    <View
-                      style={{
-                        // backgroundColor: 'pink',
-                        marginTop: 5,
-
-                        flex: 6,
-                      }}>
-                      <View style={{flexDirection: 'row'}}>
+                    {item.menu_image !== 'null' ? (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'menu',
+                            data: item,
+                          });
+                        }}>
                         <Image
-                          source={
-                            item?.veg == 1
-                              ? require('../assets/veg.png')
-                              : require('../assets/nonveg.png')
-                          }
+                          source={{uri: item.menu_image}}
                           style={{
-                            width: 20,
-                            height: 20,
-                            marginTop: 2,
+                            width: 50,
+                            height: 50,
+                            // marginLeft: 10,
+                            borderRadius: 5,
+                            marginLeft: 5,
+                            marginTop: 5,
+
+                            // marginRight: 20,
                           }}
                         />
-
-                        <Text
-                          style={{
-                            marginBottom: 10,
-                            color: 'black',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            marginLeft: 10,
-                            textTransform: 'capitalize',
-                          }}>
-                          {item?.menu}
-                        </Text>
-
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => {
+                          navigation.navigate('upload', {
+                            page: 'menu',
+                            data: item,
+                          });
+                        }}>
                         <Image
-                          source={
-                            item?.spice == 1
-                              ? require('../assets/chilli1.png')
-                              : item?.spice == 2
-                              ? require('../assets/chilli2.png')
-                              : item?.spice == 3
-                              ? require('../assets/chilli3.png')
-                              : require('../assets/nochilli.png')
-                          }
+                          source={require('../assets/noimg.png')}
                           style={{
-                            width:
-                              item?.spice == 1
-                                ? 10
-                                : item?.spice == 2
-                                ? 17
-                                : item?.spice == 3
-                                ? 24
-                                : 10,
-                            height: 10,
-                            marginLeft: 10,
-                            marginTop: 2,
+                            width: 50,
+                            height: 50,
+                            marginLeft: 5,
                           }}
                         />
-                      </View>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                  <View
+                    style={{
+                      // backgroundColor: 'pink',
+                      marginTop: 5,
 
-                      <View style={{flexDirection: 'row'}}>
-                        <Text
-                          style={{
-                            // marginBottom: 10,
-                            color: 'black',
-                            textTransform: 'capitalize',
-                            // fontWeight: 'bold',
-                          }}>
-                          {item?.description}{' '}
-                        </Text>
-
-                        <Text
-                          style={{
-                            marginBottom: 10,
-                            color: 'black',
-                            textTransform: 'capitalize',
-                            // fontWeight: 'bold',
-                          }}>
-                          {item?.ingredients}
-                        </Text>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        width: 50,
-                        // backgroundColor: 'grey',
-                        flex: 2,
-                        // marginLeft
-                        // alignSelf: 'center',
-                      }}>
-                      {/* *********************************************************************************************** */}
-                      <View style={{marginTop: -20, marginLeft: -20}}>
-                        <Menu>
-                          <MenuTrigger
-                            text="..."
-                            customStyles={triggerStyles}
-                          />
-
-                          <MenuOptions customStyles={blockStyles}>
-                            <MenuOption
-                              onSelect={() => {}}
-                              customStyles={blockStyles}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  ButtonAlert(item);
-                                }}>
-                                <View
-                                  style={{flexDirection: 'row', marginTop: 10}}>
-                                  <Text style={{color: 'black'}}>Delete</Text>
-                                </View>
-                              </TouchableOpacity>
-                            </MenuOption>
-                            <MenuOption
-                              onSelect={() => {}}
-                              customStyles={blockStyles}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  UpdateMenu(item);
-                                }}>
-                                <View style={{flexDirection: 'row'}}>
-                                  <Text style={{color: 'black'}}>
-                                    Edit Menu
-                                  </Text>
-                                </View>
-                              </TouchableOpacity>
-                            </MenuOption>
-                          </MenuOptions>
-                        </Menu>
-                      </View>
-
-                      {/* *********************************************************************************************** */}
+                      flex: 6,
+                    }}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Image
+                        source={
+                          item?.veg == 1
+                            ? require('../assets/veg.png')
+                            : require('../assets/nonveg.png')
+                        }
+                        style={{
+                          width: 20,
+                          height: 20,
+                          marginTop: 2,
+                        }}
+                      />
 
                       <Text
                         style={{
                           marginBottom: 10,
                           color: 'black',
                           fontWeight: 'bold',
-                          marginLeft: -20,
+                          fontSize: 15,
+                          marginLeft: 10,
+                          textTransform: 'capitalize',
                         }}>
-                        {item?.price}/-
+                        {item?.menu}
+                      </Text>
+
+                      <Image
+                        source={
+                          item?.spice == 1
+                            ? require('../assets/chilli1.png')
+                            : item?.spice == 2
+                            ? require('../assets/chilli2.png')
+                            : item?.spice == 3
+                            ? require('../assets/chilli3.png')
+                            : require('../assets/nochilli.png')
+                        }
+                        style={{
+                          width:
+                            item?.spice == 1
+                              ? 10
+                              : item?.spice == 2
+                              ? 17
+                              : item?.spice == 3
+                              ? 24
+                              : 10,
+                          height: 10,
+                          marginLeft: 10,
+                          marginTop: 2,
+                        }}
+                      />
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          // marginBottom: 10,
+                          color: 'black',
+                          textTransform: 'capitalize',
+                          // fontWeight: 'bold',
+                        }}>
+                        {item?.description}{' '}
+                      </Text>
+
+                      <Text
+                        style={{
+                          marginBottom: 10,
+                          color: 'black',
+                          textTransform: 'capitalize',
+                          // fontWeight: 'bold',
+                        }}>
+                        {item?.ingredients}
                       </Text>
                     </View>
                   </View>
+                  <View
+                    style={{
+                      width: 50,
+                      // backgroundColor: 'grey',
+                      flex: 2,
+                      // marginLeft
+                      // alignSelf: 'center',
+                    }}>
+                    {/* *********************************************************************************************** */}
+                    <View style={{marginTop: -20, marginLeft: -20}}>
+                      <Menu>
+                        <MenuTrigger text="..." customStyles={triggerStyles} />
 
-                  {UpdateId == item?.menuid ? (
+                        <MenuOptions customStyles={blockStyles}>
+                          <MenuOption
+                            onSelect={() => {}}
+                            customStyles={blockStyles}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                ButtonAlert(item);
+                              }}>
+                              <View
+                                style={{flexDirection: 'row', marginTop: 10}}>
+                                <Text style={{color: 'black'}}>Delete</Text>
+                              </View>
+                            </TouchableOpacity>
+                          </MenuOption>
+                          <MenuOption
+                            onSelect={() => {}}
+                            customStyles={blockStyles}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                UpdateMenu(item);
+                              }}>
+                              <View style={{flexDirection: 'row'}}>
+                                <Text style={{color: 'black'}}>Edit Menu</Text>
+                              </View>
+                            </TouchableOpacity>
+                          </MenuOption>
+                        </MenuOptions>
+                      </Menu>
+                    </View>
+
+                    {/* *********************************************************************************************** */}
+
+                    <Text
+                      style={{
+                        marginBottom: 10,
+                        color: 'black',
+                        fontWeight: 'bold',
+                        marginLeft: -20,
+                      }}>
+                      {item?.price}/-
+                    </Text>
+                  </View>
+                </View>
+
+                {UpdateId == item?.menu_id ? (
+                  <View>
                     <View>
-                      <View>
-                        <View style={{marginLeft: 10}}>
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Name:
-                          </Text>
-                          <TextInput
-                            style={{
-                              height: 35,
-                              // margin: 12,
-                              width: 300,
-                              borderWidth: 1,
-                              color: 'black',
-                              borderRadius: 5,
-                            }}
-                            multiline={true}
-                            value={UpName}
-                            onChangeText={text => {
-                              setUpName(text);
-                            }}
-                          />
-
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Price:{' '}
-                          </Text>
-
-                          <TextInput
-                            style={{
-                              height: 35,
-                              // margin: 12,
-                              width: 300,
-                              borderWidth: 1,
-                              color: 'black',
-                              borderRadius: 5,
-                            }}
-                            multiline={true}
-                            value={`${UpPrice}`}
-                            onChangeText={text => {
-                              setUpPrice(text);
-                            }}
-                          />
-
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Spice:{' '}
-                          </Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setSpiceInfo(1);
-                              }}
-                              style={{
-                                borderWidth: SpiceInfo == 1 ? 2 : 0,
-                                height: 40,
-                                width: 45,
-                                borderColor: 'red',
-                              }}>
-                              <Image
-                                source={require('../assets/chilli1.png')}
-                                style={{height: 35, width: 35}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setSpiceInfo(2);
-                              }}
-                              style={{
-                                borderWidth: SpiceInfo == 2 ? 2 : 0,
-                                height: 40,
-                                width: 68,
-                                borderColor: 'red',
-                                marginLeft: 20,
-                              }}>
-                              <Image
-                                source={require('../assets/chilli2.png')}
-                                style={{height: 35, width: 60}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setSpiceInfo(3);
-                              }}
-                              style={{
-                                borderWidth: SpiceInfo == 3 ? 2 : 0,
-                                height: 40,
-                                width: 90,
-                                borderColor: 'red',
-                                marginLeft: 20,
-                              }}>
-                              <Image
-                                source={require('../assets/chilli3.png')}
-                                style={{height: 35, width: 84}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setSpiceInfo(4);
-                              }}
-                              style={{
-                                borderWidth: SpiceInfo == 4 ? 2 : 0,
-                                height: 45,
-                                width: 45,
-                                borderColor: 'black',
-                                marginLeft: 20,
-                                justifyContent: 'center',
-                              }}>
-                              <Image
-                                source={require('../assets/nochilli.png')}
-                                style={{
-                                  height: 40,
-                                  width: 40,
-                                  alignSelf: 'center',
-                                }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Veg/Non-Veg:{' '}
-                          </Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setVegInfo(1);
-                              }}
-                              style={{
-                                borderWidth: VegInfo == 1 ? 2 : 0,
-                                height: 40,
-                                width: 45,
-                                borderColor: 'black',
-                              }}>
-                              <Image
-                                source={require('../assets/veg.png')}
-                                style={{
-                                  height: 35,
-                                  width: 35,
-                                  alignSelf: 'center',
-                                }}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setVegInfo(2);
-                              }}
-                              style={{
-                                borderWidth: VegInfo == 2 ? 2 : 0,
-                                height: 40,
-                                width: 45,
-                                borderColor: 'black',
-                                marginLeft: 20,
-                              }}>
-                              <Image
-                                source={require('../assets/nonveg.png')}
-                                style={{
-                                  height: 35,
-                                  width: 35,
-                                  alignSelf: 'center',
-                                }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Description:{' '}
-                          </Text>
-                          <TextInput
-                            style={{
-                              height: 35,
-                              // margin: 12,
-                              width: 300,
-                              borderWidth: 1,
-                              color: 'black',
-                              borderRadius: 5,
-                            }}
-                            multiline={true}
-                            value={UpDesc}
-                            onChangeText={text => {
-                              setUpDesc(text);
-                            }}
-                          />
-
-                          <Text
-                            style={{
-                              marginTop: 10,
-                              color: 'black',
-                              fontWeight: 'bold',
-                            }}>
-                            Ingredients:{' '}
-                          </Text>
-                          <TextInput
-                            style={{
-                              height: 35,
-                              // margin: 12,
-                              width: 300,
-                              borderWidth: 1,
-                              color: 'black',
-                              borderRadius: 5,
-                            }}
-                            multiline={true}
-                            value={UpIngred}
-                            onChangeText={text => {
-                              setUpIngred(text);
-                            }}
-                          />
-                        </View>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={UpdateItem}
+                      <View style={{marginLeft: 10}}>
+                        <Text
                           style={{
-                            width: 80,
-                            height: 40,
-                            backgroundColor: 'skyblue',
-                            borderRadius: 5,
-                            alignContent: 'center',
-                            justifyContent: 'center',
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
                           }}>
-                          <Text
-                            style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                              fontSize: 18,
-                            }}>
-                            Save
-                          </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
+                          Name:
+                        </Text>
+                        <TextInput
                           style={{
-                            marginLeft: 50,
-                            width: 80,
-                            height: 40,
-                            backgroundColor: 'skyblue',
+                            height: 35,
+                            // margin: 12,
+                            width: 300,
+                            borderWidth: 1,
+                            color: 'black',
                             borderRadius: 5,
-                            alignContent: 'center',
-                            justifyContent: 'center',
                           }}
-                          onPress={() => {
-                            setUpdateId(null);
-                            // setBackFlag(false);
+                          multiline={true}
+                          value={UpName}
+                          onChangeText={text => {
+                            setUpName(text);
+                          }}
+                        />
+
+                        <Text
+                          style={{
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
                           }}>
-                          <Text
+                          Price:{' '}
+                        </Text>
+
+                        <TextInput
+                          style={{
+                            height: 35,
+                            // margin: 12,
+                            width: 300,
+                            borderWidth: 1,
+                            color: 'black',
+                            borderRadius: 5,
+                          }}
+                          multiline={true}
+                          value={`${UpPrice}`}
+                          onChangeText={text => {
+                            setUpPrice(text);
+                          }}
+                        />
+
+                        <Text
+                          style={{
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
+                          }}>
+                          Spice:{' '}
+                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSpiceInfo(1);
+                            }}
                             style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                              fontSize: 18,
+                              borderWidth: SpiceInfo == 1 ? 2 : 0,
+                              height: 40,
+                              width: 45,
+                              borderColor: 'red',
                             }}>
-                            cancel
-                          </Text>
-                        </TouchableOpacity>
+                            <Image
+                              source={require('../assets/chilli1.png')}
+                              style={{height: 35, width: 35}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSpiceInfo(2);
+                            }}
+                            style={{
+                              borderWidth: SpiceInfo == 2 ? 2 : 0,
+                              height: 40,
+                              width: 68,
+                              borderColor: 'red',
+                              marginLeft: 20,
+                            }}>
+                            <Image
+                              source={require('../assets/chilli2.png')}
+                              style={{height: 35, width: 60}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSpiceInfo(3);
+                            }}
+                            style={{
+                              borderWidth: SpiceInfo == 3 ? 2 : 0,
+                              height: 40,
+                              width: 90,
+                              borderColor: 'red',
+                              marginLeft: 20,
+                            }}>
+                            <Image
+                              source={require('../assets/chilli3.png')}
+                              style={{height: 35, width: 84}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSpiceInfo(4);
+                            }}
+                            style={{
+                              borderWidth: SpiceInfo == 4 ? 2 : 0,
+                              height: 45,
+                              width: 45,
+                              borderColor: 'black',
+                              marginLeft: 20,
+                              justifyContent: 'center',
+                            }}>
+                            <Image
+                              source={require('../assets/nochilli.png')}
+                              style={{
+                                height: 40,
+                                width: 40,
+                                alignSelf: 'center',
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+
+                        <Text
+                          style={{
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
+                          }}>
+                          Veg/Non-Veg:{' '}
+                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setVegInfo(1);
+                            }}
+                            style={{
+                              borderWidth: VegInfo == 1 ? 2 : 0,
+                              height: 40,
+                              width: 45,
+                              borderColor: 'black',
+                            }}>
+                            <Image
+                              source={require('../assets/veg.png')}
+                              style={{
+                                height: 35,
+                                width: 35,
+                                alignSelf: 'center',
+                              }}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              setVegInfo(2);
+                            }}
+                            style={{
+                              borderWidth: VegInfo == 2 ? 2 : 0,
+                              height: 40,
+                              width: 45,
+                              borderColor: 'black',
+                              marginLeft: 20,
+                            }}>
+                            <Image
+                              source={require('../assets/nonveg.png')}
+                              style={{
+                                height: 35,
+                                width: 35,
+                                alignSelf: 'center',
+                              }}
+                            />
+                          </TouchableOpacity>
+                        </View>
+
+                        <Text
+                          style={{
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
+                          }}>
+                          Description:{' '}
+                        </Text>
+                        <TextInput
+                          style={{
+                            height: 35,
+                            // margin: 12,
+                            width: 300,
+                            borderWidth: 1,
+                            color: 'black',
+                            borderRadius: 5,
+                          }}
+                          multiline={true}
+                          value={UpDesc}
+                          onChangeText={text => {
+                            setUpDesc(text);
+                          }}
+                        />
+
+                        <Text
+                          style={{
+                            marginTop: 10,
+                            color: 'black',
+                            fontWeight: 'bold',
+                          }}>
+                          Ingredients:{' '}
+                        </Text>
+                        <TextInput
+                          style={{
+                            height: 35,
+                            // margin: 12,
+                            width: 300,
+                            borderWidth: 1,
+                            color: 'black',
+                            borderRadius: 5,
+                          }}
+                          multiline={true}
+                          value={UpIngred}
+                          onChangeText={text => {
+                            setUpIngred(text);
+                          }}
+                        />
                       </View>
                     </View>
-                  ) : (
-                    <View>
-                      <View style={{marginLeft: 10}}></View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        marginTop: 10,
+                      }}>
+                      <TouchableOpacity
+                        onPress={UpdateItem}
+                        style={{
+                          width: 80,
+                          height: 40,
+                          backgroundColor: 'skyblue',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 18,
+                          }}>
+                          Save
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          marginLeft: 50,
+                          width: 80,
+                          height: 40,
+                          backgroundColor: 'skyblue',
+                          borderRadius: 5,
+                          alignContent: 'center',
+                          justifyContent: 'center',
+                        }}
+                        onPress={() => {
+                          setUpdateId(null);
+                          // setBackFlag(false);
+                        }}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 18,
+                          }}>
+                          cancel
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-                  )}
-                </TouchableOpacity>
-              </View>
-            );
-          })
-        ) : (
-          <View>
-            <View style={{flex: 1}}>
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  fontWeight: 'bold',
-                }}>
-                Add new menu
-              </Text>
-
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 10,
-                  fontWeight: 'bold',
-                }}>
-                Name
-              </Text>
-
-              <TextInput
-                style={{
-                  height: 40,
-                  margin: 12,
-                  borderWidth: 1,
-                  padding: 10,
-                  color: 'black',
-                }}
-                multiline={true}
-                onChangeText={text => setName(text)}
-                placeholder="Name"
-              />
-
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 5,
-                  fontWeight: 'bold',
-                }}>
-                Price
-              </Text>
-              <TextInput
-                style={{
-                  height: 40,
-                  margin: 12,
-                  borderWidth: 1,
-                  padding: 10,
-                  color: 'black',
-                }}
-                multiline={true}
-                onChangeText={text => setPrice(text)}
-                placeholder="Price"
-              />
-
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 5,
-                  fontWeight: 'bold',
-                }}>
-                Spice Id
-              </Text>
-              <View style={{flexDirection: 'row', marginLeft: 50}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAddSpice(1);
-                  }}
-                  style={{
-                    borderWidth: AddSpice == 1 ? 2 : 0,
-                    height: 40,
-                    width: 45,
-                    borderColor: 'red',
-                  }}>
-                  <Image
-                    source={require('../assets/chilli1.png')}
-                    style={{height: 35, width: 35}}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAddSpice(2);
-                  }}
-                  style={{
-                    borderWidth: AddSpice == 2 ? 2 : 0,
-                    height: 40,
-                    width: 68,
-                    borderColor: 'red',
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={require('../assets/chilli2.png')}
-                    style={{height: 35, width: 60}}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAddSpice(3);
-                  }}
-                  style={{
-                    borderWidth: AddSpice == 3 ? 2 : 0,
-                    height: 40,
-                    width: 90,
-                    borderColor: 'red',
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={require('../assets/chilli3.png')}
-                    style={{height: 35, width: 84}}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAddSpice(4);
-                  }}
-                  style={{
-                    borderWidth: AddSpice == 4 ? 2 : 0,
-                    height: 40,
-                    width: 40,
-                    borderColor: 'black',
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={require('../assets/nochilli.png')}
-                    style={{height: 35, width: 35}}
-                  />
-                </TouchableOpacity>
-              </View>
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 5,
-                  fontWeight: 'bold',
-                }}>
-                Veg/Non-Veg
-              </Text>
-              <View style={{flexDirection: 'row', marginLeft: 50}}>
-                <TouchableOpacity
-                  onPress={() => {
-                    // setVegInfo(1);
-                    setAddVeg(1);
-                  }}
-                  style={{
-                    borderWidth: AddVeg == 1 ? 2 : 0,
-                    height: 40,
-                    width: 45,
-                    borderColor: 'black',
-                  }}>
-                  <Image
-                    source={require('../assets/veg.png')}
-                    style={{
-                      height: 36,
-                      width: 35,
-                      alignSelf: 'center',
-                    }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    // setVegInfo(2);
-                    setAddVeg(2);
-                  }}
-                  style={{
-                    borderWidth: AddVeg == 2 ? 2 : 0,
-                    height: 40,
-                    width: 45,
-                    borderColor: 'black',
-                    marginLeft: 20,
-                  }}>
-                  <Image
-                    source={require('../assets/nonveg.png')}
-                    style={{
-                      height: 35,
-                      width: 35,
-                      alignSelf: 'center',
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 5,
-                  fontWeight: 'bold',
-                }}>
-                Description
-              </Text>
-
-              <TextInput
-                style={{
-                  height: 40,
-                  margin: 12,
-                  borderWidth: 1,
-                  padding: 10,
-                  color: 'black',
-                }}
-                multiline={true}
-                onChangeText={text => setDesc(text)}
-                placeholder="Description"
-              />
-
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 10,
-                  marginTop: 5,
-                  fontWeight: 'bold',
-                }}>
-                Ingredients
-              </Text>
-
-              <TextInput
-                style={{
-                  height: 40,
-                  margin: 12,
-                  borderWidth: 1,
-                  padding: 10,
-                  color: 'black',
-                }}
-                multiline={true}
-                onChangeText={text => setIngred(text)}
-                placeholder="Ingredients"
-              />
-            </View>
-
-            <View style={{flexDirection: 'row', marginLeft: 120}}>
-              <TouchableOpacity
-                onPress={submitMenu}
-                style={{
-                  marginLeft: -30,
-                  width: 80,
-                  height: 40,
-                  backgroundColor: 'skyblue',
-                  borderRadius: 5,
-                  alignContent: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                  }}>
-                  Submit
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setAddFlag(false);
-                  // setBackFlag(false);
-                }}
-                style={{
-                  marginLeft: 50,
-                  width: 80,
-                  height: 40,
-                  backgroundColor: 'skyblue',
-                  borderRadius: 5,
-                  alignContent: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                  }}>
-                  cancel
-                </Text>
+                  </View>
+                ) : (
+                  <View>
+                    <View style={{marginLeft: 10}}></View>
+                  </View>
+                )}
               </TouchableOpacity>
             </View>
-          </View>
-        )}
+          );
+        })}
       </ScrollView>
     </View>
   );

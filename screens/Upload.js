@@ -100,11 +100,16 @@ const Upload = ({route}) => {
 
   const UpdateImgBrand = path => {
     apiAxios1('brand', {
-      userid: user,
+      // user_id: user,
+      // action: 'update',
+      // brand: data.brand,
+      // BImage: path,
+      // brandid: data.brandid,
+      user_id: user,
       action: 'update',
       brand: data.brand,
-      BImage: path,
-      brandid: data.brandid,
+      brand_image: path,
+      brand_id: data.brand_id,
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
@@ -115,9 +120,9 @@ const Upload = ({route}) => {
   const UpdateImgRest = path => {
     apiAxios1('rest', {
       action: 'update',
-      rest: data.rest,
-      RImage: path,
-      restid: data.restid,
+      restaurant: data.restaurant,
+      restaurant_image: path,
+      restaurant_id: data.restaurant_id,
     }).then(res => {
       console.log(res.data);
       Alert.alert('Image upload complete');
@@ -127,9 +132,9 @@ const Upload = ({route}) => {
 
   const UpdateImgMT = path => {
     apiAxios1('menutype', {
-      menutype: data.menutype,
-      MTImage: path,
-      mtid: data.mtid,
+      menu_type: data.menu_type,
+      menu_type_image: path,
+      menutype_id: data.menutype_id,
       action: 'update',
     }).then(res => {
       console.log(res.data);
@@ -154,13 +159,14 @@ const Upload = ({route}) => {
   const UpdateImgMenu = path => {
     apiAxios1('menu', {
       menu: data.menu,
-      MImage: path,
+      menu_image: path,
       spice: data.spice,
       price: data.price,
       veg: data.veg,
       description: data.description,
       ingredients: data.ingredients,
-      menuid: data.menuid,
+      menu_id: data.menu_id,
+      rank_order: data.rank_order,
       action: 'update',
     }).then(res => {
       console.log(res.data);
@@ -216,8 +222,6 @@ const Upload = ({route}) => {
             width: DeviceWidth - 20,
             alignSelf: 'center',
             borderRadius: 10,
-            // marginBottom: 50,
-            // marginTop: 50,
           }}>
           <Text
             style={{

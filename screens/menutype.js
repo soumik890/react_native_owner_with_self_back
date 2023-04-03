@@ -70,16 +70,17 @@ const MenuType = ({route}) => {
   }, [actionMT, Rest]);
 
   const UpdateType = item => {
-    setUpdateId(item?.mtid);
-    setUpType(item?.menutype);
-    setImg(item?.MTImage);
+    console.log('item received in updatetype', item);
+    setUpdateId(item?.menutype_id);
+    setUpType(item?.menu_type);
+    setImg(item?.menu_type_image);
   };
 
   const UpdateTypeName = () => {
     apiAxios1('menutype', {
-      menutype: UpType,
-      MTImage: Img,
-      mtid: UpdateId,
+      menu_type: UpType,
+      menu_type_image: Img,
+      menutype_id: UpdateId,
       action: 'update',
     }).then(res => {
       console.log(res.data);
@@ -121,7 +122,7 @@ const MenuType = ({route}) => {
         rank_order: 1,
         action: 'create',
       }).then(res => {
-        console.log('DeveloperDefaultCategory category created', res.data);
+        console.log('@$DeveloperDefaultCategory$@ category created', res.data);
       });
 
       setAddFlag(false);
@@ -157,20 +158,19 @@ const MenuType = ({route}) => {
         action: 'read',
         user_id: user,
       }).then(res => {
-        console.log('response data from cat', res.data);
-        // res.data.map(i => {
-        //   if (i.category == '@$DeveloperDefaultCategory$@') {
-        //     setCat(i);
-        //     setMenuType(item);
-        //     console.log('Found the default', i);
-        //   }
-        // });
+        // console.log('response data from cat', res.data);
+        res.data.map(i => {
+          if (i.category == '@$DeveloperDefaultCategory$@') {
+            setCat(i);
+            setMenuType(item);
+            console.log('Found the default', i);
+          }
+        });
       });
     } else {
       setMenuType();
       setTray({});
     }
-    // navigation.navigate('cat');
   };
 
   const traySelector = item => {
@@ -180,17 +180,17 @@ const MenuType = ({route}) => {
   };
 
   const AddMenu = () => {
-    // setAddFlag(true);
     console.log('AddMenu called');
     setAddMenuFlag(true);
   };
 
   const submitMenu = () => {
     console.log(
-      MenuType.mtid,
-      route.params.data.brandid,
-      Rest.restid,
-      Cat.catid,
+      'actions received at submit menu',
+      MenuType.menutype_id,
+      route.params.data.brand_id,
+      Rest.restaurant_id,
+      Cat.category_id,
       user,
       AddVeg,
       AddSpice,
@@ -200,22 +200,21 @@ const MenuType = ({route}) => {
     );
     apiAxios1('menu', {
       menu: Name,
-      mtid: MenuType.mtid,
-      brandid: route.params.data.brandid,
-      restid: Rest.restid,
-      catid: Cat.catid,
-      userid: user,
-      notes: 'blah',
-      MImage: 'null',
+      menutype_id: MenuType.menutype_id,
+      brand_id: route.params.data.brand_id,
+      restaurant_id: Rest.restaurant_id,
+      category_id: Cat.category_id,
+      user_id: user,
+      notes: 'null',
+      menu_image: 'null',
       veg: AddVeg,
       spice: AddSpice,
       price: Price,
       description: Desc,
       ingredients: Ingred,
       favourite: 1,
-      status1: 1,
-      rank1: 1,
-      cUser: user,
+      is_active: 1,
+      rank_order: 1,
       action: 'create',
     }).then(res => {
       console.log(res.data);
