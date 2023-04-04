@@ -28,7 +28,6 @@ const MenuType = ({route}) => {
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
   const {UserID} = useContext(exportvalues);
-  const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
   const {MenuType, setMenuType} = useContext(exportvalues);
   const [isOpen, setIsOpen] = useState(false);
@@ -559,6 +558,7 @@ const MenuType = ({route}) => {
                       // backgroundColor: '#38b05f',
                       // backgroundColor: '#b7b7b7',
                       width: '80%',
+                      alignSelf: 'center',
                       backgroundColor: '#fad06e',
                       elevation: 15,
                       borderRadius: 5,
@@ -620,7 +620,7 @@ const MenuType = ({route}) => {
                         style={{
                           flexDirection: 'row',
                           position: 'absolute',
-                          marginLeft: 250,
+                          marginLeft: 230,
                           marginTop: 5,
                         }}>
                         <TouchableOpacity
@@ -834,59 +834,10 @@ const MenuType = ({route}) => {
                               }}>
                               Cancel
                             </Button>
-
-                            {/* <TouchableOpacity
-                              onPress={() => {
-                                AddMenu();
-                              }}
-                              style={{
-                                marginLeft: 20,
-                                width: 80,
-                                height: 25,
-                                backgroundColor: 'pink',
-                                borderRadius: 5,
-                                alignContent: 'center',
-                                justifyContent: 'center',
-                              }}>
-                              <Text
-                                style={{
-                                  color: 'black',
-                                  alignSelf: 'center',
-                                  fontWeight: 'bold',
-                                  fontSize: 15,
-                                }}>
-                                Add menu
-                              </Text>
-                            </TouchableOpacity> */}
-
-                            {/* <TouchableOpacity
-                              onPress={() => {
-                                setTray({});
-                              }}
-                              style={{
-                                marginLeft: 20,
-                                width: 60,
-                                height: 25,
-                                backgroundColor: 'pink',
-                                borderRadius: 5,
-                                alignContent: 'center',
-                                justifyContent: 'center',
-                              }}>
-                              <Text
-                                style={{
-                                  color: 'black',
-                                  alignSelf: 'center',
-                                  fontWeight: 'bold',
-                                  fontSize: 15,
-                                }}>
-                                Cancel
-                              </Text>
-                            </TouchableOpacity> */}
                           </View>
                         ) : (
                           <View></View>
                         )}
-                        {/* <Text>{MenuType}</Text> */}
 
                         {MenuType == item ? (
                           <View
@@ -1193,7 +1144,9 @@ const MenuType = ({route}) => {
               margin: 10,
               marginBottom: 10,
               backgroundColor: '#7f7f7f',
+              width: '90%',
               elevation: 15,
+              alignSelf: 'center',
               borderRadius: 5,
             }}>
             <Text style={{color: 'white'}}>+ New Menu Type</Text>
