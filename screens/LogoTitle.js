@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import Snackbar from 'react-native-snackbar';
 import apiAxios1 from '../ApiCaller/apiAxios1';
+import {ToggleButton} from 'react-native-paper';
 
 function LogoTitle() {
   const navigation = useNavigation();
@@ -99,9 +100,12 @@ function LogoTitle() {
           }}>
           <Image
             style={{width: 30, height: 30, marginTop: 10, marginLeft: 10}}
-            source={require('../assets/ham.png')}
+            source={require('../assets/ham3.png')}
           />
         </TouchableOpacity>
+
+        {/* <ToggleButton icon="menu" value="menu" /> */}
+
         <Image
           style={{width: 45, height: 45, marginLeft: 15}}
           source={require('../assets/logo.png')}
@@ -147,10 +151,9 @@ function LogoTitle() {
             // alignSelf: 'flex-start',
             height: 1000,
             marginLeft: -20,
+            marginTop: -20,
           }}>
-          <ScrollView
-            style={{marginBottom: 0}}
-            showsVerticalScrollIndicator={false}>
+          <View style={{marginBottom: 0}} showsVerticalScrollIndicator={false}>
             <View
               style={{
                 width: windowWidth - 150,
@@ -167,190 +170,91 @@ function LogoTitle() {
                 shadowRadius: 4,
                 elevation: 5,
               }}>
-              <TouchableOpacity onPress={() => setIsOpen(false)}>
+              <View
+                style={{
+                  backgroundColor: 'orange',
+                  width: '100%',
+                  marginBottom: 10,
+                }}>
                 <Image
                   style={{
-                    height: 20,
-                    width: 20,
-                    marginLeft: 200,
-                    marginTop: 10,
+                    height: 80,
+                    borderRadius: 50,
+                    width: 80,
+                    margin: 2,
+                    // marginBottom: 10,
+                    alignSelf: 'center',
+                    marginTop: 20,
                   }}
-                  source={require('../assets/wrong.png')}
+                  source={{
+                    uri: PhotoUrl,
+                  }}
                 />
-              </TouchableOpacity>
-
-              <Image
-                style={{
-                  height: 80,
-                  borderRadius: 50,
-                  width: 80,
-                  margin: 2,
-                  marginBottom: 10,
-                  alignSelf: 'center',
-                  // marginTop: 20,
-                }}
-                source={{
-                  uri: PhotoUrl,
-                }}
-              />
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  fontWeight: 'bold',
-                  marginBottom: 5,
-                  color: 'black',
-                }}>
-                {Name}
-              </Text>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  fontWeight: 'bold',
-                  marginBottom: 10,
-                  color: '#f6b022',
-                }}>
-                {Email}
-              </Text>
-              <Button
-                style={{width: 200, alignSelf: 'center'}}
-                mode="contained"
-                color="red"
-                onPress={googleOut}>
-                SignOut
-              </Button>
-              <Text>{'\n'}</Text>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold',
+                    marginBottom: 5,
+                    color: 'black',
+                  }}>
+                  {Name}
+                </Text>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    fontWeight: 'bold',
+                    color: 'white',
+                    marginBottom: 10,
+                  }}>
+                  {Email}
+                </Text>
+                <Button
+                  labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
+                  style={{
+                    width: 80,
+                    alignSelf: 'center',
+                    height: 20,
+                    marginBottom: 10,
+                  }}
+                  mode="contained"
+                  color="red"
+                  onPress={googleOut}>
+                  Sign Out
+                </Button>
+              </View>
 
               <Button
-                // icon="camera"
+                labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
+                style={{
+                  width: 130,
+                  alignSelf: 'center',
+                  height: 20,
+                  marginBottom: 10,
+                }}
                 mode="contained"
+                color="green"
                 onPress={BrandCaller}>
                 Go To Dashboards{' '}
               </Button>
+
               <Text>{'\n'}</Text>
 
               <Button
-                // icon="camera"
+                labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
+                style={{
+                  width: 130,
+                  alignSelf: 'center',
+                  height: 20,
+                  marginBottom: 10,
+                }}
                 mode="contained"
+                color="green"
                 onPress={() => console.log('Pressed')}>
+                {' '}
                 Go To Access{' '}
               </Button>
-
-              {/* {Brands.map(item => {
-                return (
-                  <View>
-                    <View style={{flexDirection: 'row'}}>
-                      <TouchableOpacity
-                        style={{
-                          width: 180,
-                          height: 30,
-                          marginTop: 10,
-                          borderRadius: 5,
-                          backgroundColor:
-                            brandId == item?.Id ? 'orange' : 'grey',
-                        }}
-                        onPress={() => {
-                          // serverdata_out(item.act_id);
-                          BrandSelector(item);
-                        }}>
-                        <Text
-                          style={{
-                            // flex: 1,
-                            color: 'black',
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            alignSelf: 'center',
-                            marginTop: 5,
-                          }}>
-                          {item?.brand}
-                        </Text>
-                      </TouchableOpacity>
-                      {brandId == item?.brandid ? (
-                        <TouchableOpacity
-                          onPress={() => {
-                            setBrandId(null);
-                          }}>
-                          <Image
-                            source={require('../assets/minimize.png')}
-                            style={[
-                              styles.searchWhiteImage,
-                              {
-                                marginRight: 10,
-                                marginTop: 15,
-                                marginLeft: 10,
-                              },
-                            ]}
-                          />
-                        </TouchableOpacity>
-                      ) : (
-                        <View></View>
-                      )}
-                    </View>
-
-                    {brandId == item?.brandid ? (
-                      <View style={{marginLeft: 10}}>
-                        <TouchableOpacity
-                          style={{
-                            flexDirection: 'row',
-                            marginTop: 10,
-                            marginLeft: 20,
-                            // marginBottom: 5,
-                            width: 160,
-                            height: 30,
-                            backgroundColor: 'skyblue',
-                            borderRadius: 10,
-                            justifyContent: 'center',
-                          }}
-                          onPress={RestCaller}>
-                          <Text
-                            style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                            }}>
-                            Go To My Restaurants
-                          </Text>
-                        </TouchableOpacity>
-                        {Rests.map((item, index) => {
-                          return (
-                            <View
-                              style={{flexDirection: 'row', marginLeft: 20}}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  RestSelector(item);
-                                }}
-                                style={{
-                                  height: 30,
-                                  backgroundColor:
-                                    Rest.Id == item.Id ? 'orange' : 'green',
-                                  width: 200,
-                                  marginTop: 5,
-                                  borderRadius: 10,
-                                  // flexDirection: 'row',
-                                }}>
-                                <Text
-                                  style={{
-                                    fontWeight: 'bold',
-                                    color: 'black',
-                                    fontSize: 15,
-                                    padding: 5,
-                                  }}>
-                                  {index + 1}.{item?.rest}
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                          );
-                        })}
-                      </View>
-                    ) : (
-                      <View></View>
-                    )}
-                  </View>
-                );
-              })} */}
             </View>
-          </ScrollView>
+          </View>
         </View>
       </Modal>
     </View>

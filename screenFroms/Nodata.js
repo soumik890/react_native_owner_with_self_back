@@ -9,7 +9,8 @@ const Nodata = () => {
     <View
       style={{
         backgroundColor: '#fdfdfe',
-        height: DeviceHeight,
+        // height: DeviceHeight,
+        height: 220,
         width: DeviceWidth,
       }}>
       <Image

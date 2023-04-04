@@ -23,6 +23,8 @@ const ContextTab = ({children}) => {
   const [countController, setCountroller] = useState(false);
   const [menuCounter, setMenuCounter] = useState(0);
   const [menuTypeCounter, setMenuTypeCounter] = useState(0);
+  const [menuModalIsOpen, setMenuModalIsOpen] = useState(false);
+  const [plan, setPlan] = useState(1);
 
   return (
     <exportvalues.Provider
@@ -67,6 +69,10 @@ const ContextTab = ({children}) => {
         setMenuCounter,
         menuTypeCounter,
         setMenuTypeCounter,
+        menuModalIsOpen,
+        setMenuModalIsOpen,
+        plan,
+        setPlan,
       }}>
       {children}
     </exportvalues.Provider>

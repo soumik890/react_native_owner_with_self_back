@@ -11,6 +11,7 @@ import Cat from './screens/cat';
 import Upload from './screens/Upload';
 import Publish from './screens/publish';
 import {MenuProvider} from 'react-native-popup-menu';
+import menuModal from './screens/menuModal';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -57,6 +58,11 @@ const App = () => {
             <Stack.Screen
               name="publish"
               component={Publish}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="menumodal"
+              component={menuModal}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

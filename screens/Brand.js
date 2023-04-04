@@ -4,10 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
+  // TextInput,
   Dimensions,
   Image,
   Alert,
+  StyleSheet,
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
@@ -18,6 +19,9 @@ import {exportvalues} from '../contextApi/ContextTab';
 import Modal from 'react-native-modal';
 // import RestDrop from './RestDrop';
 import Rest from './Rest';
+import {Button, TextInput} from 'react-native-paper';
+import PlanForm from '../screenFroms/PlanForm';
+import {Dropdown} from 'react-native-element-dropdown';
 
 function Brand() {
   const navigation = useNavigation();
@@ -41,7 +45,10 @@ function Brand() {
   const [Img, setImg] = useState();
   const [Tray, setTray] = useState({});
 
-  const [plan, setPlan] = useState(1);
+  const [isFocus, setIsFocus] = useState(false);
+  const [value, setValue] = useState(null);
+
+  const {plan, setPlan} = useContext(exportvalues);
 
   const {brandCounter, setBrandCounter} = useContext(exportvalues);
 
@@ -121,10 +128,6 @@ function Brand() {
     });
   };
 
-  // const BrandSelector = item => {
-  //   setBrand(item);
-  // };
-
   const traySelector = item => {
     console.log('item in tray', item);
     setTray(item);
@@ -136,26 +139,70 @@ function Brand() {
   };
 
   const submitRest = () => {
-    console.log('restaurant name at submit rest', RName);
-    apiAxios1('rest', {
-      restaurant: RName,
-      user_id: user,
-      plan_id: plan,
-      plan_name: 'Basic',
-      menu_license_id: 1,
-      notes: 'nill',
-      favourite: 0,
-      is_active: 1,
-      rank_order: 1,
-      brand_id: Brand.brand_id,
-      restaurant_image: 'null',
-      action: 'create',
-    }).then(res => {
-      console.log(res.data);
-      setAddRestFlag(false);
-      setactionR(!actionR);
-    });
+    if (value !== 0) {
+      // console.log('restaurant name at submit rest', RName);
+      apiAxios1('rest', {
+        restaurant: RName,
+        user_id: user,
+        plan_id: plan,
+        plan_name: 'refer plan id',
+        menu_license_id: 41,
+        notes: 'nill',
+        favourite: 0,
+        is_active: 1,
+        rank_order: 1,
+        // brand_id: Brand.brand_id,
+        brand_id: value,
+        restaurant_image: 'null',
+        action: 'create',
+      }).then(res => {
+        console.log('response at value not zero', res.data);
+        setAddRestFlag(false);
+        setactionR(!actionR);
+      });
+    } else {
+      apiAxios1('brand', {
+        brand: Name,
+        brand_image: 'null',
+        user_id: user,
+        rank_order: 1,
+        c_user: user,
+        is_active: 1,
+        action: 'create',
+      }).then(res => {
+        // console.log(res.data.status);
+        // setAddRestFlag(false);
+        // setactionB(!actionB);
+        apiAxios1('rest', {
+          restaurant: RName,
+          user_id: user,
+          plan_id: plan,
+          plan_name: 'refer plan id',
+          menu_license_id: 41,
+          notes: 'nill',
+          favourite: 0,
+          is_active: 1,
+          rank_order: 1,
+          brand_id: res.data[0].brand_id,
+          restaurant_image: 'null',
+          action: 'create',
+        }).then(res => {
+          console.log(res.data);
+          setAddRestFlag(false);
+          setactionB(!actionB);
+          setactionR(!actionR);
+        });
+      });
+    }
   };
+
+  const data = [{label: 'Add new brand', value: 0}];
+
+  // console.log('brands are', Brands);
+
+  Brands.map(item => {
+    data.push({label: item.brand, value: item.brand_id});
+  });
 
   return (
     <View style={{backgroundColor: '#f2f2f2'}}>
@@ -279,127 +326,6 @@ function Brand() {
         </View>
       </Modal>
 
-      {/* Brand Add Modal */}
-
-      <Modal
-        useNativeDriver={true}
-        animationInTiming={500}
-        animationOutTiming={500}
-        animationIn="bounceInUp"
-        animationOut="bounceOutDown"
-        onBackButtonPress={() => setAddFlag(false)}
-        onBackdropPress={() => {
-          setAddFlag(false);
-        }}
-        isVisible={AddFlag}>
-        <View
-          style={{
-            width: 320,
-            height: 200,
-            backgroundColor: 'white',
-            alignSelf: 'center',
-            borderWidth: 3,
-            borderColor: '#9e4848',
-            borderRadius: 10,
-          }}>
-          <View
-            style={{
-              height: 40,
-              backgroundColor: '#9e4848',
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: 18,
-                alignSelf: 'center',
-              }}>
-              Add a new brand
-            </Text>
-          </View>
-
-          <View>
-            <View style={{marginTop: 20}}>
-              <Text
-                style={{
-                  color: 'black',
-                  marginLeft: 20,
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                Brand Name
-              </Text>
-              <View style={{marginTop: 5}}>
-                <TextInput
-                  style={{
-                    height: 40,
-                    margin: 12,
-                    borderWidth: 1,
-                    padding: 10,
-                    color: 'black',
-                    // backgroundColor: 'grey',
-                    borderColor: 'grey',
-                  }}
-                  multiline={true}
-                  onChangeText={text => setName(text)}
-                />
-              </View>
-            </View>
-            <View style={{flexDirection: 'row', marginLeft: 80}}>
-              <TouchableOpacity
-                onPress={submitType}
-                style={{
-                  // marginLeft: 250,
-                  width: 60,
-                  height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  backgroundColor: '#ee8b8d',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Submit
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setAddFlag(false);
-                }}
-                style={{
-                  marginLeft: 50,
-                  width: 60,
-                  height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  justifyContent: 'center',
-                  backgroundColor: '#88cdea',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
       {/* Restaurant add modal */}
 
       <Modal
@@ -415,18 +341,20 @@ function Brand() {
         isVisible={AddRestFlag}>
         <View
           style={{
-            width: 320,
-            height: 230,
+            // width: 320,
+            width: '90%',
+            // height: 230,
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: '#9e4848',
-            borderRadius: 10,
+            borderColor: '#f48225',
+            borderRadius: 5,
+            // marginBottom: 10,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: '#9e4848',
+              backgroundColor: '#f48225',
               justifyContent: 'center',
             }}>
             <Text
@@ -436,114 +364,80 @@ function Brand() {
                 fontSize: 18,
                 alignSelf: 'center',
               }}>
-              Add a new Restaurent
+              Add a New Restaurent
             </Text>
           </View>
 
-          <View>
-            <View style={{marginTop: 20}}>
-              <Text
+          <Dropdown
+            style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={data}
+            search
+            // maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={!isFocus ? 'Select Brand' : '...'}
+            searchPlaceholder="Search..."
+            value={value}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onChange={item => {
+              setValue(item.value);
+              setIsFocus(false);
+            }}
+          />
+
+          {value == 0 ? (
+            <View style={{marginTop: 5}}>
+              <TextInput
+                mode="outlined"
+                label="Brand Name"
+                placeholder="Brand Name"
+                textColor={'red'}
                 style={{
-                  color: 'black',
-                  marginLeft: 20,
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                Restaurant Name
-              </Text>
-              <View style={{marginTop: 5}}>
-                <TextInput
-                  style={{
-                    height: 40,
-                    margin: 12,
-                    borderWidth: 1,
-                    padding: 10,
-                    color: 'black',
-                    // backgroundColor: 'grey',
-                    borderColor: 'grey',
-                  }}
-                  multiline={true}
-                  onChangeText={text => setRName(text)}
-                />
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    color: 'black',
-                    marginLeft: 20,
-                    fontSize: 15,
-                    fontWeight: 'bold',
-                  }}>
-                  Select Plan
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    setPlan(1);
-                  }}>
-                  <View
-                    style={{
-                      width: 30,
-                      height: 30,
-                      backgroundColor: plan == 1 ? 'yellow' : 'skyblue',
-                      marginLeft: 10,
-                    }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        marginLeft: 8,
-                      }}>
-                      1
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setPlan(2);
-                  }}>
-                  <View
-                    style={{
-                      width: 30,
-                      height: 30,
-                      backgroundColor: plan == 2 ? 'yellow' : 'skyblue',
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        marginLeft: 8,
-                      }}>
-                      2
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setPlan(3);
-                  }}>
-                  <View
-                    style={{
-                      width: 30,
-                      height: 30,
-                      backgroundColor: plan == 3 ? 'yellow' : 'skyblue',
-                      marginLeft: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontWeight: 'bold',
-                        fontSize: 20,
-                        marginLeft: 8,
-                      }}>
-                      3
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+                  height: 35,
+                  width: '90%',
+                  alignSelf: 'center',
+                  fontSize: 12,
+                }}
+                theme={{
+                  colors: {
+                    text: 'black',
+                    primary: 'orange',
+                    onSurfaceVariant: 'green',
+                  },
+                  fontSize: {text: 12},
+                }}
+                onChangeText={text => setName(text)}
+              />
             </View>
+          ) : (
+            <View></View>
+          )}
+
+          <View style={{marginTop: 5}}>
+            <TextInput
+              mode="outlined"
+              label="Restaurant Name"
+              placeholder="Restaurant Name"
+              textColor={'red'}
+              style={{
+                height: 35,
+                width: '90%',
+                alignSelf: 'center',
+                fontSize: 12,
+              }}
+              theme={{colors: {text: 'black', primary: 'orange'}}}
+              onChangeText={text => setRName(text)}
+            />
+          </View>
+
+          <PlanForm />
+
+          <View>
             <View style={{flexDirection: 'row', marginLeft: 80, marginTop: 20}}>
               <TouchableOpacity
                 onPress={submitRest}
@@ -630,9 +524,10 @@ function Brand() {
             flex: 1,
           }}>
           <TouchableOpacity
-            onPress={AddType}
+            // onPress={AddType}
+            onPress={AddRest}
             style={{
-              marginLeft: 280,
+              marginLeft: 260,
             }}>
             <View style={{flexDirection: 'row'}}>
               <Text
@@ -647,7 +542,7 @@ function Brand() {
                   marginRight: 5,
                   textTransform: 'capitalize',
                 }}>
-                Brands
+                Restaurants
               </Text>
               <View
                 style={{
@@ -675,22 +570,11 @@ function Brand() {
         style={{marginBottom: 10}}
         keyboardShouldPersistTaps={'always'}>
         {Types.map((item, index) => {
-          // console.log(item);
-          // BrandSelector(item);
           return (
-            <TouchableOpacity
-              onPress={() => {
-                // BrandSelector(item);
-              }}
+            <View
               style={{
-                marginTop: 10,
-                // marginBottom: 10,
-                marginLeft: 10,
-                width: DeviceWidth - 20,
-                // backgroundColor: '#38b05f',
-                backgroundColor: '#b7b7b7',
-                elevation: 15,
                 borderRadius: 5,
+                marginTop: 10,
               }}>
               <View style={{flex: 1}}>
                 <View
@@ -698,96 +582,7 @@ function Brand() {
                     flexDirection: 'row',
                     marginTop: 10,
                     // marginBottom: 10,
-                  }}>
-                  <View>
-                    {item.brand_image !== 'null' ? (
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate('upload', {
-                            page: 'brand',
-                            data: item,
-                          });
-                        }}>
-                        <Image
-                          source={{uri: item.brand_image}}
-                          style={{
-                            width: 50,
-                            height: 50,
-                            marginLeft: 10,
-                            borderRadius: 5,
-                          }}
-                        />
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate('upload', {
-                            page: 'brand',
-                            data: item,
-                          });
-                        }}>
-                        <Image
-                          source={require('../assets/noimg.png')}
-                          style={{width: 50, height: 50, marginLeft: 10}}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  </View>
-
-                  <View style={{marginLeft: 10, flexDirection: 'column'}}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
-                        fontSize: 15,
-                      }}>
-                      {item.brand}
-                    </Text>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      position: 'absolute',
-                      marginLeft: 240,
-                    }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        traySelector(item);
-                      }}>
-                      <Image
-                        source={require('../assets/ham2.png')}
-                        style={{
-                          width: 25,
-                          height: 25,
-                          marginLeft: 20,
-                          // borderRadius: 5,
-                        }}
-                      />
-                    </TouchableOpacity>
-                    {Tray == item ? (
-                      <TouchableOpacity
-                        // onPress={() => {
-                        //   BrandSelector();
-                        // }}
-                        onPressIn={() => {
-                          setTray({});
-                        }}>
-                        <Image
-                          source={require('../assets/wrong.png')}
-                          style={{
-                            width: 20,
-                            height: 20,
-                            marginLeft: 20,
-                          }}
-                        />
-                      </TouchableOpacity>
-                    ) : (
-                      <View></View>
-                    )}
-                  </View>
-                </View>
+                  }}></View>
               </View>
 
               {UpdateId == item?.brand_id ? (
@@ -886,100 +681,82 @@ function Brand() {
                     <View
                       style={{
                         flexDirection: 'row',
-                        // justifyContent: 'flex-end',
-                        // marginRight: 10,
-                        marginLeft: 20,
+                        alignSelf: 'center',
                         marginBottom: 10,
+                        marginTop: 5,
                       }}>
-                      <TouchableOpacity
+                      <Button
+                        labelStyle={{
+                          fontSize: 8,
+                          marginTop: 4,
+                          marginBottom: 5,
+                        }}
+                        style={{
+                          width: 100,
+                          alignSelf: 'center',
+                          height: 20,
+                          marginBottom: 10,
+                        }}
+                        mode="contained"
+                        color="#fc5d4a"
                         onPress={() => {
                           ButtonAlert(item);
-                        }}
-                        style={{
-                          // marginLeft: 250,
-                          width: 100,
-                          height: 25,
-                          backgroundColor: '#ec8c8c',
-                          borderRadius: 5,
-                          alignContent: 'center',
-                          justifyContent: 'center',
                         }}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                          }}>
-                          Delete Brand
-                        </Text>
-                      </TouchableOpacity>
+                        Delete Brand
+                      </Button>
 
-                      <TouchableOpacity
-                        onPress={() => {
-                          // setTray({});
-                          AddRest();
+                      <Button
+                        labelStyle={{
+                          fontSize: 8,
+                          marginTop: 4,
+                          marginBottom: 5,
                         }}
                         style={{
-                          marginLeft: 10,
                           width: 120,
-                          height: 25,
-                          backgroundColor: 'pink',
-                          borderRadius: 5,
-                          alignContent: 'center',
-                          justifyContent: 'center',
+                          alignSelf: 'center',
+                          height: 20,
+                          marginBottom: 10,
+                          marginLeft: 5,
+                          marginRight: 5,
+                        }}
+                        mode="contained"
+                        color="pink"
+                        onPress={() => {
+                          AddRest();
                         }}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                          }}>
-                          Add restaurant
-                        </Text>
-                      </TouchableOpacity>
+                        Add restaurant{' '}
+                      </Button>
 
-                      <TouchableOpacity
+                      <Button
+                        labelStyle={{
+                          fontSize: 8,
+                          marginTop: 4,
+                          marginBottom: 5,
+                        }}
+                        style={{
+                          width: 60,
+                          alignSelf: 'center',
+                          height: 20,
+                          // marginBottom: 10,
+                        }}
+                        mode="contained"
+                        color="skyblue"
                         onPress={() => {
                           UpdateType(item);
-                        }}
-                        style={{
-                          marginLeft: 10,
-                          width: 50,
-                          height: 25,
-                          backgroundColor: 'skyblue',
-                          borderRadius: 5,
-                          alignContent: 'center',
-                          justifyContent: 'center',
                         }}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            alignSelf: 'center',
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                          }}>
-                          edit
-                        </Text>
-                      </TouchableOpacity>
+                        edit
+                      </Button>
                     </View>
                   ) : (
                     <View></View>
                   )}
 
-                  {/* {Brand == item ? ( */}
-
-                  <View
-                    style={{
-                      width: '95%',
-                      alignSelf: 'flex-end',
-                    }}>
+                  <View>
                     <Rest data={item} />
                   </View>
                 </View>
               )}
-            </TouchableOpacity>
+            </View>
           );
         })}
       </ScrollView>
@@ -988,3 +765,43 @@ function Brand() {
 }
 
 export default Brand;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    padding: 12,
+  },
+  dropdown: {
+    height: 30,
+    width: '90%',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 8,
+    alignSelf: 'center',
+    marginTop: 5,
+    fontSize: 12,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    fontSize: 12,
+  },
+  placeholderStyle: {
+    fontSize: 12,
+  },
+  selectedTextStyle: {
+    fontSize: 12,
+  },
+  iconStyle: {
+    width: 15,
+    height: 15,
+  },
+  inputSearchStyle: {
+    height: 35,
+    fontSize: 12,
+  },
+});

@@ -15,6 +15,7 @@ import apiAxios1 from '../ApiCaller/apiAxios1';
 import {exportvalues} from '../contextApi/ContextTab';
 import LogoTitle from './LogoTitle';
 import Modal from 'react-native-modal';
+import {Button} from 'react-native-paper';
 
 function Rest({data}) {
   const navigation = useNavigation();
@@ -45,7 +46,7 @@ function Rest({data}) {
       // brandid: Brand.brandid,
       brand_id: data.brand_id,
     }).then(res => {
-      console.log('restaurant list', res);
+      // console.log('restaurant list', res);
       setTypes(res?.data);
       setRestCounter(res.data.length);
       // console.log('rest length is', res.data.length);
@@ -255,7 +256,7 @@ function Rest({data}) {
         </View>
       </Modal>
 
-      <ScrollView style={{marginBottom: 10}}>
+      <ScrollView style={{marginTop: -20}}>
         {AddFlag == false ? (
           Types.map((item, index) => {
             console.log(item);
@@ -266,13 +267,15 @@ function Rest({data}) {
                 }}
                 style={{
                   marginTop: 10,
-                  marginLeft: 10,
+                  // marginLeft: 10,
                   marginBottom: 10,
-                  width: DeviceWidth - 80,
+                  width: '80%',
+                  // width: DeviceWidth - 80,
                   // backgroundColor: '#38b05f',
                   backgroundColor: 'white',
                   elevation: 15,
                   borderRadius: 5,
+                  alignSelf: 'center',
                 }}>
                 <View
                   style={{
@@ -292,8 +295,8 @@ function Rest({data}) {
                         <Image
                           source={{uri: item.restaurant_image}}
                           style={{
-                            width: 50,
-                            height: 50,
+                            width: 35,
+                            height: 35,
                             marginLeft: 10,
                             borderRadius: 5,
                           }}
@@ -309,7 +312,7 @@ function Rest({data}) {
                         }}>
                         <Image
                           source={require('../assets/noimg.png')}
-                          style={{width: 50, height: 50, marginLeft: 10}}
+                          style={{width: 35, height: 35, marginLeft: 10}}
                         />
                       </TouchableOpacity>
                     )}
@@ -321,7 +324,16 @@ function Rest({data}) {
                         color: 'black',
                         fontWeight: 'bold',
                         textTransform: 'uppercase',
-                        fontSize: 15,
+                        fontSize: 10,
+                      }}>
+                      {data.brand}
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'black',
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        fontSize: 12,
                       }}>
                       {item.restaurant}
                     </Text>
@@ -335,20 +347,20 @@ function Rest({data}) {
                     marginLeft: 210,
                     marginTop: 10,
                   }}>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => {
                       traySelector(item);
                     }}>
                     <Image
-                      source={require('../assets/ham2.png')}
+                      source={require('../assets/ham4.png')}
                       style={{
-                        width: 25,
-                        height: 25,
+                        width: 10,
+                        height: 40,
                         marginLeft: 20,
                         // borderRadius: 5,
                       }}
                     />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
 
                 {UpdateId == item?.restaurant_id ? (
@@ -437,82 +449,72 @@ function Rest({data}) {
                         style={{
                           flexDirection: 'row',
                           // justifyContent: 'flex-end',
-                          marginLeft: 60,
-                          marginRight: 20,
+                          // marginLeft: 10,
+                          // marginRight: 20,
+                          alignSelf: 'center',
                           marginBottom: 10,
                         }}>
-                        <TouchableOpacity
+                        <Button
+                          labelStyle={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            marginBottom: 5,
+                          }}
+                          style={{
+                            width: 80,
+                            alignSelf: 'center',
+                            height: 20,
+                            marginBottom: 10,
+                          }}
+                          mode="contained"
+                          color="#fc5d4a"
                           onPress={() => {
                             ButtonAlert(item);
+                          }}>
+                          Delete
+                        </Button>
+
+                        <Button
+                          labelStyle={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            marginBottom: 5,
                           }}
                           style={{
-                            // marginLeft: 250,
-                            width: 50,
-                            height: 25,
-                            backgroundColor: '#ec8c8c',
-                            borderRadius: 5,
-                            alignContent: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                              fontSize: 15,
-                            }}>
-                            Delete
-                          </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
+                            width: 80,
+                            alignSelf: 'center',
+                            height: 20,
+                            marginBottom: 10,
+                            marginLeft: 5,
+                            marginRight: 5,
+                          }}
+                          mode="contained"
+                          color="skyblue"
                           onPress={() => {
                             UpdateType(item);
-                          }}
-                          style={{
-                            marginLeft: 20,
-                            width: 50,
-                            height: 25,
-                            backgroundColor: 'skyblue',
-                            borderRadius: 5,
-                            alignContent: 'center',
-                            justifyContent: 'center',
                           }}>
-                          <Text
-                            style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                              fontSize: 15,
-                            }}>
-                            edit
-                          </Text>
-                        </TouchableOpacity>
+                          edit
+                        </Button>
 
-                        <TouchableOpacity
-                          onPress={() => {
-                            // UpdateType(item);
-                            setTray({});
+                        <Button
+                          labelStyle={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            marginBottom: 5,
                           }}
                           style={{
-                            marginLeft: 20,
-                            width: 50,
-                            height: 25,
-                            backgroundColor: 'pink',
-                            borderRadius: 5,
-                            alignContent: 'center',
-                            justifyContent: 'center',
+                            width: 80,
+                            alignSelf: 'center',
+                            height: 20,
+                            marginBottom: 10,
+                          }}
+                          mode="contained"
+                          color="pink"
+                          onPress={() => {
+                            setTray({});
                           }}>
-                          <Text
-                            style={{
-                              color: 'black',
-                              alignSelf: 'center',
-                              fontWeight: 'bold',
-                              fontSize: 15,
-                            }}>
-                            cancel
-                          </Text>
-                        </TouchableOpacity>
+                          cancel
+                        </Button>
                       </View>
                     ) : (
                       <View></View>
