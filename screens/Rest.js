@@ -36,6 +36,7 @@ function Rest({data}) {
   const {actionR, setactionR} = useContext(exportvalues);
   const {restCounter, setRestCounter} = useContext(exportvalues);
   const {brandCounter, setBrandCounter} = useContext(exportvalues);
+  // const {Brand, setBrand} = useContext(exportvalues);
 
   const [Tray, setTray] = useState({});
 
@@ -130,6 +131,7 @@ function Rest({data}) {
     //   '***************************************************item in rest selector',
     //   item,
     // );
+    setBrand(data);
     navigation.navigate('menuType', {data: item, brandInfo: data});
   };
 

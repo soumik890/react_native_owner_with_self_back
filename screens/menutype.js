@@ -52,6 +52,8 @@ const MenuType = ({route}) => {
   const {menuTypeCounter, setMenuTypeCounter} = useContext(exportvalues);
   const {menuModalIsOpen, setMenuModalIsOpen} = useContext(exportvalues);
 
+  // setBrand()
+
   useEffect(() => {
     apiAxios1('menutype', {
       user_id: user,

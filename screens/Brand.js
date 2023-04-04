@@ -37,7 +37,6 @@ function Brand() {
   const user = parseInt(UserID);
   const {actionB, setactionB} = useContext(exportvalues);
   const {actionR, setactionR} = useContext(exportvalues);
-  const {Brand, setBrand} = useContext(exportvalues);
   // const {Rest, setRest} = useContext(exportvalues);
   const {Brands, setBrands} = useContext(exportvalues);
   const [isOpen, setIsOpen] = useState(false);
@@ -128,11 +127,11 @@ function Brand() {
     });
   };
 
-  const traySelector = item => {
-    console.log('item in tray', item);
-    setTray(item);
-    setBrand(item);
-  };
+  // const traySelector = item => {
+  //   console.log('item in tray', item);
+  //   setTray(item);
+  //   setBrand(item);
+  // };
 
   const AddRest = () => {
     setAddRestFlag(true);
