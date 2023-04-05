@@ -531,7 +531,7 @@ const MenuType = ({route}) => {
           >
             <Image
               source={require('../assets/ham5.png')}
-              style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+              style={{width: 25, height: 25, marginLeft: 13}}
             />
           </TouchableOpacity>
         </View>
@@ -557,7 +557,7 @@ const MenuType = ({route}) => {
                       // width: DeviceWidth - 20,
                       // backgroundColor: '#38b05f',
                       // backgroundColor: '#b7b7b7',
-                      width: '80%',
+                      width: '90%',
                       alignSelf: 'center',
                       backgroundColor: '#fad06e',
                       elevation: 15,
@@ -656,7 +656,19 @@ const MenuType = ({route}) => {
                             />
                           </TouchableOpacity>
                         ) : (
-                          <View></View>
+                          <View>
+                            <TouchableOpacity>
+                              <Image
+                                source={require('../assets/drag.png')}
+                                style={{
+                                  height: 23,
+                                  width: 15,
+                                  marginLeft: 30,
+                                  marginTop: -5,
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
                         )}
                       </View>
                     </View>
@@ -1062,7 +1074,7 @@ const MenuType = ({route}) => {
                     placeholder="Description"
                   />
 
-                  <Text
+                  {/* <Text
                     style={{
                       color: 'black',
                       marginLeft: 10,
@@ -1083,7 +1095,7 @@ const MenuType = ({route}) => {
                     multiline={true}
                     onChangeText={text => setIngred(text)}
                     placeholder="Ingredients"
-                  />
+                  /> */}
                 </View>
 
                 <View style={{flexDirection: 'row', marginLeft: 120}}>

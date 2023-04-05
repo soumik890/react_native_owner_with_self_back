@@ -170,6 +170,17 @@ const Menu1 = ({brandInfo}) => {
     },
     TriggerTouchableComponent: TouchableHighlight,
   };
+
+  const AvailableCaller = item => {
+    console.log(item);
+    apiAxios1('menu', {
+      menu_id: item.menu_id,
+      is_active: item.is_active == 1 ? 0 : 1,
+      action: 'available',
+    }).then(response => {
+      setactionM(!actionM);
+    });
+  };
   return (
     <View style={styles.containerMain}>
       <Modal
@@ -296,7 +307,9 @@ const Menu1 = ({brandInfo}) => {
                   disabled={true}
                   style={{
                     marginTop: 2,
-                    backgroundColor: '#f7f7f7',
+                    backgroundColor: item.is_active == 1 ? '#f7f7f7' : 'grey',
+                    // backgroundColor: '#f7f7f7',
+                    opacity: item.is_active == 1 ? 1 : 0.5,
                     elevation: 15,
                     // borderRadius: 5,
                   }}>
@@ -441,43 +454,96 @@ const Menu1 = ({brandInfo}) => {
                         // alignSelf: 'center',
                       }}>
                       {/* *********************************************************************************************** */}
-                      <View style={{marginTop: -20, marginLeft: -20}}>
-                        <Menu>
-                          <MenuTrigger
-                            text="..."
-                            customStyles={triggerStyles}
-                          />
+                      <View style={{flexDirection: 'row'}}>
+                        <View style={{marginTop: -20, marginLeft: -20}}>
+                          <Menu>
+                            <MenuTrigger
+                              text="..."
+                              customStyles={triggerStyles}
+                            />
 
-                          <MenuOptions customStyles={blockStyles}>
-                            <MenuOption
-                              onSelect={() => {}}
-                              customStyles={blockStyles}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  ButtonAlert(item);
-                                }}>
-                                <View
-                                  style={{flexDirection: 'row', marginTop: 10}}>
-                                  <Text style={{color: 'black'}}>Delete</Text>
-                                </View>
-                              </TouchableOpacity>
-                            </MenuOption>
-                            <MenuOption
-                              onSelect={() => {}}
-                              customStyles={blockStyles}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  UpdateMenu(item);
-                                }}>
-                                <View style={{flexDirection: 'row'}}>
-                                  <Text style={{color: 'black'}}>
-                                    Edit Menu
-                                  </Text>
-                                </View>
-                              </TouchableOpacity>
-                            </MenuOption>
-                          </MenuOptions>
-                        </Menu>
+                            <MenuOptions customStyles={blockStyles}>
+                              <MenuOption
+                                onSelect={() => {}}
+                                customStyles={blockStyles}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    ButtonAlert(item);
+                                  }}>
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      marginTop: 10,
+                                    }}>
+                                    <Text style={{color: 'black'}}>Delete</Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </MenuOption>
+                              <MenuOption
+                                onSelect={() => {}}
+                                customStyles={blockStyles}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    UpdateMenu(item);
+                                  }}>
+                                  <View style={{flexDirection: 'row'}}>
+                                    <Text style={{color: 'black'}}>
+                                      Edit Menu
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              </MenuOption>
+                              <MenuOption
+                                onSelect={() => {}}
+                                customStyles={blockStyles}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    // UpdateMenu(item);
+                                    AvailableCaller(item);
+                                  }}>
+                                  <View
+                                    style={{
+                                      flexDirection: 'row',
+                                      backgroundColor:
+                                        item.is_active == 1 ? 'green' : 'red',
+                                      borderRadius: 10,
+                                      justifyContent: 'center',
+                                    }}>
+                                    {item.is_active == 1 ? (
+                                      <Text
+                                        style={{
+                                          color: 'white',
+                                          fontSize: 13,
+                                        }}>
+                                        Available
+                                      </Text>
+                                    ) : (
+                                      <Text
+                                        style={{
+                                          color: 'white',
+                                          fontSize: 13,
+                                        }}>
+                                        Not Available
+                                      </Text>
+                                    )}
+                                  </View>
+                                </TouchableOpacity>
+                              </MenuOption>
+                            </MenuOptions>
+                          </Menu>
+                        </View>
+
+                        <TouchableOpacity>
+                          <Image
+                            source={require('../assets/drag.png')}
+                            style={{
+                              height: 23,
+                              width: 15,
+                              marginLeft: 15,
+                              marginTop: 10,
+                            }}
+                          />
+                        </TouchableOpacity>
                       </View>
 
                       {/* *********************************************************************************************** */}
@@ -700,7 +766,7 @@ const Menu1 = ({brandInfo}) => {
                             }}
                           />
 
-                          <Text
+                          {/* <Text
                             style={{
                               marginTop: 10,
                               color: 'black',
@@ -722,7 +788,7 @@ const Menu1 = ({brandInfo}) => {
                             onChangeText={text => {
                               setUpIngred(text);
                             }}
-                          />
+                          /> */}
                         </View>
                       </View>
                       <View

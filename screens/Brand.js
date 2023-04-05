@@ -92,26 +92,26 @@ function Brand() {
     });
   };
 
-  const AddType = () => {
-    setAddFlag(true);
-  };
+  // const AddType = () => {
+  //   setAddFlag(true);
+  // };
 
-  const submitType = () => {
-    console.log(Name);
-    apiAxios1('brand', {
-      brand: Name,
-      brand_image: 'null',
-      user_id: user,
-      rank_order: 1,
-      c_user: user,
-      is_active: 1,
-      action: 'create',
-    }).then(res => {
-      console.log(res.data.status);
-      setAddFlag(false);
-      setactionB(!actionB);
-    });
-  };
+  // const submitType = () => {
+  //   console.log(Name);
+  //   apiAxios1('brand', {
+  //     brand: Name,
+  //     brand_image: 'null',
+  //     user_id: user,
+  //     rank_order: 1,
+  //     c_user: user,
+  //     is_active: 1,
+  //     action: 'create',
+  //   }).then(res => {
+  //     console.log(res.data.status);
+  //     setAddFlag(false);
+  //     setactionB(!actionB);
+  //   });
+  // };
 
   const deleteType = item => {
     console.log(item);
@@ -436,56 +436,90 @@ function Brand() {
 
           <PlanForm />
 
+          <View
+            style={{marginTop: 5, flexDirection: 'row', alignSelf: 'center'}}>
+            <TextInput
+              mode="outlined"
+              label="Apply Coupon"
+              placeholder="Apply Coupon"
+              style={{
+                height: 35,
+                width: '50%',
+                alignSelf: 'center',
+                fontSize: 12,
+              }}
+              theme={{colors: {text: 'black', primary: 'orange'}}}
+              onChangeText={text => setRName(text)}
+            />
+            <Button
+              labelStyle={{
+                fontSize: 8,
+                marginTop: 4,
+                marginBottom: 5,
+              }}
+              style={{
+                width: 60,
+                alignSelf: 'center',
+                height: 20,
+                marginLeft: 10,
+                // marginBottom: 10,
+              }}
+              mode="contained"
+              color="orange"
+              onPress={{}}>
+              apply
+            </Button>
+          </View>
+
           <View>
-            <View style={{flexDirection: 'row', marginLeft: 80, marginTop: 20}}>
-              <TouchableOpacity
-                onPress={submitRest}
-                style={{
-                  // marginLeft: 250,
-                  width: 60,
-                  height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  backgroundColor: '#ee8b8d',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Submit
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setAddRestFlag(false);
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 20,
+                alignSelf: 'center',
+                marginBottom: 10,
+              }}>
+              <Button
+                labelStyle={{
+                  fontSize: 8,
+                  marginTop: 4,
+                  marginBottom: 5,
                 }}
                 style={{
-                  marginLeft: 50,
-                  width: 60,
+                  width: 80,
+                  alignSelf: 'center',
                   height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  justifyContent: 'center',
-                  backgroundColor: '#88cdea',
+                  marginBottom: 10,
+                }}
+                mode="contained"
+                color="#fc5d4a"
+                onPress={
+                  // ButtonAlert(item);
+                  submitRest
+                }>
+                Submit
+              </Button>
+
+              <Button
+                labelStyle={{
+                  fontSize: 8,
+                  marginTop: 4,
+                  marginBottom: 5,
+                }}
+                style={{
+                  width: 80,
+                  alignSelf: 'center',
+                  height: 20,
+                  marginBottom: 10,
+                  marginLeft: 50,
+                }}
+                mode="contained"
+                color="#88cdea"
+                onPress={() => {
+                  setAddRestFlag(false);
                 }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
+                cancel
+              </Button>
             </View>
           </View>
         </View>
@@ -522,47 +556,23 @@ function Brand() {
             position: 'absolute',
             flex: 1,
           }}>
-          <TouchableOpacity
-            // onPress={AddType}
-            onPress={AddRest}
+          <Button
+            labelStyle={{
+              fontSize: 9,
+              marginTop: 4,
+              marginBottom: 5,
+            }}
             style={{
-              marginLeft: 260,
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <Text
-                style={{
-                  color: 'black',
-                  fontWeight: 'bold',
-                  color: 'red',
-                  // fontStyle: 'italic',
-                  fontSize: 10,
-                  alignSelf: 'center',
-                  // marginLeft: 5,
-                  marginRight: 5,
-                  textTransform: 'capitalize',
-                }}>
-                Restaurants
-              </Text>
-              <View
-                style={{
-                  width: 25,
-                  height: 25,
-                  backgroundColor: '#ee6601',
-                  borderRadius: 5,
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 40,
-                    alignSelf: 'center',
-                    marginTop: -17,
-                  }}>
-                  +
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+              width: 130,
+              alignSelf: 'center',
+              height: 20,
+              marginLeft: 210,
+            }}
+            mode="contained"
+            color="#fc5d4a"
+            onPress={AddRest}>
+            {/* Submit */}+ Restaurants
+          </Button>
         </View>
       </View>
       <ScrollView

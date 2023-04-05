@@ -249,7 +249,7 @@ function LogoTitle() {
                 }}
                 mode="contained"
                 color="green"
-                onPress={() => console.log('Pressed')}>
+                onPress={() => navigation.navigate('access')}>
                 {' '}
                 Go To Access{' '}
               </Button>

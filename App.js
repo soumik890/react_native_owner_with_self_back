@@ -2,6 +2,7 @@ import React from 'react';
 import LoginScreen from './screens/LoginScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import ContextTab from './contextApi/ContextTab';
 import MenuType from './screens/menutype';
 import Menu from './screens/menu';
@@ -12,6 +13,8 @@ import Upload from './screens/Upload';
 import Publish from './screens/publish';
 import {MenuProvider} from 'react-native-popup-menu';
 import menuModal from './screens/menuModal';
+import Access from './screenFroms/Access';
+import Logs from './screenFroms/Logs';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -19,6 +22,7 @@ const App = () => {
     <NavigationContainer>
       <MenuProvider>
         <ContextTab>
+          {/* <GestureHandlerRootView> */}
           <Stack.Navigator>
             <Stack.Screen
               name="LoginScreen"
@@ -65,7 +69,18 @@ const App = () => {
               component={menuModal}
               options={{headerShown: false}}
             />
+            <Stack.Screen
+              name="access"
+              component={Access}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="logs"
+              component={Logs}
+              options={{headerShown: false}}
+            />
           </Stack.Navigator>
+          {/* </GestureHandlerRootView> */}
         </ContextTab>
       </MenuProvider>
     </NavigationContainer>

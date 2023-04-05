@@ -13,6 +13,11 @@ import LogoTitle from './LogoTitle';
 import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
 import apiAxios1 from '../ApiCaller/apiAxios1';
+import {Button} from 'react-native-paper';
+
+import {captureScreen} from 'react-native-view-shot';
+const RNFS = require('react-native-fs');
+// const fs = require('fs')
 
 const Publish = () => {
   const navigation = useNavigation();
@@ -27,10 +32,10 @@ const Publish = () => {
 
   useEffect(() => {
     apiAxios1('allmenu', {
-      userid: UserID,
-      restid: Rest.restid,
-      userid: UserID,
-      restid: Rest.restid,
+      user_id: UserID,
+      restaurant_id: Rest.restaurant_id,
+      user_id: UserID,
+      restaurant_id: Rest.restaurant_id,
       action: 'build',
     }).then(Response => {
       // setDispMenu(Response?.data);
@@ -38,6 +43,22 @@ const Publish = () => {
       console.log(Response?.data?.data?.restaurant[0].url);
     });
   }, []);
+
+  const ScreenShot = () => {
+    captureScreen({
+      format: 'png',
+      quality: 0.99,
+    }).then(
+      uri => {
+        console.log('Image saved to', uri),
+          RNFS.readFile(uri, 'base64').then(res => {
+            let urlString = 'data:image/jpeg;base64,' + res;
+            console.log(urlString);
+          });
+      },
+      // error => console.error('Oops, snapshot failed', error),
+    );
+  };
 
   return (
     <View style={styles.containerMain}>
@@ -55,7 +76,7 @@ const Publish = () => {
             fontWeight: 'bold',
             marginBottom: 10,
           }}>
-          {Rest.rest}
+          {Rest.restaurant}
         </Text>
       </View>
 
@@ -68,6 +89,25 @@ const Publish = () => {
         />
         <Text style={{color: 'black', marginTop: 20}}>{url}</Text>
       </View>
+
+      <Button
+        labelStyle={{
+          fontSize: 12,
+          marginTop: 5,
+          // marginBottom: 5,
+        }}
+        style={{
+          width: 200,
+          alignSelf: 'center',
+          height: 30,
+          marginBottom: 10,
+          marginTop: 30,
+        }}
+        mode="contained"
+        color="#ec8c8c"
+        onPress={ScreenShot}>
+        Download PDF
+      </Button>
 
       <View style={styles.bottomView}>
         <TouchableOpacity

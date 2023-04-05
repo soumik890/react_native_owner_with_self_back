@@ -10,8 +10,11 @@ import React, {useContext} from 'react';
 import Modal from 'react-native-modal';
 import {exportvalues} from '../contextApi/ContextTab';
 import {Button} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 const MenuModal = () => {
+  const navigation = useNavigation();
+
   const {menuModalIsOpen, setMenuModalIsOpen} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
@@ -43,36 +46,50 @@ const MenuModal = () => {
         <View
           style={{
             flex: 1,
-            // width: 300,
-            // alignSelf: 'flex-start',
-            // height: 1000,
             marginLeft: 120,
-            marginRight: -50,
+            marginRight: -80,
+            marginTop: 31,
           }}>
-          <View style={{marginBottom: 0}} showsVerticalScrollIndicator={false}>
+          <View
+            style={{
+              width: 250,
+              backgroundColor: 'white',
+              alignItems: 'center',
+              elevation: 5,
+              borderRadius: 5,
+              // marginBottom: 10,
+            }}>
             <View
               style={{
-                width: windowWidth - 150,
-                height: 350,
-                backgroundColor: 'white',
-                // padding: 35,
-                // marginRight: -50,
-                alignItems: 'center',
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 4,
-                elevation: 5,
+                backgroundColor: 'orange',
+                width: '100%',
+                borderRadius: 5,
+                padding: 5,
+                alignSelf: 'center',
+                justifyContent: 'center',
+                // flex: 1,
               }}>
-              <Text>{'\n'}</Text>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  fontSize: 12,
+                }}>
+                {Brand.brand}
+              </Text>
+              <Text
+                style={{
+                  color: 'black',
+                  fontSize: 18,
+                  textTransform: 'uppercase',
+                  fontWeight: 'bold',
+                }}>
+                {Rest.restaurant}
+              </Text>
+            </View>
 
-              <Text style={{color: 'black'}}>{Brand.brand}</Text>
-              <Text style={{color: 'black'}}>{Rest.restaurant}</Text>
-              <Text>{'\n'}</Text>
-
+            <View style={{margin: 5}}>
               <Button
                 // icon="camera"
                 mode="contained"
@@ -93,7 +110,7 @@ const MenuModal = () => {
               <Button
                 // icon="camera"
                 mode="contained"
-                onPress={() => console.log('Pressed')}>
+                onPress={() => navigation.navigate('logs')}>
                 Logs
               </Button>
             </View>
