@@ -34,8 +34,6 @@ function Rest({data}) {
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
   const {actionR, setactionR} = useContext(exportvalues);
-  const {restCounter, setRestCounter} = useContext(exportvalues);
-  const {brandCounter, setBrandCounter} = useContext(exportvalues);
   // const {Brand, setBrand} = useContext(exportvalues);
 
   const [Tray, setTray] = useState({});
@@ -47,18 +45,8 @@ function Rest({data}) {
       // brandid: Brand.brandid,
       brand_id: data.brand_id,
     }).then(res => {
-      // console.log('restaurant list', res);
       setTypes(res?.data);
-      setRestCounter(res.data.length);
-      // console.log('rest length is', res.data.length);
-
-      // if (brandCounter == 1 && restCounter == 1) {
-      //   setRest(res?.data[0]);
-
-      //   navigation.navigate('menuType', {data: res?.data[0], brandInfo: data});
-      // } else {
-      //   console.log('not found 1');
-      // }
+      // setRestCounter(res.data.length);
     });
   }, [actionR, Brand]);
 

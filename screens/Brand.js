@@ -33,6 +33,7 @@ function Brand() {
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
   const [RName, setRName] = useState('');
+  const [coupon, setCoupon] = useState('');
   const {UserID} = useContext(exportvalues);
   const user = parseInt(UserID);
   const {actionB, setactionB} = useContext(exportvalues);
@@ -127,12 +128,6 @@ function Brand() {
     });
   };
 
-  // const traySelector = item => {
-  //   console.log('item in tray', item);
-  //   setTray(item);
-  //   setBrand(item);
-  // };
-
   const AddRest = () => {
     setAddRestFlag(true);
   };
@@ -158,6 +153,7 @@ function Brand() {
         console.log('response at value not zero', res.data);
         setAddRestFlag(false);
         setactionR(!actionR);
+        setRName('');
       });
     } else {
       apiAxios1('brand', {
@@ -190,6 +186,7 @@ function Brand() {
           setAddRestFlag(false);
           setactionB(!actionB);
           setactionR(!actionR);
+          setRName('');
         });
       });
     }
@@ -368,10 +365,14 @@ function Brand() {
           </View>
 
           <Dropdown
-            style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+            style={[
+              styles.dropdown,
+              isFocus && {borderColor: 'orange', textColor: 'red'},
+            ]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
+            itemTextStyle={{color: 'black'}}
             iconStyle={styles.iconStyle}
             data={data}
             search
@@ -395,20 +396,16 @@ function Brand() {
                 mode="outlined"
                 label="Brand Name"
                 placeholder="Brand Name"
-                textColor={'red'}
+                activeOutlineColor="orange"
+                // textColor="red"
+                // itemTextStyle={{color: 'red'}}
                 style={{
                   height: 35,
                   width: '90%',
                   alignSelf: 'center',
                   fontSize: 12,
-                }}
-                theme={{
-                  colors: {
-                    text: 'black',
-                    primary: 'orange',
-                    onSurfaceVariant: 'green',
-                  },
-                  fontSize: {text: 12},
+                  // color: 'red',
+                  // backgroundColor: 'red',
                 }}
                 onChangeText={text => setName(text)}
               />
@@ -422,14 +419,16 @@ function Brand() {
               mode="outlined"
               label="Restaurant Name"
               placeholder="Restaurant Name"
-              textColor={'red'}
+              activeOutlineColor="orange"
+              // textColor={'red'}
               style={{
                 height: 35,
                 width: '90%',
                 alignSelf: 'center',
                 fontSize: 12,
+                // textColor: 'red',
               }}
-              theme={{colors: {text: 'black', primary: 'orange'}}}
+              // theme={{colors: {text: 'black', primary: 'orange'}}}
               onChangeText={text => setRName(text)}
             />
           </View>
@@ -442,14 +441,16 @@ function Brand() {
               mode="outlined"
               label="Apply Coupon"
               placeholder="Apply Coupon"
+              // selectionColor="red"
+              activeOutlineColor="orange"
               style={{
                 height: 35,
                 width: '50%',
                 alignSelf: 'center',
                 fontSize: 12,
               }}
-              theme={{colors: {text: 'black', primary: 'orange'}}}
-              onChangeText={text => setRName(text)}
+              // theme={{colors: {primary: 'orange'}}}
+              onChangeText={text => setCoupon(text)}
             />
             <Button
               labelStyle={{
@@ -465,8 +466,8 @@ function Brand() {
                 // marginBottom: 10,
               }}
               mode="contained"
-              color="orange"
-              onPress={{}}>
+              color={coupon !== '' ? 'orange' : 'grey'}
+              onPress={coupon !== '' ? () => {} : () => {}}>
               apply
             </Button>
           </View>
@@ -492,11 +493,8 @@ function Brand() {
                   marginBottom: 10,
                 }}
                 mode="contained"
-                color="#fc5d4a"
-                onPress={
-                  // ButtonAlert(item);
-                  submitRest
-                }>
+                color={RName !== '' ? '#fc5d4a' : 'grey'}
+                onPress={RName !== '' ? submitRest : () => {}}>
                 Submit
               </Button>
 
@@ -798,12 +796,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'red',
     fontSize: 12,
+    color: 'black',
   },
   placeholderStyle: {
     fontSize: 12,
+    color: 'red',
   },
   selectedTextStyle: {
     fontSize: 12,
+    color: 'black',
   },
   iconStyle: {
     width: 15,

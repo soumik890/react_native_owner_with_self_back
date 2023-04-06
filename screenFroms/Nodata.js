@@ -14,7 +14,7 @@ const Nodata = () => {
         width: DeviceWidth,
       }}>
       <Image
-        source={require('../assets/no-data.png')}
+        source={require('../assets/no-data.gif')}
         style={{
           width: 200,
           height: 200,
@@ -28,11 +28,11 @@ const Nodata = () => {
       <Image
         source={require('../assets/nodatatext.png')}
         style={{
-          width: 120,
-          height: 15,
+          width: 145,
+          height: 20,
           borderRadius: 5,
           marginLeft: 5,
-          marginTop: -50,
+          marginTop: -60,
           alignSelf: 'center',
         }}
       />
