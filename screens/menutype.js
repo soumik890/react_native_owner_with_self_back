@@ -461,727 +461,685 @@ const MenuType = ({route}) => {
 
       <LogoTitle />
 
-      <View
-        style={{
-          width: DeviceWidth,
-          backgroundColor: '#ecba5c',
-          height: 50,
-          flexDirection: 'row',
-          // marginLeft: 20,
-          // flex: 1,
-        }}>
-        <View>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              color: 'white',
-              // fontStyle: 'italic',
-              fontSize: 13,
-              alignSelf: 'center',
-              marginLeft: 25,
-              textTransform: 'uppercase',
-            }}>
-            {route.params.brandInfo.brand}
-          </Text>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              color: 'black',
-              // fontStyle: 'italic',
-              fontSize: 18,
-              alignSelf: 'center',
-              marginLeft: 25,
-              textTransform: 'uppercase',
-            }}>
-            {Rest.restaurant}
-          </Text>
-        </View>
-
+      <View>
         <View
           style={{
-            marginTop: 2,
-            alignSelf: 'center',
+            width: DeviceWidth,
+            backgroundColor: '#ecba5c',
+            height: 50,
             flexDirection: 'row',
-            position: 'absolute',
-            marginLeft: 260,
+            // marginLeft: 20,
+            // flex: 1,
           }}>
-          {menuCounter > 0 && menuTypeCounter > 0 ? (
+          <View>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                color: 'white',
+                // fontStyle: 'italic',
+                fontSize: 13,
+                alignSelf: 'center',
+                marginLeft: 25,
+                textTransform: 'uppercase',
+              }}>
+              {route.params.brandInfo.brand}
+            </Text>
+            <Text
+              style={{
+                color: 'black',
+                fontWeight: 'bold',
+                color: 'black',
+                // fontStyle: 'italic',
+                fontSize: 18,
+                alignSelf: 'center',
+                marginLeft: 25,
+                textTransform: 'uppercase',
+              }}>
+              {Rest.restaurant}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              marginTop: 2,
+              alignSelf: 'center',
+              flexDirection: 'row',
+              position: 'absolute',
+              marginLeft: 260,
+            }}>
+            {menuCounter > 0 && menuTypeCounter > 0 ? (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('publish');
+                }}>
+                <Image
+                  source={require('../assets/QR.png')}
+                  style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+                />
+              </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
+
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('publish');
-              }}>
+                setMenuModalIsOpen(true);
+              }}
+              // onPressIn={() => {
+              //   navigation.navigate('menumodal');
+              // }}
+            >
               <Image
-                source={require('../assets/QR.png')}
-                style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+                source={require('../assets/ham5.png')}
+                style={{width: 25, height: 25, marginLeft: 13}}
               />
             </TouchableOpacity>
-          ) : (
-            <View></View>
-          )}
-
-          <TouchableOpacity
-            onPress={() => {
-              setMenuModalIsOpen(true);
-            }}
-            // onPressIn={() => {
-            //   navigation.navigate('menumodal');
-            // }}
-          >
-            <Image
-              source={require('../assets/ham5.png')}
-              style={{width: 25, height: 25, marginLeft: 13}}
-            />
-          </TouchableOpacity>
+          </View>
         </View>
+        <TouchableOpacity
+          onPress={AddType}
+          style={{
+            // marginTop: -5,
+            padding: 8,
+            // margin: 10,
+            // marginBottom: 10,
+            backgroundColor: '#7f7f7f',
+            width: '90%',
+            elevation: 15,
+            alignSelf: 'center',
+            borderRadius: 5,
+          }}>
+          <Text style={{color: 'white'}}>+ New Menu Type</Text>
+        </TouchableOpacity>
       </View>
 
       {Types.length > 0 ? (
-        <View>
-          <ScrollView
-            style={{marginBottom: 10}}
-            keyboardShouldPersistTaps={'always'}>
-            {!AddMenuFlag ? (
-              Types.map((item, index) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      selectMenuType(item);
-                    }}
+        // <View>
+        <ScrollView
+          style={{marginBottom: 50}}
+          keyboardShouldPersistTaps={'always'}>
+          {!AddMenuFlag ? (
+            Types.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    selectMenuType(item);
+                  }}
+                  style={{
+                    // marginTop: 10,
+                    // marginLeft: 10,
+                    // marginBottom: 10,
+                    margin: 10,
+                    // width: DeviceWidth - 20,
+                    // backgroundColor: '#38b05f',
+                    // backgroundColor: '#b7b7b7',
+                    width: '90%',
+                    alignSelf: 'center',
+                    backgroundColor: '#fad06e',
+                    elevation: 15,
+                    borderRadius: 5,
+                    // marginBottom: UpdateId == item?.Id ? 60 : 0,
+                  }}>
+                  <View
                     style={{
-                      // marginTop: 10,
-                      // marginLeft: 10,
-                      // marginBottom: 10,
-                      margin: 10,
-                      // width: DeviceWidth - 20,
-                      // backgroundColor: '#38b05f',
-                      // backgroundColor: '#b7b7b7',
-                      width: '90%',
-                      alignSelf: 'center',
-                      backgroundColor: '#fad06e',
-                      elevation: 15,
-                      borderRadius: 5,
-                      // marginBottom: UpdateId == item?.Id ? 60 : 0,
+                      flexDirection: 'row',
+                      marginTop: 10,
+                      marginBottom: 10,
                     }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        marginTop: 10,
-                        marginBottom: 10,
-                      }}>
-                      <View>
-                        {item.menu_type_image !== 'null' ? (
-                          <TouchableOpacity
-                            onPress={() => {
-                              navigation.navigate('upload', {
-                                page: 'MT',
-                                data: item,
-                              });
-                            }}>
-                            <Image
-                              source={{uri: item.menu_type_image}}
-                              style={{
-                                width: 25,
-                                height: 25,
-                                marginLeft: 10,
-                                borderRadius: 5,
-                              }}
-                            />
-                          </TouchableOpacity>
-                        ) : (
-                          <TouchableOpacity
-                            onPress={() => {
-                              navigation.navigate('upload', {
-                                page: 'MT',
-                                data: item,
-                              });
-                            }}>
-                            <Image
-                              source={require('../assets/noimg.png')}
-                              style={{width: 25, height: 25, marginLeft: 10}}
-                            />
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                      <View style={{marginLeft: 10, flexDirection: 'column'}}>
-                        <Text
-                          style={{
-                            color: 'black',
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                            fontSize: 15,
-                          }}>
-                          {item.menu_type}
-                        </Text>
-                      </View>
-
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          position: 'absolute',
-                          marginLeft: 230,
-                          marginTop: 5,
-                        }}>
+                    <View>
+                      {item.menu_type_image !== 'null' ? (
                         <TouchableOpacity
                           onPress={() => {
-                            traySelector(item);
+                            navigation.navigate('upload', {
+                              page: 'MT',
+                              data: item,
+                            });
                           }}>
                           <Image
-                            source={require('../assets/ham4.png')}
+                            source={{uri: item.menu_type_image}}
                             style={{
-                              width: 10,
+                              width: 25,
                               height: 25,
-                              marginLeft: 20,
-                              marginTop: -5,
-                              // borderRadius: 5,
+                              marginLeft: 10,
+                              borderRadius: 5,
                             }}
                           />
                         </TouchableOpacity>
-                        {MenuType == item ? (
-                          <TouchableOpacity
-                            onPress={() => {
-                              selectMenuType();
+                      ) : (
+                        <TouchableOpacity
+                          onPress={() => {
+                            navigation.navigate('upload', {
+                              page: 'MT',
+                              data: item,
+                            });
+                          }}>
+                          <Image
+                            source={require('../assets/noimg.png')}
+                            style={{width: 25, height: 25, marginLeft: 10}}
+                          />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    <View style={{marginLeft: 10, flexDirection: 'column'}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontWeight: 'bold',
+                          textTransform: 'uppercase',
+                          fontSize: 15,
+                        }}>
+                        {item.menu_type}
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        position: 'absolute',
+                        marginLeft: 230,
+                        marginTop: 5,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          traySelector(item);
+                        }}>
+                        <Image
+                          source={require('../assets/ham4.png')}
+                          style={{
+                            width: 10,
+                            height: 25,
+                            marginLeft: 20,
+                            marginTop: -5,
+                            // borderRadius: 5,
+                          }}
+                        />
+                      </TouchableOpacity>
+                      {MenuType == item ? (
+                        <TouchableOpacity
+                          onPress={() => {
+                            selectMenuType();
+                          }}
+                          onPressIn={() => {
+                            setTray({});
+                          }}>
+                          <Image
+                            source={require('../assets/wrong.png')}
+                            style={{
+                              width: 15,
+                              height: 15,
+                              marginLeft: 20,
                             }}
-                            onPressIn={() => {
-                              setTray({});
-                            }}>
+                          />
+                        </TouchableOpacity>
+                      ) : (
+                        <View>
+                          <TouchableOpacity>
                             <Image
-                              source={require('../assets/wrong.png')}
+                              source={require('../assets/drag.png')}
                               style={{
+                                height: 23,
                                 width: 15,
-                                height: 15,
-                                marginLeft: 20,
+                                marginLeft: 30,
+                                marginTop: -5,
                               }}
                             />
                           </TouchableOpacity>
-                        ) : (
-                          <View>
-                            <TouchableOpacity>
-                              <Image
-                                source={require('../assets/drag.png')}
-                                style={{
-                                  height: 23,
-                                  width: 15,
-                                  marginLeft: 30,
-                                  marginTop: -5,
-                                }}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        )}
+                        </View>
+                      )}
+                    </View>
+                  </View>
+
+                  {UpdateId == item?.menutype_id ? (
+                    <View style={{marginTop: 15}}>
+                      <View>
+                        <View style={{}}>
+                          <Text
+                            style={{
+                              color: 'black',
+                              fontWeight: 'bold',
+                              marginLeft: 10,
+                            }}>
+                            Menu Type
+                          </Text>
+                          <TextInput
+                            style={{
+                              height: 35,
+                              // margin: 12,
+                              // width: 350,
+                              borderWidth: 1,
+                              color: 'black',
+                              borderRadius: 5,
+                              borderColor: 'grey',
+                              margin: 10,
+                            }}
+                            multiline={true}
+                            onChangeText={text => setUpType(text)}
+                            value={UpType}
+                          />
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <Button
+                          labelStyle={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            marginBottom: 5,
+                          }}
+                          style={{
+                            width: 70,
+                            alignSelf: 'center',
+                            height: 20,
+                            marginBottom: 10,
+                          }}
+                          mode="contained"
+                          color="#ec8c8c"
+                          onPress={UpdateTypeName}>
+                          Save
+                        </Button>
+
+                        <Button
+                          labelStyle={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            marginBottom: 5,
+                          }}
+                          style={{
+                            width: 70,
+                            alignSelf: 'center',
+                            height: 20,
+                            marginBottom: 10,
+                            marginLeft: 20,
+                          }}
+                          mode="contained"
+                          color="skyblue"
+                          onPress={() => {
+                            setUpdateId(null);
+                          }}>
+                          cancel
+                        </Button>
                       </View>
                     </View>
-
-                    {UpdateId == item?.menutype_id ? (
-                      <View style={{marginTop: 15}}>
-                        <View>
-                          <View style={{marginLeft: 10}}>
-                            <Text
-                              style={{
-                                marginBottom: 10,
-                                color: 'black',
-                                fontWeight: 'bold',
-                              }}>
-                              Menu Type
-                            </Text>
-                            <TextInput
-                              style={{
-                                height: 35,
-                                // margin: 12,
-                                width: 350,
-                                borderWidth: 1,
-                                color: 'black',
-                                borderRadius: 5,
-                                borderColor: 'grey',
-                              }}
-                              multiline={true}
-                              onChangeText={text => setUpType(text)}
-                              value={UpType}
-                            />
-                          </View>
-                        </View>
+                  ) : (
+                    <View>
+                      {Tray == item ? (
                         <View
                           style={{
                             flexDirection: 'row',
-                            justifyContent: 'center',
+                            justifyContent: 'flex-start',
+                            // marginRight: 10,
+                            marginLeft: 10,
+                            marginBottom: 10,
                           }}>
-                          <TouchableOpacity
-                            onPress={UpdateTypeName}
-                            style={{
-                              // marginLeft: 200,
-                              width: 80,
-                              height: 40,
-                              backgroundColor: 'skyblue',
-                              borderRadius: 5,
-                              alignContent: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            <Text
-                              style={{
-                                color: 'black',
-                                alignSelf: 'center',
-                                fontWeight: 'bold',
-                                fontSize: 18,
-                              }}>
-                              Save
-                            </Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            style={{
-                              marginLeft: 50,
-                              width: 80,
-                              height: 40,
-                              backgroundColor: 'skyblue',
-                              borderRadius: 5,
-                              alignContent: 'center',
-                              justifyContent: 'center',
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
                             }}
-                            onPress={() => {
-                              setUpdateId(null);
-                            }}>
-                            <Text
-                              style={{
-                                color: 'black',
-                                alignSelf: 'center',
-                                fontWeight: 'bold',
-                                fontSize: 18,
-                              }}>
-                              cancel
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    ) : (
-                      <View>
-                        {Tray == item ? (
-                          <View
                             style={{
-                              flexDirection: 'row',
-                              justifyContent: 'flex-start',
-                              // marginRight: 10,
-                              marginLeft: 10,
+                              width: 70,
+                              alignSelf: 'center',
+                              height: 20,
                               marginBottom: 10,
+                            }}
+                            mode="contained"
+                            color="#ec8c8c"
+                            onPress={() => {
+                              ButtonAlert(item);
                             }}>
-                            <Button
-                              labelStyle={{
-                                fontSize: 8,
-                                marginTop: 4,
-                                marginBottom: 5,
-                              }}
-                              style={{
-                                width: 70,
-                                alignSelf: 'center',
-                                height: 20,
-                                marginBottom: 10,
-                              }}
-                              mode="contained"
-                              color="#ec8c8c"
-                              onPress={() => {
-                                ButtonAlert(item);
-                              }}>
-                              Delete
-                            </Button>
+                            Delete
+                          </Button>
 
-                            <Button
-                              labelStyle={{
-                                fontSize: 8,
-                                marginTop: 4,
-                                marginBottom: 5,
-                              }}
-                              style={{
-                                width: 60,
-                                alignSelf: 'center',
-                                height: 20,
-                                marginBottom: 10,
-                                marginLeft: 5,
-                                marginRight: 5,
-                              }}
-                              mode="contained"
-                              color="skyblue"
-                              onPress={() => {
-                                UpdateType(item);
-                              }}>
-                              edit
-                            </Button>
-
-                            <Button
-                              labelStyle={{
-                                fontSize: 8,
-                                marginTop: 4,
-                                marginBottom: 5,
-                              }}
-                              style={{
-                                width: 80,
-                                alignSelf: 'center',
-                                height: 20,
-                                marginBottom: 10,
-                                // marginLeft: 5,
-                                marginRight: 5,
-                              }}
-                              mode="contained"
-                              color="pink"
-                              onPress={() => {
-                                AddMenu();
-                              }}>
-                              Add menu
-                            </Button>
-
-                            <Button
-                              labelStyle={{
-                                fontSize: 8,
-                                marginTop: 4,
-                                marginBottom: 5,
-                              }}
-                              style={{
-                                width: 70,
-                                alignSelf: 'center',
-                                height: 20,
-                                marginBottom: 10,
-                              }}
-                              mode="contained"
-                              color="green"
-                              onPress={() => {
-                                setTray({});
-                              }}>
-                              Cancel
-                            </Button>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-
-                        {MenuType == item ? (
-                          <View
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
                             style={{
-                              width: '100%',
-                              alignSelf: 'flex-end',
+                              width: 60,
+                              alignSelf: 'center',
+                              height: 20,
+                              marginBottom: 10,
+                              marginLeft: 5,
+                              marginRight: 5,
+                            }}
+                            mode="contained"
+                            color="skyblue"
+                            onPress={() => {
+                              UpdateType(item);
                             }}>
-                            <Menu1 brandInfo={route.params.brandInfo} />
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                );
-              })
-            ) : (
-              <View>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontWeight: 'bold',
-                    }}>
-                    Add new menu
-                  </Text>
+                            edit
+                          </Button>
 
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 10,
-                      fontWeight: 'bold',
-                    }}>
-                    Name
-                  </Text>
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
+                            style={{
+                              width: 80,
+                              alignSelf: 'center',
+                              height: 20,
+                              marginBottom: 10,
+                              // marginLeft: 5,
+                              marginRight: 5,
+                            }}
+                            mode="contained"
+                            color="pink"
+                            onPress={() => {
+                              AddMenu();
+                            }}>
+                            Add menu
+                          </Button>
 
-                  <TextInput
-                    style={{
-                      height: 40,
-                      margin: 12,
-                      borderWidth: 1,
-                      padding: 10,
-                      color: 'black',
-                    }}
-                    multiline={true}
-                    onChangeText={text => setName(text)}
-                    placeholder="Name"
-                  />
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
+                            style={{
+                              width: 70,
+                              alignSelf: 'center',
+                              height: 20,
+                              marginBottom: 10,
+                            }}
+                            mode="contained"
+                            color="green"
+                            onPress={() => {
+                              setTray({});
+                            }}>
+                            Cancel
+                          </Button>
+                        </View>
+                      ) : (
+                        <View></View>
+                      )}
 
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 5,
-                      fontWeight: 'bold',
-                    }}>
-                    Price
-                  </Text>
-                  <TextInput
-                    style={{
-                      height: 40,
-                      margin: 12,
-                      borderWidth: 1,
-                      padding: 10,
-                      color: 'black',
-                    }}
-                    multiline={true}
-                    onChangeText={text => setPrice(text)}
-                    placeholder="Price"
-                  />
+                      {MenuType == item ? (
+                        <View
+                          style={{
+                            width: '100%',
+                            alignSelf: 'flex-end',
+                          }}>
+                          <Menu1 brandInfo={route.params.brandInfo} />
+                        </View>
+                      ) : (
+                        <View></View>
+                      )}
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })
+          ) : (
+            <View>
+              <View style={{flex: 1}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: 'bold',
+                  }}>
+                  Add new menu
+                </Text>
 
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 5,
-                      fontWeight: 'bold',
-                    }}>
-                    Spice Id
-                  </Text>
-                  <View style={{flexDirection: 'row', marginLeft: 50}}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setAddSpice(1);
-                      }}
-                      style={{
-                        borderWidth: AddSpice == 1 ? 2 : 0,
-                        height: 40,
-                        width: 45,
-                        borderColor: 'red',
-                      }}>
-                      <Image
-                        source={require('../assets/chilli1.png')}
-                        style={{height: 35, width: 35}}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setAddSpice(2);
-                      }}
-                      style={{
-                        borderWidth: AddSpice == 2 ? 2 : 0,
-                        height: 40,
-                        width: 68,
-                        borderColor: 'red',
-                        marginLeft: 20,
-                      }}>
-                      <Image
-                        source={require('../assets/chilli2.png')}
-                        style={{height: 35, width: 60}}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setAddSpice(3);
-                      }}
-                      style={{
-                        borderWidth: AddSpice == 3 ? 2 : 0,
-                        height: 40,
-                        width: 90,
-                        borderColor: 'red',
-                        marginLeft: 20,
-                      }}>
-                      <Image
-                        source={require('../assets/chilli3.png')}
-                        style={{height: 35, width: 84}}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        setAddSpice(4);
-                      }}
-                      style={{
-                        borderWidth: AddSpice == 4 ? 2 : 0,
-                        height: 40,
-                        width: 40,
-                        borderColor: 'black',
-                        marginLeft: 20,
-                      }}>
-                      <Image
-                        source={require('../assets/nochilli.png')}
-                        style={{height: 35, width: 35}}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 5,
-                      fontWeight: 'bold',
-                    }}>
-                    Veg/Non-Veg
-                  </Text>
-                  <View style={{flexDirection: 'row', marginLeft: 50}}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // setVegInfo(1);
-                        setAddVeg(1);
-                      }}
-                      style={{
-                        borderWidth: AddVeg == 1 ? 2 : 0,
-                        height: 40,
-                        width: 45,
-                        borderColor: 'black',
-                      }}>
-                      <Image
-                        source={require('../assets/veg.png')}
-                        style={{
-                          height: 36,
-                          width: 35,
-                          alignSelf: 'center',
-                        }}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // setVegInfo(2);
-                        setAddVeg(2);
-                      }}
-                      style={{
-                        borderWidth: AddVeg == 2 ? 2 : 0,
-                        height: 40,
-                        width: 45,
-                        borderColor: 'black',
-                        marginLeft: 20,
-                      }}>
-                      <Image
-                        source={require('../assets/nonveg.png')}
-                        style={{
-                          height: 35,
-                          width: 35,
-                          alignSelf: 'center',
-                        }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 5,
-                      fontWeight: 'bold',
-                    }}>
-                    Description
-                  </Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    fontWeight: 'bold',
+                  }}>
+                  Name
+                </Text>
 
-                  <TextInput
-                    style={{
-                      height: 40,
-                      margin: 12,
-                      borderWidth: 1,
-                      padding: 10,
-                      color: 'black',
-                    }}
-                    multiline={true}
-                    onChangeText={text => setDesc(text)}
-                    placeholder="Description"
-                  />
+                <TextInput
+                  style={{
+                    height: 40,
+                    margin: 12,
+                    borderWidth: 1,
+                    padding: 10,
+                    color: 'black',
+                  }}
+                  multiline={true}
+                  onChangeText={text => setName(text)}
+                  placeholder="Name"
+                />
 
-                  {/* <Text
-                    style={{
-                      color: 'black',
-                      marginLeft: 10,
-                      marginTop: 5,
-                      fontWeight: 'bold',
-                    }}>
-                    Ingredients
-                  </Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  Price
+                </Text>
+                <TextInput
+                  style={{
+                    height: 40,
+                    margin: 12,
+                    borderWidth: 1,
+                    padding: 10,
+                    color: 'black',
+                  }}
+                  multiline={true}
+                  onChangeText={text => setPrice(text)}
+                  placeholder="Price"
+                />
 
-                  <TextInput
-                    style={{
-                      height: 40,
-                      margin: 12,
-                      borderWidth: 1,
-                      padding: 10,
-                      color: 'black',
-                    }}
-                    multiline={true}
-                    onChangeText={text => setIngred(text)}
-                    placeholder="Ingredients"
-                  /> */}
-                </View>
-
-                <View style={{flexDirection: 'row', marginLeft: 120}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  Spice Id
+                </Text>
+                <View style={{flexDirection: 'row', marginLeft: 50}}>
                   <TouchableOpacity
-                    onPress={submitMenu}
+                    onPress={() => {
+                      setAddSpice(1);
+                    }}
                     style={{
-                      marginLeft: -30,
-                      width: 80,
+                      borderWidth: AddSpice == 1 ? 2 : 0,
                       height: 40,
-                      backgroundColor: 'skyblue',
-                      borderRadius: 5,
-                      alignContent: 'center',
-                      justifyContent: 'center',
+                      width: 45,
+                      borderColor: 'red',
                     }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        alignSelf: 'center',
-                        fontWeight: 'bold',
-                        fontSize: 18,
-                      }}>
-                      Submit
-                    </Text>
+                    <Image
+                      source={require('../assets/chilli1.png')}
+                      style={{height: 35, width: 35}}
+                    />
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      setAddMenuFlag(false);
-                      // setBackFlag(false);
+                      setAddSpice(2);
                     }}
                     style={{
-                      marginLeft: 50,
-                      width: 80,
+                      borderWidth: AddSpice == 2 ? 2 : 0,
                       height: 40,
-                      backgroundColor: 'skyblue',
-                      borderRadius: 5,
-                      alignContent: 'center',
-                      justifyContent: 'center',
+                      width: 68,
+                      borderColor: 'red',
+                      marginLeft: 20,
                     }}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        alignSelf: 'center',
-                        fontWeight: 'bold',
-                        fontSize: 18,
-                      }}>
-                      cancel
-                    </Text>
+                    <Image
+                      source={require('../assets/chilli2.png')}
+                      style={{height: 35, width: 60}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setAddSpice(3);
+                    }}
+                    style={{
+                      borderWidth: AddSpice == 3 ? 2 : 0,
+                      height: 40,
+                      width: 90,
+                      borderColor: 'red',
+                      marginLeft: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/chilli3.png')}
+                      style={{height: 35, width: 84}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setAddSpice(4);
+                    }}
+                    style={{
+                      borderWidth: AddSpice == 4 ? 2 : 0,
+                      height: 40,
+                      width: 40,
+                      borderColor: 'black',
+                      marginLeft: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/nochilli.png')}
+                      style={{height: 35, width: 35}}
+                    />
                   </TouchableOpacity>
                 </View>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  Veg/Non-Veg
+                </Text>
+                <View style={{flexDirection: 'row', marginLeft: 50}}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // setVegInfo(1);
+                      setAddVeg(1);
+                    }}
+                    style={{
+                      borderWidth: AddVeg == 1 ? 2 : 0,
+                      height: 40,
+                      width: 45,
+                      borderColor: 'black',
+                    }}>
+                    <Image
+                      source={require('../assets/veg.png')}
+                      style={{
+                        height: 36,
+                        width: 35,
+                        alignSelf: 'center',
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      // setVegInfo(2);
+                      setAddVeg(2);
+                    }}
+                    style={{
+                      borderWidth: AddVeg == 2 ? 2 : 0,
+                      height: 40,
+                      width: 45,
+                      borderColor: 'black',
+                      marginLeft: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/nonveg.png')}
+                      style={{
+                        height: 35,
+                        width: 35,
+                        alignSelf: 'center',
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <Text
+                  style={{
+                    color: 'black',
+                    marginLeft: 10,
+                    marginTop: 5,
+                    fontWeight: 'bold',
+                  }}>
+                  Description
+                </Text>
+
+                <TextInput
+                  style={{
+                    height: 40,
+                    margin: 12,
+                    borderWidth: 1,
+                    padding: 10,
+                    color: 'black',
+                  }}
+                  multiline={true}
+                  onChangeText={text => setDesc(text)}
+                  placeholder="Description"
+                />
               </View>
-            )}
-          </ScrollView>
-          <TouchableOpacity
-            onPress={AddType}
-            style={{
-              marginTop: -5,
-              padding: 8,
-              margin: 10,
-              marginBottom: 10,
-              backgroundColor: '#7f7f7f',
-              width: '90%',
-              elevation: 15,
-              alignSelf: 'center',
-              borderRadius: 5,
-            }}>
-            <Text style={{color: 'white'}}>+ New Menu Type</Text>
-          </TouchableOpacity>
-        </View>
+
+              <View style={{flexDirection: 'row', marginLeft: 120}}>
+                <TouchableOpacity
+                  onPress={submitMenu}
+                  style={{
+                    marginLeft: -30,
+                    width: 80,
+                    height: 40,
+                    backgroundColor: 'skyblue',
+                    borderRadius: 5,
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignSelf: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                    }}>
+                    Submit
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setAddMenuFlag(false);
+                    // setBackFlag(false);
+                  }}
+                  style={{
+                    marginLeft: 50,
+                    width: 80,
+                    height: 40,
+                    backgroundColor: 'skyblue',
+                    borderRadius: 5,
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignSelf: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                    }}>
+                    cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </ScrollView>
       ) : (
         <View style={{backgroundColor: '#fdfdfe', height: DeviceHeight}}>
           <Nodata />
-          <TouchableOpacity
-            onPress={AddType}
-            style={{
-              // marginTop: -5,
-              padding: 8,
-              margin: 10,
-              marginBottom: 10,
-              backgroundColor: '#7f7f7f',
-              elevation: 15,
-              borderRadius: 5,
-              width: 150,
-              alignSelf: 'center',
-            }}>
-            <Text style={{color: 'white'}}>+ New Menu Type</Text>
-          </TouchableOpacity>
         </View>
       )}
 
