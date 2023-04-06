@@ -275,7 +275,7 @@ function Rest({data}) {
                   // width: DeviceWidth - 80,
                   // backgroundColor: '#38b05f',
                   backgroundColor: 'white',
-                  elevation: 15,
+                  // elevation: 15,
                   borderRadius: 5,
                   alignSelf: 'center',
                 }}>

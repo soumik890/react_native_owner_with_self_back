@@ -20,7 +20,7 @@
  * @format
  */
 
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Animated,
   Image,
@@ -32,56 +32,69 @@ import {
   Dimensions,
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
+import apiAxios1 from '../ApiCaller/apiAxios1';
 
 const window = Dimensions.get('window');
 
-const data = {
-  0: {
-    image: 'https://placekitten.com/200/240',
-    text: 'Chloe',
-  },
-  1: {
-    image: 'https://placekitten.com/200/201',
-    text: 'Jasper',
-  },
-  2: {
-    image: 'https://placekitten.com/200/202',
-    text: 'Pepper',
-  },
-  3: {
-    image: 'https://placekitten.com/200/203',
-    text: 'Oscar',
-  },
-  4: {
-    image: 'https://placekitten.com/200/204',
-    text: 'Dusty',
-  },
-  5: {
-    image: 'https://placekitten.com/200/205',
-    text: 'Spooky',
-  },
-  6: {
-    image: 'https://placekitten.com/200/210',
-    text: 'Kiki',
-  },
-  7: {
-    image: 'https://placekitten.com/200/215',
-    text: 'Smokey',
-  },
-  8: {
-    image: 'https://placekitten.com/200/220',
-    text: 'Gizmo',
-  },
-  9: {
-    image: 'https://placekitten.com/220/239',
-    text: 'Kitty',
-  },
-};
+// const data1 = [
+//   {
+//     image: 'https://placekitten.com/200/240',
+//     text: 'Chloe',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/201',
+//     text: 'Jasper',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/202',
+//     text: 'Pepper',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/203',
+//     text: 'Oscar',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/204',
+//     text: 'Dusty',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/205',
+//     text: 'Spooky',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/210',
+//     text: 'Kiki',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/215',
+//     text: 'Smokey',
+//   },
+//   {
+//     image: 'https://placekitten.com/200/220',
+//     text: 'Gizmo',
+//   },
+//   {
+//     image: 'https://placekitten.com/220/239',
+//     text: 'Kitty',
+//   },
+// ];
+
+// const arrItems = [];
+
+// for (i = 0; i < data1.length; i++) {
+//   arrItems.push({appRank: i, text: data1[i].text});
+// }
+
+// console.log('arrItems is', arrItems);
 
 function Row(props) {
   const {active, data} = props;
 
+  // console.log('data is ', data);
+
   const activeAnim = useRef(new Animated.Value(0));
+
+  // console.log(activeAnim);
   const style = useMemo(
     () => ({
       ...Platform.select({
@@ -101,8 +114,10 @@ function Row(props) {
         },
 
         android: {
+          // useNativeDriver: true,
           transform: [
             {
+              // useNativeDriver: true,
               scale: activeAnim.current.interpolate({
                 inputRange: [0, 1],
                 outputRange: [1, 1.07],
@@ -110,14 +125,18 @@ function Row(props) {
             },
           ],
           elevation: activeAnim.current.interpolate({
+            // useNativeDriver: true,
             inputRange: [0, 1],
             outputRange: [2, 6],
           }),
         },
       }),
     }),
+
     [],
   );
+
+  // console.log(style.transform);
   useEffect(() => {
     Animated.timing(activeAnim.current, {
       duration: 300,
@@ -129,14 +148,59 @@ function Row(props) {
 
   return (
     <Animated.View style={[styles.row, style]}>
-      <Image source={{uri: data.image}} style={[styles.image]} />
-      <Text style={styles.text}>{data.text}</Text>
+      <Text style={styles.text}>{data.menu_type}</Text>
     </Animated.View>
   );
 }
 
 const Access = () => {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    apiAxios1('menutype', {
+      user_id: 3,
+      action: 'read',
+      restaurant_id: 32,
+      brand_id: 3,
+    }).then(res => {
+      console.log('read data at menutype', res.data);
+      setList(res.data);
+    });
+  }, []);
+
+  const arrItems = [];
+
+  for (i = 0; i < list.length; i++) {
+    arrItems.push({
+      appRank: i,
+      menutype_id: list[i].menutype_id,
+      menu_type: list[i].menu_type,
+      rank_order: list[i].rank_order,
+    });
+  }
+
+  arrItems.map(item => {
+    if (item.appRank !== item.rank_order) {
+      console.log(
+        'CALLED ******************************************************************************************',
+      );
+      apiAxios1('rank', {
+        menutype_id: item.menutype_id,
+        rank_order: item.appRank,
+        action: 'rank',
+      }).then(response => {
+        console.log(response);
+      });
+    }
+  });
+
+  const result = arrItems.reduce(
+    (obj, item) => ({...obj, [item.appRank]: item}),
+    {},
+  );
+
   const renderRow = useCallback(({data, active}) => {
+    // console.log('active at render row', active);
     return <Row data={data} active={active} />;
   }, []);
 
@@ -145,8 +209,12 @@ const Access = () => {
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
-        data={data}
+        // data={data}
+        data={result}
         renderRow={renderRow}
+        onReleaseRow={(item, list) => {
+          console.log('new item', item, list);
+        }}
       />
     </View>
   );

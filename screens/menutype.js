@@ -60,7 +60,7 @@ const MenuType = ({route}) => {
       restaurant_id: Rest.restaurant_id,
       brand_id: route.params.data.brand_id,
     }).then(res => {
-      // console.log('read data at menutype', res.data);
+      console.log('read data at menutype', res.data);
       setTypes(res?.data);
       setMenuTypeCounter(res?.data.length);
     });
@@ -546,7 +546,7 @@ const MenuType = ({route}) => {
             // marginBottom: 10,
             backgroundColor: '#7f7f7f',
             width: '90%',
-            elevation: 15,
+            // elevation: 15,
             alignSelf: 'center',
             borderRadius: 5,
           }}>
@@ -577,7 +577,7 @@ const MenuType = ({route}) => {
                     width: '90%',
                     alignSelf: 'center',
                     backgroundColor: '#fad06e',
-                    elevation: 15,
+                    // elevation: 15,
                     borderRadius: 5,
                     // marginBottom: UpdateId == item?.Id ? 60 : 0,
                   }}>
