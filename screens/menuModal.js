@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import Modal from 'react-native-modal';
 import {exportvalues} from '../contextApi/ContextTab';
 import {Button} from 'react-native-paper';
@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 const MenuModal = () => {
   const navigation = useNavigation();
 
+  // const [menuModalIsOpen, setMenuModalIsOpen] = useState(false);
   const {menuModalIsOpen, setMenuModalIsOpen} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
@@ -22,6 +23,12 @@ const MenuModal = () => {
   const windowHeight = Dimensions.get('window').height;
 
   //   console.log('menuModalIsOpen is', menuModalIsOpen);
+
+  const navigator = () => {
+    setMenuModalIsOpen(false);
+
+    navigation.navigate('logs', {Rest: Rest, Brand: Brand});
+  };
 
   return (
     <View>
@@ -110,7 +117,7 @@ const MenuModal = () => {
               <Button
                 // icon="camera"
                 mode="contained"
-                onPress={() => navigation.navigate('logs')}>
+                onPress={navigator}>
                 Logs
               </Button>
             </View>
