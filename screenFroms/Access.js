@@ -109,14 +109,14 @@ const Access = () => {
     });
   }, []);
 
-  for (i = 0; i < list.length; i++) {
-    arrItems.push({
-      appRank: list[i].rank_order,
-      menutype_id: list[i].menutype_id,
-      menu_type: list[i].menu_type,
-      rank_order: list[i].rank_order,
-    });
-  }
+  // for (i = 0; i < list.length; i++) {
+  //   arrItems.push({
+  //     appRank: list[i].rank_order,
+  //     menutype_id: list[i].menutype_id,
+  //     menu_type: list[i].menu_type,
+  //     rank_order: list[i].rank_order,
+  //   });
+  // }
 
   console.log(arrItems);
 
@@ -139,9 +139,9 @@ const Access = () => {
       const item = parseInt(i);
       newArrItems.push({
         appRank: index,
-        menutype_id: arrItems[item].menutype_id,
-        menu_type: arrItems[item].menu_type,
-        rank_order: arrItems[item].rank_order,
+        menutype_id: list[item].menutype_id,
+        menu_type: list[item].menu_type,
+        rank_order: list[item].rank_order,
       });
     });
     console.log('newArrItems are', newArrItems);
@@ -174,7 +174,7 @@ const Access = () => {
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
-        data={arrItems}
+        data={list}
         renderRow={renderRow}
         onReleaseRow={(item, list) => {
           newListSetter(item, list);
