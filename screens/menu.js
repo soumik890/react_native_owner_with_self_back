@@ -53,6 +53,8 @@ const Menu1 = ({brandInfo}) => {
   const [VegInfo, setVegInfo] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [DeleteItem, setDeleteItem] = useState();
+  const {Email, setEmail} = useContext(exportvalues);
+  const [allUpdateItems, setAllUpdateItems] = useState({});
 
   // const [BackFlag, setBackFlag] = useState(false);
 
@@ -93,23 +95,39 @@ const Menu1 = ({brandInfo}) => {
       action: 'delete',
     }).then(res => {
       console.log(res.data);
+
+      apiAxios1('log', {
+        user_id: '1',
+        restaurant_id: Rest.restaurant_id,
+        restaurant: 'depends upon id',
+        log: `Menu ${item.menu} in Menu Type ${MenuType.menu_type} is deleted by ${Email} `,
+        action: 'create',
+      }).then(res => {
+        console.log('logger fired', res.data);
+      });
       setIsOpen(false);
       setactionM(!actionM);
     });
   };
   const UpdateMenu = item => {
     console.log('item received at update menu', item);
-    // setBackFlag(true);
     setUpdateId(item?.menu_id);
     setUpName(item?.menu);
-    // setUpName('demo');
     setUpDesc(item?.description);
     setUpPrice(item.price);
-    // setUpPrice('500');
     setSpiceInfo(item?.spice);
     setVegInfo(item?.veg);
     setUpIngred(item?.ingredients);
     setImg(item?.menu_image);
+    setAllUpdateItems({
+      menu_id: item?.menu_id,
+      menu: item?.menu,
+      description: item?.description,
+      price: item.price,
+      spice: item?.spice,
+      veg: item?.veg,
+      ingredients: item?.ingredients,
+    });
   };
   const UpdateItem = () => {
     apiAxios1('menu', {
@@ -125,6 +143,31 @@ const Menu1 = ({brandInfo}) => {
     }).then(res => {
       console.log(res.data);
       setUpdateId(null);
+
+      apiAxios1('log', {
+        user_id: '1',
+        restaurant_id: Rest.restaurant_id,
+        restaurant: 'depends upon id',
+        log: `Menu ${allUpdateItems.menu} in Menu Type ${
+          MenuType.menu_type
+        } is updated to Name :${UpName}, 
+        Price :${UpPrice}, 
+        Spice :${
+          SpiceInfo == 3
+            ? 'High '
+            : SpiceInfo == 2
+            ? 'Medium '
+            : SpiceInfo == 1
+            ? 'Low '
+            : 'Nill'
+        }, 
+        Veg/NonVeg :${VegInfo == 1 ? 'Veg' : 'Non Veg'},
+        Description :${UpDesc}, 
+        by ${Email} `,
+        action: 'create',
+      }).then(res => {
+        console.log('logger fired', res.data);
+      });
       // setBackFlag(false);
       setactionM(!actionM);
     });
@@ -535,22 +578,7 @@ const Menu1 = ({brandInfo}) => {
                             </MenuOptions>
                           </Menu>
                         </View>
-
-                        <TouchableOpacity>
-                          <Image
-                            source={require('../assets/drag.png')}
-                            style={{
-                              height: 23,
-                              width: 15,
-                              marginLeft: 15,
-                              marginTop: 10,
-                            }}
-                          />
-                        </TouchableOpacity>
                       </View>
-
-                      {/* *********************************************************************************************** */}
-
                       <Text
                         style={{
                           marginBottom: 10,
@@ -579,7 +607,8 @@ const Menu1 = ({brandInfo}) => {
                             style={{
                               height: 35,
                               // margin: 12,
-                              width: 300,
+                              // width: 300,
+                              width: '90%',
                               borderWidth: 1,
                               color: 'black',
                               borderRadius: 5,
@@ -601,10 +630,11 @@ const Menu1 = ({brandInfo}) => {
                           </Text>
 
                           <TextInput
+                            keyboardType="numeric"
                             style={{
                               height: 35,
                               // margin: 12,
-                              width: 300,
+                              width: '90%',
                               borderWidth: 1,
                               color: 'black',
                               borderRadius: 5,
@@ -627,13 +657,41 @@ const Menu1 = ({brandInfo}) => {
                           <View style={{flexDirection: 'row'}}>
                             <TouchableOpacity
                               onPress={() => {
+                                setSpiceInfo(4);
+                              }}
+                              style={{
+                                borderWidth: SpiceInfo == 4 ? 3 : 0,
+                                // borderWidth: SpiceInfo == 1 ? 3 : 0,
+                                borderStyle: 'dotted',
+                                borderRadius: 5,
+
+                                height: 45,
+                                width: 45,
+                                borderColor: 'red',
+                                // marginLeft: 20,
+                                justifyContent: 'center',
+                              }}>
+                              <Image
+                                source={require('../assets/nochilli.png')}
+                                style={{
+                                  height: 40,
+                                  width: 40,
+                                  alignSelf: 'center',
+                                }}
+                              />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              onPress={() => {
                                 setSpiceInfo(1);
                               }}
                               style={{
-                                borderWidth: SpiceInfo == 1 ? 2 : 0,
+                                borderWidth: SpiceInfo == 1 ? 3 : 0,
+                                borderRadius: 5,
+                                borderStyle: 'dotted',
                                 height: 40,
                                 width: 45,
                                 borderColor: 'red',
+                                marginLeft: 20,
                               }}>
                               <Image
                                 source={require('../assets/chilli1.png')}
@@ -645,7 +703,9 @@ const Menu1 = ({brandInfo}) => {
                                 setSpiceInfo(2);
                               }}
                               style={{
-                                borderWidth: SpiceInfo == 2 ? 2 : 0,
+                                borderWidth: SpiceInfo == 2 ? 3 : 0,
+                                borderRadius: 5,
+                                borderStyle: 'dotted',
                                 height: 40,
                                 width: 68,
                                 borderColor: 'red',
@@ -661,7 +721,9 @@ const Menu1 = ({brandInfo}) => {
                                 setSpiceInfo(3);
                               }}
                               style={{
-                                borderWidth: SpiceInfo == 3 ? 2 : 0,
+                                borderWidth: SpiceInfo == 3 ? 3 : 0,
+                                borderRadius: 5,
+                                borderStyle: 'dotted',
                                 height: 40,
                                 width: 90,
                                 borderColor: 'red',
@@ -670,27 +732,6 @@ const Menu1 = ({brandInfo}) => {
                               <Image
                                 source={require('../assets/chilli3.png')}
                                 style={{height: 35, width: 84}}
-                              />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                setSpiceInfo(4);
-                              }}
-                              style={{
-                                borderWidth: SpiceInfo == 4 ? 2 : 0,
-                                height: 45,
-                                width: 45,
-                                borderColor: 'black',
-                                marginLeft: 20,
-                                justifyContent: 'center',
-                              }}>
-                              <Image
-                                source={require('../assets/nochilli.png')}
-                                style={{
-                                  height: 40,
-                                  width: 40,
-                                  alignSelf: 'center',
-                                }}
                               />
                             </TouchableOpacity>
                           </View>
@@ -709,10 +750,13 @@ const Menu1 = ({brandInfo}) => {
                                 setVegInfo(1);
                               }}
                               style={{
-                                borderWidth: VegInfo == 1 ? 2 : 0,
-                                height: 40,
-                                width: 45,
+                                borderWidth: VegInfo == 1 ? 3 : 0,
+                                borderRadius: 5,
+                                borderStyle: 'dotted',
+                                height: 45,
+                                width: 47,
                                 borderColor: 'black',
+                                justifyContent: 'center',
                               }}>
                               <Image
                                 source={require('../assets/veg.png')}
@@ -728,10 +772,14 @@ const Menu1 = ({brandInfo}) => {
                                 setVegInfo(2);
                               }}
                               style={{
-                                borderWidth: VegInfo == 2 ? 2 : 0,
-                                height: 40,
-                                width: 45,
+                                borderWidth: VegInfo == 2 ? 3 : 0,
+                                borderRadius: 5,
+                                borderStyle: 'dotted',
+                                height: 45,
+                                width: 47,
                                 borderColor: 'black',
+                                justifyContent: 'center',
+
                                 marginLeft: 20,
                               }}>
                               <Image

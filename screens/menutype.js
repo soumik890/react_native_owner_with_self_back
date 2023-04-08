@@ -27,6 +27,7 @@ const MenuType = ({route}) => {
   const [UpdateId, setUpdateId] = useState(null);
   const [UpType, setUpType] = useState('');
   const [Name, setName] = useState('');
+  const [mName, setMName] = useState('');
   const {UserID} = useContext(exportvalues);
   const {Rest, setRest} = useContext(exportvalues);
   const {MenuType, setMenuType} = useContext(exportvalues);
@@ -45,6 +46,8 @@ const MenuType = ({route}) => {
   const [Price, setPrice] = useState();
   const [Desc, setDesc] = useState();
   const [Ingred, setIngred] = useState();
+  const [loading, setLoading] = useState(false);
+  const {Email, setEmail} = useContext(exportvalues);
 
   const {actionM, setactionM} = useContext(exportvalues);
   const {menuCounter, setMenuCounter} = useContext(exportvalues);
@@ -54,6 +57,7 @@ const MenuType = ({route}) => {
   // setBrand()
 
   useEffect(() => {
+    setLoading(true);
     apiAxios1('menutype', {
       user_id: user,
       action: 'read',
@@ -62,6 +66,7 @@ const MenuType = ({route}) => {
     }).then(res => {
       console.log('read data at menutype', res.data);
       setTypes(res?.data);
+      setLoading(false);
       setMenuTypeCounter(res?.data.length);
     });
   }, [actionMT, Rest]);
@@ -73,7 +78,7 @@ const MenuType = ({route}) => {
     setImg(item?.menu_type_image);
   };
 
-  const UpdateTypeName = () => {
+  const UpdateTypeName = item => {
     apiAxios1('menutype', {
       menu_type: UpType,
       menu_type_image: Img,
@@ -81,6 +86,16 @@ const MenuType = ({route}) => {
       action: 'update',
     }).then(res => {
       console.log(res.data);
+
+      apiAxios1('log', {
+        user_id: '1',
+        restaurant_id: Rest.restaurant_id,
+        restaurant: 'depends upon id',
+        log: `Menu Type ${item.menu_type} is edited to ${UpType} by ${Email} `,
+        action: 'create',
+      }).then(res => {
+        console.log('logger fired', res.data);
+      });
       setactionMT(!actionMT);
       setUpdateId(null);
     });
@@ -120,6 +135,16 @@ const MenuType = ({route}) => {
         action: 'create',
       }).then(res => {
         console.log('@$DeveloperDefaultCategory$@ category created', res.data);
+
+        apiAxios1('log', {
+          user_id: '1',
+          restaurant_id: Rest.restaurant_id,
+          restaurant: 'depends upon id',
+          log: `New Menu Type ${Name} is created by ${Email} `,
+          action: 'create',
+        }).then(res => {
+          console.log('logger fired', res.data);
+        });
       });
 
       setAddFlag(false);
@@ -140,6 +165,16 @@ const MenuType = ({route}) => {
       action: 'delete',
     }).then(res => {
       console.log(res.data);
+
+      apiAxios1('log', {
+        user_id: '1',
+        restaurant_id: Rest.restaurant_id,
+        restaurant: 'depends upon id',
+        log: `Menu Type ${item.menu_type} is deleted by ${Email} `,
+        action: 'create',
+      }).then(res => {
+        console.log('logger fired', res.data);
+      });
       setIsOpen(false);
       setactionMT(!actionMT);
     });
@@ -165,7 +200,7 @@ const MenuType = ({route}) => {
         });
       });
     } else {
-      setMenuType();
+      setMenuType([]);
       setTray({});
     }
   };
@@ -176,12 +211,15 @@ const MenuType = ({route}) => {
     setTray(item);
   };
 
-  const AddMenu = () => {
+  const AddMenu = item => {
     console.log('AddMenu called');
+    selectMenuType(item);
+
     setAddMenuFlag(true);
   };
 
   const submitMenu = () => {
+    // console.log(MenuType.menu_type);
     console.log(
       'actions received at submit menu',
       MenuType.menutype_id,
@@ -196,7 +234,7 @@ const MenuType = ({route}) => {
       Ingred,
     );
     apiAxios1('menu', {
-      menu: Name,
+      menu: mName,
       menutype_id: MenuType.menutype_id,
       brand_id: route.params.data.brand_id,
       restaurant_id: Rest.restaurant_id,
@@ -215,6 +253,16 @@ const MenuType = ({route}) => {
       action: 'create',
     }).then(res => {
       console.log(res.data);
+
+      apiAxios1('log', {
+        user_id: '1',
+        restaurant_id: Rest.restaurant_id,
+        restaurant: 'depends upon id',
+        log: `New Menu ${mName} in Menu Type ${MenuType.menu_type} is created by ${Email} `,
+        action: 'create',
+      }).then(res => {
+        console.log('logger fired', res.data);
+      });
       setactionM(!actionM);
       setAddMenuFlag(false);
     });
@@ -508,28 +556,20 @@ const MenuType = ({route}) => {
               position: 'absolute',
               marginLeft: 260,
             }}>
-            {menuCounter > 0 && menuTypeCounter > 0 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('publish');
-                }}>
-                <Image
-                  source={require('../assets/QR.png')}
-                  style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
-                />
-              </TouchableOpacity>
-            ) : (
-              <View></View>
-            )}
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('publish');
+              }}>
+              <Image
+                source={require('../assets/QR.png')}
+                style={{width: 27, height: 27, marginLeft: 13, marginTop: -2}}
+              />
+            </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => {
                 setMenuModalIsOpen(true);
-              }}
-              // onPressIn={() => {
-              //   navigation.navigate('menumodal');
-              // }}
-            >
+              }}>
               <Image
                 source={require('../assets/ham5.png')}
                 style={{width: 25, height: 25, marginLeft: 13}}
@@ -537,21 +577,27 @@ const MenuType = ({route}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={AddType}
-          style={{
-            // marginTop: -5,
-            padding: 8,
-            // margin: 10,
-            // marginBottom: 10,
-            backgroundColor: '#7f7f7f',
-            width: '90%',
-            // elevation: 15,
-            alignSelf: 'center',
-            borderRadius: 5,
-          }}>
-          <Text style={{color: 'white'}}>+ New Menu Type</Text>
-        </TouchableOpacity>
+        {!AddMenuFlag ? (
+          <TouchableOpacity
+            onPress={AddType}
+            style={{
+              padding: 8,
+              backgroundColor: '#e7e1d1',
+              width: '95%',
+              height: 45,
+              alignSelf: 'center',
+              borderRadius: 5,
+              marginTop: 2,
+              marginBottom: 1,
+              justifyContent: 'center',
+            }}>
+            <Text style={{color: 'black', fontWeight: 'bold', marginLeft: 30}}>
+              + New Menu Type
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <View />
+        )}
       </View>
 
       {Types.length > 0 ? (
@@ -570,13 +616,14 @@ const MenuType = ({route}) => {
                     // marginTop: 10,
                     // marginLeft: 10,
                     // marginBottom: 10,
-                    margin: 10,
+                    margin: 2,
                     // width: DeviceWidth - 20,
                     // backgroundColor: '#38b05f',
                     // backgroundColor: '#b7b7b7',
-                    width: '90%',
+                    width: '95%',
                     alignSelf: 'center',
-                    backgroundColor: '#fad06e',
+                    // backgroundColor: '#fad06e',
+                    backgroundColor: '#e7e1d1',
                     // elevation: 15,
                     borderRadius: 5,
                     // marginBottom: UpdateId == item?.Id ? 60 : 0,
@@ -631,13 +678,22 @@ const MenuType = ({route}) => {
                         }}>
                         {item.menu_type}
                       </Text>
+
+                      {MenuType.length !== 0 &&
+                      MenuType.menutype_id == item.menutype_id ? (
+                        <Text style={{color: 'black'}}>
+                          ({menuCounter} items)
+                        </Text>
+                      ) : (
+                        <View />
+                      )}
                     </View>
 
                     <View
                       style={{
                         flexDirection: 'row',
                         position: 'absolute',
-                        marginLeft: 230,
+                        marginLeft: 200,
                         marginTop: 5,
                       }}>
                       <TouchableOpacity
@@ -648,6 +704,21 @@ const MenuType = ({route}) => {
                           source={require('../assets/ham4.png')}
                           style={{
                             width: 10,
+                            height: 25,
+                            marginLeft: 20,
+                            marginTop: -5,
+                            // borderRadius: 5,
+                          }}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          AddMenu(item);
+                        }}>
+                        <Image
+                          source={require('../assets/add.png')}
+                          style={{
+                            width: 25,
                             height: 25,
                             marginLeft: 20,
                             marginTop: -5,
@@ -674,7 +745,7 @@ const MenuType = ({route}) => {
                         </TouchableOpacity>
                       ) : (
                         <View>
-                          <TouchableOpacity>
+                          {/* <TouchableOpacity>
                             <Image
                               source={require('../assets/drag.png')}
                               style={{
@@ -684,7 +755,7 @@ const MenuType = ({route}) => {
                                 marginTop: -5,
                               }}
                             />
-                          </TouchableOpacity>
+                          </TouchableOpacity> */}
                         </View>
                       )}
                     </View>
@@ -738,7 +809,9 @@ const MenuType = ({route}) => {
                           }}
                           mode="contained"
                           color="#ec8c8c"
-                          onPress={UpdateTypeName}>
+                          onPress={() => {
+                            UpdateTypeName(item);
+                          }}>
                           Save
                         </Button>
 
@@ -817,7 +890,7 @@ const MenuType = ({route}) => {
                             edit
                           </Button>
 
-                          <Button
+                          {/* <Button
                             labelStyle={{
                               fontSize: 8,
                               marginTop: 4,
@@ -835,9 +908,11 @@ const MenuType = ({route}) => {
                             color="pink"
                             onPress={() => {
                               AddMenu();
-                            }}>
+                            }}
+                            
+                            >
                             Add menu
-                          </Button>
+                          </Button> */}
 
                           <Button
                             labelStyle={{
@@ -911,7 +986,7 @@ const MenuType = ({route}) => {
                     color: 'black',
                   }}
                   multiline={true}
-                  onChangeText={text => setName(text)}
+                  onChangeText={text => setMName(text)}
                   placeholder="Name"
                 />
 
@@ -1139,7 +1214,29 @@ const MenuType = ({route}) => {
         </ScrollView>
       ) : (
         <View style={{backgroundColor: '#fdfdfe', height: DeviceHeight}}>
-          <Nodata />
+          {loading ? (
+            <View
+              style={{
+                backgroundColor: '#f5f5f5',
+                height: DeviceHeight,
+                // height: 220,
+                width: DeviceWidth,
+              }}>
+              <Image
+                source={require('../assets/load.gif')}
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 5,
+                  marginLeft: 5,
+                  marginTop: 5,
+                  alignSelf: 'center',
+                }}
+              />
+            </View>
+          ) : (
+            <Nodata />
+          )}
         </View>
       )}
 

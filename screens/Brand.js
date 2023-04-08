@@ -525,53 +525,56 @@ function Brand() {
 
       <LogoTitle />
 
-      <View
-        style={{
-          width: DeviceWidth,
-          // backgroundColor: '#62982d',
-          backgroundColor: '#f5d378',
-          // backgroundColor: '#b7b7b7',
-
-          height: 40,
-          flexDirection: 'row',
-          // flex: 1,
-        }}>
-        <Text
-          style={{
-            color: '#574d0d',
-            fontWeight: 'bold',
-            fontSize: 15,
-            alignSelf: 'center',
-            marginLeft: 20,
-          }}>
-          DASHBOARD
-        </Text>
-
+      <View>
         <View
           style={{
-            marginTop: -1,
-            alignSelf: 'center',
-            position: 'absolute',
-            flex: 1,
+            width: DeviceWidth,
+            // backgroundColor: '#62982d',
+            backgroundColor: '#f5d378',
+            // backgroundColor: '#b7b7b7',
+
+            height: 40,
+            flexDirection: 'row',
+            // flex: 1,
           }}>
-          <Button
-            labelStyle={{
-              fontSize: 9,
-              marginTop: 4,
-              marginBottom: 5,
-            }}
+          <Text
             style={{
-              width: 130,
+              color: '#574d0d',
+              fontWeight: 'bold',
+              fontSize: 15,
               alignSelf: 'center',
-              height: 20,
-              marginLeft: 210,
-            }}
-            mode="contained"
-            color="#fc5d4a"
-            onPress={AddRest}>
-            {/* Submit */}+ Restaurants
-          </Button>
+              marginLeft: 20,
+            }}>
+            DASHBOARD
+          </Text>
         </View>
+
+        <TouchableOpacity
+          onPress={AddRest}
+          style={{
+            // marginTop: -5,
+            padding: 8,
+            // margin: 10,
+            // marginBottom: 10,
+            backgroundColor: 'white',
+            width: '80%',
+            // elevation: 15,
+            alignSelf: 'center',
+            borderRadius: 5,
+            height: 50,
+            marginTop: 20,
+            marginBottom: 10,
+            justifyContent: 'center',
+          }}>
+          <Text
+            style={{
+              color: 'black',
+              textTransform: 'capitalize',
+              fontWeight: 'bold',
+            }}>
+            + New Restaurants
+          </Text>
+        </TouchableOpacity>
       </View>
       <ScrollView
         style={{marginBottom: 10}}

@@ -20,8 +20,7 @@ const Logs = ({route}) => {
 
   useEffect(() => {
     apiAxios1('log', {
-      // restaurant_id: route.params.Rest.restaurant_id,
-      restaurant_id: 27,
+      restaurant_id: route.params.Rest.restaurant_id,
       action: 'readbyrestid',
     }).then(res => {
       // console.log('responmse data', res.data);
@@ -51,18 +50,38 @@ const Logs = ({route}) => {
     <View style={styles.container}>
       <LogoTitle />
       <View>
-        <View style={{alignSelf: 'center'}}>
+        <View style={{alignSelf: 'center', flexDirection: 'row'}}>
           <Text
             style={{
               color: 'black',
               textTransform: 'capitalize',
               fontWeight: 'bold',
-              fontSize: 12,
+              fontSize: 15,
             }}>
-            {route.params.Brand.brand}
+            {route.params.Brand.brand},
+          </Text>
+          <Text
+            style={{
+              color: 'black',
+              textTransform: 'capitalize',
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}>
+            {' '}
+            {route.params.Rest.restaurant}
+          </Text>
+          <Text
+            style={{
+              color: 'black',
+              textTransform: 'capitalize',
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}>
+            {' '}
+            (Logs)
           </Text>
         </View>
-        <View style={{alignSelf: 'center'}}>
+        {/* <View style={{alignSelf: 'center'}}>
           <Text
             style={{
               color: 'black',
@@ -72,7 +91,7 @@ const Logs = ({route}) => {
             }}>
             {route.params.Rest.restaurant}
           </Text>
-        </View>
+        </View> */}
       </View>
       <ScrollView horizontal={true} style={{margin: 5, marginBottom: 50}}>
         <View>
@@ -137,7 +156,11 @@ const styles = StyleSheet.create({
   header: {height: 40, backgroundColor: '#537791'},
   text: {textAlign: 'center', fontWeight: 'bold'},
   dataWrapper: {marginTop: -1},
-  row: {height: 70, backgroundColor: '#E7E6E1'},
+  row: {
+    // height: 120,
+
+    backgroundColor: '#E7E6E1',
+  },
 
   bottomView: {
     width: '100%',
