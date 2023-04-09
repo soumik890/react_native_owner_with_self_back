@@ -107,7 +107,14 @@ function LogoTitle() {
         {/* <ToggleButton icon="menu" value="menu" /> */}
 
         <Image
-          style={{width: 45, height: 45, marginLeft: 15}}
+          style={{
+            width: 40,
+            height: 40,
+            marginLeft: 15,
+            marginTop: 5,
+            borderRadius: 5,
+            // marginBottom: 5,
+          }}
           source={require('../assets/logo.png')}
         />
         <Text

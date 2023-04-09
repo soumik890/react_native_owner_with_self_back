@@ -24,10 +24,13 @@ const MenuModal = () => {
 
   //   console.log('menuModalIsOpen is', menuModalIsOpen);
 
-  const navigator = () => {
+  const navigateToLogs = () => {
     setMenuModalIsOpen(false);
-
     navigation.navigate('logs', {Rest: Rest, Brand: Brand});
+  };
+  const navigateToMenuTypeRank = () => {
+    setMenuModalIsOpen(false);
+    navigation.navigate('MenuTypeRank', {Rest: Rest, Brand: Brand});
   };
 
   return (
@@ -96,29 +99,32 @@ const MenuModal = () => {
               </Text>
             </View>
 
-            <View style={{margin: 5}}>
+            <View>
               <Button
-                // icon="camera"
+                style={{marginTop: 5, marginBottom: 5}}
                 mode="contained"
                 onPress={() => console.log('Pressed')}>
                 User Access{' '}
               </Button>
-              <Text>{'\n'}</Text>
 
               <Button
-                // icon="camera"
+                style={{marginBottom: 5}}
                 mode="contained"
                 onPress={() => console.log('Pressed')}>
                 Lisences{' '}
               </Button>
 
-              <Text>{'\n'}</Text>
-
               <Button
-                // icon="camera"
+                style={{marginBottom: 5}}
                 mode="contained"
-                onPress={navigator}>
+                onPress={navigateToLogs}>
                 Logs
+              </Button>
+              <Button
+                style={{marginBottom: 5}}
+                mode="contained"
+                onPress={navigateToMenuTypeRank}>
+                Menutype Rank
               </Button>
             </View>
           </View>

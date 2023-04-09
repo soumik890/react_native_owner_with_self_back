@@ -81,17 +81,6 @@ const Logs = ({route}) => {
             (Logs)
           </Text>
         </View>
-        {/* <View style={{alignSelf: 'center'}}>
-          <Text
-            style={{
-              color: 'black',
-              textTransform: 'capitalize',
-              fontWeight: 'bold',
-              fontSize: 15,
-            }}>
-            {route.params.Rest.restaurant}
-          </Text>
-        </View> */}
       </View>
       <ScrollView horizontal={true} style={{margin: 5, marginBottom: 50}}>
         <View>

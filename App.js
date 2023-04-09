@@ -15,6 +15,7 @@ import {MenuProvider} from 'react-native-popup-menu';
 import menuModal from './screens/menuModal';
 import Access from './screenFroms/Access';
 import Logs from './screenFroms/Logs';
+import MenuTypeRank from './screenFroms/MenutypeRank';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -79,8 +80,12 @@ const App = () => {
               component={Logs}
               options={{headerShown: false}}
             />
+            <Stack.Screen
+              name="MenuTypeRank"
+              component={MenuTypeRank}
+              options={{headerShown: false}}
+            />
           </Stack.Navigator>
-          {/* </GestureHandlerRootView> */}
         </ContextTab>
       </MenuProvider>
     </NavigationContainer>
