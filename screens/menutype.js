@@ -48,6 +48,7 @@ const MenuType = ({route}) => {
   const [Ingred, setIngred] = useState();
   const [loading, setLoading] = useState(false);
   const {Email, setEmail} = useContext(exportvalues);
+  const {AllMenuType, setAllMenuType} = useContext(exportvalues);
 
   const {actionM, setactionM} = useContext(exportvalues);
   const {menuCounter, setMenuCounter} = useContext(exportvalues);
@@ -66,6 +67,7 @@ const MenuType = ({route}) => {
     }).then(res => {
       console.log('read data at menutype', res.data);
       setTypes(res?.data);
+      setAllMenuType(res?.data);
       setLoading(false);
       setMenuTypeCounter(res?.data.length);
     });
@@ -88,7 +90,7 @@ const MenuType = ({route}) => {
       console.log(res.data);
 
       apiAxios1('log', {
-        user_id: '1',
+        user_id: user,
         restaurant_id: Rest.restaurant_id,
         restaurant: 'depends upon id',
         log: `Menu Type ${item.menu_type} is edited to ${UpType} by ${Email} `,
@@ -137,7 +139,7 @@ const MenuType = ({route}) => {
         console.log('@$DeveloperDefaultCategory$@ category created', res.data);
 
         apiAxios1('log', {
-          user_id: '1',
+          user_id: user,
           restaurant_id: Rest.restaurant_id,
           restaurant: 'depends upon id',
           log: `New Menu Type ${Name} is created by ${Email} `,
@@ -406,13 +408,13 @@ const MenuType = ({route}) => {
             backgroundColor: 'white',
             alignSelf: 'center',
             borderWidth: 3,
-            borderColor: '#9e4848',
+            borderColor: 'orange',
             borderRadius: 10,
           }}>
           <View
             style={{
               height: 40,
-              backgroundColor: '#9e4848',
+              backgroundColor: 'orange',
               justifyContent: 'center',
             }}>
             <Text
@@ -454,54 +456,43 @@ const MenuType = ({route}) => {
               </View>
             </View>
             <View style={{flexDirection: 'row', marginLeft: 80}}>
-              <TouchableOpacity
-                onPress={submitType}
-                style={{
-                  // marginLeft: 250,
-                  width: 60,
-                  height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  backgroundColor: '#ee8b8d',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Submit
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setAddFlag(false);
+              <Button
+                labelStyle={{
+                  fontSize: 8,
+                  marginTop: 4,
+                  marginBottom: 5,
                 }}
                 style={{
-                  marginLeft: 50,
-                  width: 60,
+                  width: 70,
+                  alignSelf: 'center',
                   height: 20,
-                  // backgroundColor: 'yellow',
-                  borderRadius: 5,
-                  // borderWidth: 2,
-                  // borderColor: 'red',
-                  justifyContent: 'center',
-                  backgroundColor: '#88cdea',
+                  marginBottom: 10,
+                }}
+                mode="contained"
+                color="#ec8c8c"
+                onPress={submitType}>
+                Submit
+              </Button>
+              <Button
+                labelStyle={{
+                  fontSize: 8,
+                  marginTop: 4,
+                  marginBottom: 5,
+                }}
+                style={{
+                  width: 70,
+                  alignSelf: 'center',
+                  height: 20,
+                  marginBottom: 10,
+                  marginLeft: 20,
+                }}
+                mode="contained"
+                color="skyblue"
+                onPress={() => {
+                  setAddFlag(false);
                 }}>
-                <Text
-                  style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    fontSize: 12,
-                    fontWeight: 'bold',
-                  }}>
-                  Cancel
-                </Text>
-              </TouchableOpacity>
+                Cancel
+              </Button>
             </View>
           </View>
         </View>
@@ -1000,6 +991,7 @@ const MenuType = ({route}) => {
                   Price
                 </Text>
                 <TextInput
+                  keyboardType="numeric"
                   style={{
                     height: 40,
                     margin: 12,
@@ -1024,13 +1016,34 @@ const MenuType = ({route}) => {
                 <View style={{flexDirection: 'row', marginLeft: 50}}>
                   <TouchableOpacity
                     onPress={() => {
+                      setAddSpice(4);
+                    }}
+                    style={{
+                      borderWidth: AddSpice == 4 ? 2 : 0,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
+                      height: 40,
+                      width: 40,
+                      borderColor: 'red',
+                      // marginLeft: 20,
+                    }}>
+                    <Image
+                      source={require('../assets/nochilli.png')}
+                      style={{height: 35, width: 35}}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
                       setAddSpice(1);
                     }}
                     style={{
                       borderWidth: AddSpice == 1 ? 2 : 0,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
                       height: 40,
                       width: 45,
                       borderColor: 'red',
+                      marginLeft: 20,
                     }}>
                     <Image
                       source={require('../assets/chilli1.png')}
@@ -1047,6 +1060,9 @@ const MenuType = ({route}) => {
                       width: 68,
                       borderColor: 'red',
                       marginLeft: 20,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
+                      borderColor: 'red',
                     }}>
                     <Image
                       source={require('../assets/chilli2.png')}
@@ -1063,26 +1079,14 @@ const MenuType = ({route}) => {
                       width: 90,
                       borderColor: 'red',
                       marginLeft: 20,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
+
+                      borderColor: 'red',
                     }}>
                     <Image
                       source={require('../assets/chilli3.png')}
                       style={{height: 35, width: 84}}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setAddSpice(4);
-                    }}
-                    style={{
-                      borderWidth: AddSpice == 4 ? 2 : 0,
-                      height: 40,
-                      width: 40,
-                      borderColor: 'black',
-                      marginLeft: 20,
-                    }}>
-                    <Image
-                      source={require('../assets/nochilli.png')}
-                      style={{height: 35, width: 35}}
                     />
                   </TouchableOpacity>
                 </View>
@@ -1103,9 +1107,12 @@ const MenuType = ({route}) => {
                     }}
                     style={{
                       borderWidth: AddVeg == 1 ? 2 : 0,
-                      height: 40,
-                      width: 45,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
+                      height: 45,
+                      width: 47,
                       borderColor: 'black',
+                      justifyContent: 'center',
                     }}>
                     <Image
                       source={require('../assets/veg.png')}
@@ -1123,9 +1130,12 @@ const MenuType = ({route}) => {
                     }}
                     style={{
                       borderWidth: AddVeg == 2 ? 2 : 0,
-                      height: 40,
-                      width: 45,
+                      borderRadius: 5,
+                      borderStyle: 'dotted',
+                      height: 45,
+                      width: 47,
                       borderColor: 'black',
+                      justifyContent: 'center',
                       marginLeft: 20,
                     }}>
                     <Image
@@ -1163,51 +1173,44 @@ const MenuType = ({route}) => {
               </View>
 
               <View style={{flexDirection: 'row', marginLeft: 120}}>
-                <TouchableOpacity
-                  onPress={submitMenu}
-                  style={{
-                    marginLeft: -30,
-                    width: 80,
-                    height: 40,
-                    backgroundColor: 'skyblue',
-                    borderRadius: 5,
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      alignSelf: 'center',
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                    }}>
-                    Submit
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    setAddMenuFlag(false);
-                    // setBackFlag(false);
+                <Button
+                  labelStyle={{
+                    fontSize: 8,
+                    marginTop: 4,
+                    marginBottom: 5,
                   }}
                   style={{
-                    marginLeft: 50,
-                    width: 80,
-                    height: 40,
-                    backgroundColor: 'skyblue',
-                    borderRadius: 5,
-                    alignContent: 'center',
-                    justifyContent: 'center',
+                    width: 70,
+                    alignSelf: 'center',
+                    height: 20,
+                    marginBottom: 10,
+                  }}
+                  mode="contained"
+                  color="#ec8c8c"
+                  onPress={submitMenu}>
+                  Submit
+                </Button>
+
+                <Button
+                  labelStyle={{
+                    fontSize: 8,
+                    marginTop: 4,
+                    marginBottom: 5,
+                  }}
+                  style={{
+                    width: 70,
+                    alignSelf: 'center',
+                    height: 20,
+                    marginBottom: 10,
+                    marginLeft: 20,
+                  }}
+                  mode="contained"
+                  color="skyblue"
+                  onPress={() => {
+                    setAddMenuFlag(false);
                   }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      alignSelf: 'center',
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                    }}>
-                    cancel
-                  </Text>
-                </TouchableOpacity>
+                  Cancel
+                </Button>
               </View>
             </View>
           )}

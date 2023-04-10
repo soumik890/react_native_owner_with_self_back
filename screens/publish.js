@@ -14,11 +14,9 @@ import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
 import apiAxios1 from '../ApiCaller/apiAxios1';
 import {Button} from 'react-native-paper';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
-import {captureScreen} from 'react-native-view-shot';
 const RNFS = require('react-native-fs');
-// const fs = require('fs')
-
 const Publish = () => {
   const navigation = useNavigation();
   const DeviceWidth = Dimensions.get('window').width;
@@ -44,20 +42,20 @@ const Publish = () => {
     });
   }, []);
 
-  const ScreenShot = () => {
-    captureScreen({
-      format: 'png',
-      quality: 0.99,
-    }).then(
-      uri => {
-        console.log('Image saved to', uri),
-          RNFS.readFile(uri, 'base64').then(res => {
-            let urlString = 'data:image/jpeg;base64,' + res;
-            console.log(urlString);
-          });
-      },
-      // error => console.error('Oops, snapshot failed', error),
-    );
+  const createPDF = async () => {
+    let options = {
+      html: `<div>
+        <h1 style="color:red;font-size:40px;text-align: center;"> ${Brand.brand}</h1>
+        <h1 style="color:red;font-size:40px;text-align: center;"> ${Rest.restaurant}</h1>
+      <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${url}" alt="QR_Code" style="width:800px;height:800px;">
+      <h1>${url}</h1>
+      </div>`,
+      fileName: 'QR_Code',
+      directory: 'Documents',
+    };
+
+    let file = await RNHTMLtoPDF.convert(options);
+    alert(file.filePath);
   };
 
   return (
@@ -105,7 +103,7 @@ const Publish = () => {
         }}
         mode="contained"
         color="#ec8c8c"
-        onPress={ScreenShot}>
+        onPress={createPDF}>
         Download PDF
       </Button>
 

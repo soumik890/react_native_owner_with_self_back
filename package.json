@@ -26,6 +26,7 @@
     "react-native-element-dropdown": "^2.9.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-html-to-pdf": "^0.12.0",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.1.0",
     "react-native-paper": "^4.12.5",
@@ -40,7 +41,6 @@
     "react-native-sortable-list": "^0.0.25",
     "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-view-shot": "^3.6.0",
     "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {

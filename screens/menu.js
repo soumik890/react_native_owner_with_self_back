@@ -539,44 +539,42 @@ const Menu1 = ({brandInfo}) => {
                                   </View>
                                 </TouchableOpacity>
                               </MenuOption>
-                              <MenuOption
-                                onSelect={() => {}}
-                                customStyles={blockStyles}>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    // UpdateMenu(item);
-                                    AvailableCaller(item);
-                                  }}>
-                                  <View
-                                    style={{
-                                      flexDirection: 'row',
-                                      backgroundColor:
-                                        item.is_active == 1 ? 'green' : 'red',
-                                      borderRadius: 10,
-                                      justifyContent: 'center',
-                                    }}>
-                                    {item.is_active == 1 ? (
-                                      <Text
-                                        style={{
-                                          color: 'white',
-                                          fontSize: 13,
-                                        }}>
-                                        Available
-                                      </Text>
-                                    ) : (
-                                      <Text
-                                        style={{
-                                          color: 'white',
-                                          fontSize: 13,
-                                        }}>
-                                        Not Available
-                                      </Text>
-                                    )}
-                                  </View>
-                                </TouchableOpacity>
-                              </MenuOption>
                             </MenuOptions>
                           </Menu>
+                          <TouchableOpacity
+                            onPress={() => {
+                              // UpdateMenu(item);
+                              AvailableCaller(item);
+                            }}>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                width: 100,
+                                marginLeft: -60,
+                                backgroundColor:
+                                  item.is_active == 1 ? 'green' : 'red',
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                              }}>
+                              {item.is_active == 1 ? (
+                                <Text
+                                  style={{
+                                    color: 'white',
+                                    fontSize: 13,
+                                  }}>
+                                  Available
+                                </Text>
+                              ) : (
+                                <Text
+                                  style={{
+                                    color: 'white',
+                                    fontSize: 13,
+                                  }}>
+                                  Not Available
+                                </Text>
+                              )}
+                            </View>
+                          </TouchableOpacity>
                         </View>
                       </View>
                       <Text
@@ -594,6 +592,52 @@ const Menu1 = ({brandInfo}) => {
                   {UpdateId == item?.menu_id ? (
                     <View>
                       <View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            // marginTop: 10,
+                          }}>
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
+                            style={{
+                              width: 70,
+                              alignSelf: 'center',
+                              height: 20,
+                              // marginBottom: 10,
+                            }}
+                            mode="contained"
+                            color="#ec8c8c"
+                            onPress={UpdateItem}>
+                            Save
+                          </Button>
+
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
+                            style={{
+                              width: 70,
+                              alignSelf: 'center',
+                              height: 20,
+                              // marginBottom: 10,
+                              marginLeft: 20,
+                            }}
+                            mode="contained"
+                            color="skyblue"
+                            onPress={() => {
+                              setUpdateId(null);
+                            }}>
+                            cancel
+                          </Button>
+                        </View>
+
                         <View style={{marginLeft: 10}}>
                           <Text
                             style={{

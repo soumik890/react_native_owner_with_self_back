@@ -10,7 +10,7 @@ import LogoTitle from '../screens/LogoTitle';
 import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
 import {TextInput, Button} from 'react-native-paper';
-const Access = () => {
+const License = () => {
   const navigation = useNavigation();
   const DeviceWidth = Dimensions.get('window').width;
   const DeviceHeight = Dimensions.get('window').height;
@@ -29,7 +29,7 @@ const Access = () => {
             fontSize: 20,
             alignSelf: 'center',
           }}>
-          User Access
+          Restaurant Licenses
         </Text>
       </View>
       <Text
@@ -79,7 +79,7 @@ const Access = () => {
   );
 };
 
-export default Access;
+export default License;
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},

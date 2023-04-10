@@ -22,6 +22,7 @@ import Rest from './Rest';
 import {Button, TextInput} from 'react-native-paper';
 import PlanForm from '../screenFroms/PlanForm';
 import {Dropdown} from 'react-native-element-dropdown';
+import RazorpayCheckout from 'react-native-razorpay';
 
 function Brand() {
   const navigation = useNavigation();
@@ -44,6 +45,7 @@ function Brand() {
   const [DeleteItem, setDeleteItem] = useState();
   const [Img, setImg] = useState();
   const [Tray, setTray] = useState({});
+  const {Email, setEmail} = useContext(exportvalues);
 
   const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState(null);
@@ -129,76 +131,196 @@ function Brand() {
   };
 
   const AddRest = () => {
+    setRName('');
+    setName('');
     setAddRestFlag(true);
+    setValue(null);
   };
 
-  const submitRest = () => {
-    if (value !== 0) {
-      // console.log('restaurant name at submit rest', RName);
+  const OrderCreatorWithoutBrand = () => {
+    apiAxios1('rest', {
+      restaurant: RName,
+      user_id: user,
+      plan_id: plan.plan_id,
+      plan_name: plan.plan,
+      menu_license_id: 49,
+      notes: 'nill',
+      favourite: 0,
+      is_active: 1,
+      rank_order: 1,
+      brand_id: value,
+      restaurant_image: 'null',
+      action: 'create',
+    }).then(res => {
+      console.log('response at value not zero', res.data);
+      setAddRestFlag(false);
+      setactionR(!actionR);
+      apiAxios1('mail', {
+        email: Email,
+        msg: `New Restaurant ${RName} created under Brand ${Name}`,
+      }).then(res => {
+        console.log('mail sent', res);
+        setRName('');
+      });
+    });
+  };
+
+  const OrderCreatorWithBrand = () => {
+    apiAxios1('brand', {
+      brand: Name,
+      brand_image: 'null',
+      user_id: user,
+      rank_order: 1,
+      c_user: user,
+      is_active: 1,
+      action: 'create',
+    }).then(res => {
       apiAxios1('rest', {
         restaurant: RName,
         user_id: user,
-        plan_id: plan,
-        plan_name: 'refer plan id',
-        menu_license_id: 41,
+        plan_id: plan.plan_id,
+        plan_name: plan.plan,
+        menu_license_id: 49,
         notes: 'nill',
         favourite: 0,
         is_active: 1,
         rank_order: 1,
-        // brand_id: Brand.brand_id,
-        brand_id: value,
+        brand_id: res.data[0].brand_id,
         restaurant_image: 'null',
         action: 'create',
       }).then(res => {
-        console.log('response at value not zero', res.data);
+        console.log(res.data);
         setAddRestFlag(false);
+        setactionB(!actionB);
         setactionR(!actionR);
-        setRName('');
-      });
-    } else {
-      apiAxios1('brand', {
-        brand: Name,
-        brand_image: 'null',
-        user_id: user,
-        rank_order: 1,
-        c_user: user,
-        is_active: 1,
-        action: 'create',
-      }).then(res => {
-        // console.log(res.data.status);
-        // setAddRestFlag(false);
-        // setactionB(!actionB);
-        apiAxios1('rest', {
-          restaurant: RName,
-          user_id: user,
-          plan_id: plan,
-          plan_name: 'refer plan id',
-          menu_license_id: 41,
-          notes: 'nill',
-          favourite: 0,
-          is_active: 1,
-          rank_order: 1,
-          brand_id: res.data[0].brand_id,
-          restaurant_image: 'null',
-          action: 'create',
+
+        apiAxios1('mail', {
+          email: Email,
+          msg: `New Restaurant ${RName} created under Brand ${Name}`,
         }).then(res => {
-          console.log(res.data);
-          setAddRestFlag(false);
-          setactionB(!actionB);
-          setactionR(!actionR);
+          console.log('mail sent', res);
           setRName('');
         });
       });
+    });
+  };
+
+  const submitRest = () => {
+    // console.log('Brand name set is', Name);
+    console.log('plan received ', plan);
+    if (value !== 0) {
+      if (plan.price !== '0') {
+        razorCheckout();
+      } else {
+        OrderCreatorWithoutBrand();
+        // apiAxios1('rest', {
+        //   restaurant: RName,
+        //   user_id: user,
+        //   plan_id: plan.plan_id,
+        //   plan_name: plan.plan,
+        //   menu_license_id: 41,
+        //   notes: 'nill',
+        //   favourite: 0,
+        //   is_active: 1,
+        //   rank_order: 1,
+        //   brand_id: value,
+        //   restaurant_image: 'null',
+        //   action: 'create',
+        // }).then(res => {
+        //   console.log('response at value not zero', res.data);
+        //   setAddRestFlag(false);
+        //   setactionR(!actionR);
+        //   apiAxios1('mail', {
+        //     email: Email,
+        //     msg: `New Restaurant ${RName} created under Brand ${Name}`,
+        //   }).then(res => {
+        //     console.log('mail sent', res);
+        //     setRName('');
+        //   });
+        // });
+      }
+    } else {
+      if (plan.price !== '0') {
+        razorCheckout();
+      } else {
+        OrderCreatorWithBrand();
+        // apiAxios1('brand', {
+        //   brand: Name,
+        //   brand_image: 'null',
+        //   user_id: user,
+        //   rank_order: 1,
+        //   c_user: user,
+        //   is_active: 1,
+        //   action: 'create',
+        // }).then(res => {
+        //   apiAxios1('rest', {
+        //     restaurant: RName,
+        //     user_id: user,
+        //     plan_id: plan.plan_id,
+        //     plan_name: plan.plan,
+        //     menu_license_id: 41,
+        //     notes: 'nill',
+        //     favourite: 0,
+        //     is_active: 1,
+        //     rank_order: 1,
+        //     brand_id: res.data[0].brand_id,
+        //     restaurant_image: 'null',
+        //     action: 'create',
+        //   }).then(res => {
+        //     console.log(res.data);
+        //     setAddRestFlag(false);
+        //     setactionB(!actionB);
+        //     setactionR(!actionR);
+
+        //     apiAxios1('mail', {
+        //       email: Email,
+        //       msg: `New Restaurant ${RName} created under Brand ${Name}`,
+        //     }).then(res => {
+        //       console.log('mail sent', res);
+        //       setRName('');
+        //     });
+        //   });
+        // });
+      }
     }
   };
 
   const data = [{label: 'Add new brand', value: 0}];
 
-  // console.log('brands are', Brands);
-
   Brands.map(item => {
     data.push({label: item.brand, value: item.brand_id});
   });
+
+  const razorCheckout = () => {
+    const options = {
+      description: 'Credits towards consultation',
+      image: 'https://www.menumaster.in/assets/meumaster_logo-698ffbc1.png',
+      currency: 'INR',
+      key: 'rzp_live_7AV4E0qyRiJguA', // Your api key
+      amount: plan.price * 100,
+      name: 'Menu Master',
+      prefill: {
+        email: '',
+        contact: '',
+        name: 'MenuMaster',
+      },
+      theme: {color: '#002045'},
+    };
+    RazorpayCheckout.open(options)
+      .then(data => {
+        if (value !== 0) {
+          OrderCreatorWithoutBrand();
+        } else {
+          OrderCreatorWithBrand();
+        }
+        alert(`Success: ${data.razorpay_payment_id}`);
+      })
+      .catch(error => {
+        // handle failure
+        // alert(`Error: ${error.code} | ${error.description}`);
+        alert(`Payment Cancelled by User`);
+      });
+  };
 
   return (
     <View style={{backgroundColor: '#f2f2f2'}}>
@@ -386,6 +508,7 @@ function Brand() {
             onBlur={() => setIsFocus(false)}
             onChange={item => {
               setValue(item.value);
+              setName(item.label);
               setIsFocus(false);
             }}
           />
@@ -493,8 +616,8 @@ function Brand() {
                   marginBottom: 10,
                 }}
                 mode="contained"
-                color={RName !== '' ? '#fc5d4a' : 'grey'}
-                onPress={RName !== '' ? submitRest : () => {}}>
+                color={RName !== '' && Name !== '' ? '#fc5d4a' : 'grey'}
+                onPress={RName !== '' && Name !== '' ? submitRest : () => {}}>
                 Submit
               </Button>
 
@@ -518,6 +641,25 @@ function Brand() {
                 }}>
                 cancel
               </Button>
+
+              {/* <Button
+                labelStyle={{
+                  fontSize: 8,
+                  marginTop: 4,
+                  marginBottom: 5,
+                }}
+                style={{
+                  width: 80,
+                  alignSelf: 'center',
+                  height: 20,
+                  marginBottom: 10,
+                  marginLeft: 50,
+                }}
+                mode="contained"
+                color="#88cdea"
+                onPress={razorCheckout}>
+                Razor
+              </Button> */}
             </View>
           </View>
         </View>

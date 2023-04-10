@@ -1,3 +1,10 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
+
 import React, {
   useCallback,
   useEffect,
@@ -15,11 +22,9 @@ import {
   Easing,
   View,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import {exportvalues} from '../contextApi/ContextTab';
-import {List} from 'react-native-paper';
 
 const window = Dimensions.get('window');
 
@@ -74,6 +79,7 @@ function Row(props) {
 
   return (
     <Animated.View style={[styles.row, style]}>
+      <Image source={{uri: data.image}} style={[styles.image]} />
       <Text style={styles.text}>{data.menu_type}</Text>
     </Animated.View>
   );
@@ -83,8 +89,12 @@ const MenuTypeRank = () => {
   const [list, setList] = useState([]);
   const [action, setAction] = useState(false);
   const {Rest, setRest} = useContext(exportvalues);
-  const {MenuType, setMenuType} = useContext(exportvalues);
+  // const {MenuType, setMenuType} = useContext(exportvalues);
+  const {AllMenuType, setAllMenuType} = useContext(exportvalues);
+
   const {Brand, setBrand} = useContext(exportvalues);
+  const {actionMT, setactionMT} = useContext(exportvalues);
+
   const {UserID} = useContext(exportvalues);
   let user = parseInt(UserID);
 
@@ -101,23 +111,9 @@ const MenuTypeRank = () => {
       action: 'rank',
     }).then(response => {
       console.log(response.data);
+      setactionMT(!actionMT);
     });
   };
-
-  useEffect(() => {
-    console.log('use effect called @@@@@@@@@@@@@@@@@@@@@@@@');
-    apiAxios1('menutype', {
-      user_id: user,
-      action: 'read',
-      restaurant_id: Rest.restaurant_id,
-      brand_id: Brand.brand_id,
-    }).then(res => {
-      //   console.log(res.data);
-      setList(res.data);
-    });
-  }, []);
-
-  console.log('List data is', list);
 
   const newListSetter = (item, newlist) => {
     const newArrItems = [];
@@ -127,9 +123,9 @@ const MenuTypeRank = () => {
       const item = parseInt(i);
       newArrItems.push({
         appRank: index,
-        menutype_id: list[item].menutype_id,
-        menu_type: list[item].menu_type,
-        rank_order: list[item].rank_order,
+        menutype_id: AllMenuType[item].menutype_id,
+        menu_type: AllMenuType[item].menu_type,
+        rank_order: AllMenuType[item].rank_order,
       });
     });
     console.log('newArrItems are', newArrItems);
@@ -140,29 +136,18 @@ const MenuTypeRank = () => {
       }
     });
   };
-
   const renderRow = useCallback(({data, active}) => {
     return <Row data={data} active={active} />;
   }, []);
 
   return (
     <View style={styles.container}>
-      <View>
-        <View style={{alignSelf: 'center'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {Brand.brand}
-          </Text>
-        </View>
-        <View style={{alignSelf: 'center'}}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
-            {Rest.restaurant}
-          </Text>
-        </View>
-      </View>
+      <Text style={styles.title}>{Brand.brand}</Text>
+      <Text style={styles.title}>{Rest.restaurant}</Text>
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
-        data={list}
+        data={AllMenuType}
         renderRow={renderRow}
         onReleaseRow={(item, list) => {
           newListSetter(item, list);
@@ -185,9 +170,10 @@ const styles = StyleSheet.create({
     }),
   },
   title: {
-    fontSize: 20,
-    paddingVertical: 20,
-    color: '#999999',
+    fontSize: 15,
+    // paddingVertical: 20,
+    color: 'black',
+    fontWeight: 'bold',
   },
   list: {
     flex: 1,
@@ -207,11 +193,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 16,
-    height: 80,
+    padding: 6,
+    height: 50,
     flex: 1,
     marginTop: 7,
-    marginBottom: 12,
+    marginBottom: 7,
     borderRadius: 4,
     ...Platform.select({
       ios: {
@@ -235,9 +221,9 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   text: {
-    fontSize: 24,
-    color: 'black',
-    textTransform: 'capitalize',
+    fontSize: 20,
+    color: '#222222',
+    // fontWeight: 'bold',
   },
 });
 

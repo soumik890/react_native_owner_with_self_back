@@ -12,10 +12,15 @@ import com.facebook.soloader.SoLoader;
 import com.quanateams.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+// import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
+
+//   new MainReactPackage(),
+// new RNHTMLtoPDFPackage(),
       new ReactNativeHost(this) {
         @Override
         public boolean getUseDeveloperSupport() {

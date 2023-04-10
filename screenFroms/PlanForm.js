@@ -22,13 +22,13 @@ const PlanForm = () => {
         return (
           <TouchableOpacity
             onPress={() => {
-              setPlan(item.plan_id);
+              setPlan(item);
             }}
             style={{
               width: 85,
               height: 100,
               // backgroundColor: 'red',
-              borderColor: plan == item.plan_id ? 'orange' : 'grey',
+              borderColor: plan.plan_id == item.plan_id ? 'orange' : 'grey',
               borderWidth: 2,
               borderRadius: 5,
               margin: 5,
@@ -36,7 +36,8 @@ const PlanForm = () => {
             <View
               style={{
                 height: '20%',
-                backgroundColor: plan == item.plan_id ? 'orange' : 'grey',
+                backgroundColor:
+                  plan.plan_id == item.plan_id ? 'orange' : 'grey',
               }}>
               <Text
                 style={{

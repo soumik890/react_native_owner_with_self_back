@@ -110,14 +110,14 @@ const LoginScreen = () => {
       </View>
       <Text>{'\n'}</Text>
 
-      <View style={styles.center}>
+      {/* <View style={styles.center}>
         <Image
           source={require('../assets/logo1.png')}
           style={{height: 50, width: 250}}
         />
-      </View>
+      </View> */}
 
-      <Text>{'\n'}</Text>
+      {/* <Text>{'\n'}</Text> */}
       <Text>{'\n'}</Text>
 
       <TouchableOpacity

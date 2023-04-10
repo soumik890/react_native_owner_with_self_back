@@ -30,7 +30,15 @@ const MenuModal = () => {
   };
   const navigateToMenuTypeRank = () => {
     setMenuModalIsOpen(false);
-    navigation.navigate('MenuTypeRank', {Rest: Rest, Brand: Brand});
+    navigation.navigate('MenuTypeRank');
+  };
+  const navigateToAccess = () => {
+    setMenuModalIsOpen(false);
+    navigation.navigate('access');
+  };
+  const navigateToLicense = () => {
+    setMenuModalIsOpen(false);
+    navigation.navigate('license');
   };
 
   return (
@@ -56,13 +64,13 @@ const MenuModal = () => {
         <View
           style={{
             flex: 1,
-            marginLeft: 120,
-            marginRight: -80,
+            marginLeft: 150,
+            // marginRight: -100,
             marginTop: 31,
           }}>
           <View
             style={{
-              width: 250,
+              width: 200,
               backgroundColor: 'white',
               alignItems: 'center',
               elevation: 5,
@@ -103,14 +111,14 @@ const MenuModal = () => {
               <Button
                 style={{marginTop: 5, marginBottom: 5}}
                 mode="contained"
-                onPress={() => console.log('Pressed')}>
+                onPress={navigateToAccess}>
                 User Access{' '}
               </Button>
 
               <Button
                 style={{marginBottom: 5}}
                 mode="contained"
-                onPress={() => console.log('Pressed')}>
+                onPress={navigateToLicense}>
                 Lisences{' '}
               </Button>
 

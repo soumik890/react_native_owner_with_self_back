@@ -115,6 +115,8 @@ function LogoTitle() {
             borderRadius: 5,
             // marginBottom: 5,
           }}
+          // source={require('../assets/menumaster.ico')}
+          // source={require('../assets/nochilli.png')}
           source={require('../assets/logo.png')}
         />
         <Text
@@ -246,7 +248,7 @@ function LogoTitle() {
 
               <Text>{'\n'}</Text>
 
-              <Button
+              {/* <Button
                 labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
                 style={{
                   width: 130,
@@ -259,7 +261,7 @@ function LogoTitle() {
                 onPress={() => navigation.navigate('access')}>
                 {' '}
                 Go To Access{' '}
-              </Button>
+              </Button> */}
             </View>
           </View>
         </View>

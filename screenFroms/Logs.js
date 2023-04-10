@@ -143,7 +143,7 @@ export default Logs;
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
   header: {height: 40, backgroundColor: '#537791'},
-  text: {textAlign: 'center', fontWeight: 'bold'},
+  text: {textAlign: 'center', fontWeight: 'bold', color: 'black'},
   dataWrapper: {marginTop: -1},
   row: {
     // height: 120,

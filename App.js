@@ -16,6 +16,7 @@ import menuModal from './screens/menuModal';
 import Access from './screenFroms/Access';
 import Logs from './screenFroms/Logs';
 import MenuTypeRank from './screenFroms/MenutypeRank';
+import License from './screenFroms/License';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -83,6 +84,11 @@ const App = () => {
             <Stack.Screen
               name="MenuTypeRank"
               component={MenuTypeRank}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="license"
+              component={License}
               options={{headerShown: false}}
             />
           </Stack.Navigator>
