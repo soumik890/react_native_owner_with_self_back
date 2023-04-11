@@ -24,6 +24,7 @@ const ContextTab = ({children}) => {
   const [menuModalIsOpen, setMenuModalIsOpen] = useState(false);
   const [AllMenuType, setAllMenuType] = useState([]);
   const [plan, setPlan] = useState({plan_id: 1});
+  const [DispMenu, setDispMenu] = useState([]);
 
   return (
     <exportvalues.Provider
@@ -70,6 +71,8 @@ const ContextTab = ({children}) => {
         setPlan,
         AllMenuType,
         setAllMenuType,
+        DispMenu,
+        setDispMenu,
       }}>
       {children}
     </exportvalues.Provider>

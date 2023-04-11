@@ -30,7 +30,6 @@ import {Button} from 'react-native-paper';
 const Menu1 = ({brandInfo}) => {
   const navigation = useNavigation();
 
-  const [DispMenu, setDispMenu] = useState([]);
   const [AddFlag, setAddFlag] = useState(false);
   const [UpdateId, setUpdateId] = useState(null);
   const [Name, setName] = useState();
@@ -63,6 +62,8 @@ const Menu1 = ({brandInfo}) => {
   const [Img, setImg] = useState('');
   const {actionM, setactionM} = useContext(exportvalues);
   const {menuCounter, setMenuCounter} = useContext(exportvalues);
+  const {DispMenu, setDispMenu} = useContext(exportvalues);
+
   const [Tray, setTray] = useState({});
 
   console.log('Brand info from menu page', brandInfo);

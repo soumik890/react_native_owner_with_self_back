@@ -888,7 +888,7 @@ const MenuType = ({route}) => {
                               marginBottom: 5,
                             }}
                             style={{
-                              width: 105,
+                              width: 99,
                               alignSelf: 'center',
                               height: 20,
                               marginBottom: 10,
@@ -900,7 +900,7 @@ const MenuType = ({route}) => {
                             onPress={() => {
                               navigation.navigate('MenuRank');
                             }}>
-                            Change Order
+                            Change Rank
                           </Button>
                         </View>
                       ) : (

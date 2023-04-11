@@ -82,7 +82,7 @@ function Row(props) {
 
   return (
     <Animated.View style={[styles.row, style]}>
-      <Image source={{uri: data.image}} style={[styles.image]} />
+      <Image source={{uri: data.menutype_image}} style={[styles.image]} />
       <Text style={styles.text}>{data.menu_type}</Text>
     </Animated.View>
   );
@@ -169,7 +169,7 @@ const MenuTypeRank = () => {
           fontSize: 15,
           alignSelf: 'center',
         }}>
-        {Brand.brand}
+        {Brand.brand}-{Brand.brand_id}
       </Text>
       <Text
         style={{
@@ -178,7 +178,16 @@ const MenuTypeRank = () => {
           fontSize: 15,
           alignSelf: 'center',
         }}>
-        {Rest.restaurant}
+        {Rest.restaurant}-{Rest.restaurant_id}
+      </Text>
+      <Text
+        style={{
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: 15,
+          alignSelf: 'center',
+        }}>
+        {user}
       </Text>
 
       <SortableList
@@ -286,6 +295,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     color: '#222222',
+    textTransform: 'uppercase',
     // fontWeight: 'bold',
   },
 
