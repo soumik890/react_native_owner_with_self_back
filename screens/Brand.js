@@ -727,13 +727,13 @@ function Brand() {
               style={{
                 borderRadius: 5,
                 marginTop: 10,
+                justifyContent: 'flex-start',
               }}>
-              <View style={{flex: 1}}>
+              <View>
                 <View
                   style={{
                     flexDirection: 'row',
                     marginTop: 10,
-                    // marginBottom: 10,
                   }}></View>
               </View>
 

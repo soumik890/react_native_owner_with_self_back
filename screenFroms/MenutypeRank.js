@@ -22,9 +22,12 @@ import {
   Easing,
   View,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import SortableList from 'react-native-sortable-list';
 import {exportvalues} from '../contextApi/ContextTab';
+import LogoTitle from '../screens/LogoTitle';
+import {useNavigation} from '@react-navigation/native';
 
 const window = Dimensions.get('window');
 
@@ -86,6 +89,10 @@ function Row(props) {
 }
 
 const MenuTypeRank = () => {
+  const navigation = useNavigation();
+  const DeviceWidth = Dimensions.get('window').width;
+  const DeviceHeight = Dimensions.get('window').height;
+
   const [list, setList] = useState([]);
   const [action, setAction] = useState(false);
   const {Rest, setRest} = useContext(exportvalues);
@@ -142,8 +149,38 @@ const MenuTypeRank = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{Brand.brand}</Text>
-      <Text style={styles.title}>{Rest.restaurant}</Text>
+      <LogoTitle />
+      <View style={{backgroundColor: 'orange'}}>
+        <Text
+          style={{
+            color: 'black',
+            fontWeight: 'bold',
+            fontSize: 20,
+            alignSelf: 'center',
+          }}>
+          Menu Type Rank
+        </Text>
+      </View>
+
+      <Text
+        style={{
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: 15,
+          alignSelf: 'center',
+        }}>
+        {Brand.brand}
+      </Text>
+      <Text
+        style={{
+          color: 'black',
+          fontWeight: 'bold',
+          fontSize: 15,
+          alignSelf: 'center',
+        }}>
+        {Rest.restaurant}
+      </Text>
+
       <SortableList
         style={styles.list}
         contentContainerStyle={styles.contentContainer}
@@ -153,6 +190,31 @@ const MenuTypeRank = () => {
           newListSetter(item, list);
         }}
       />
+
+      <View style={styles.bottomView}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={{
+            backgroundColor: '#4c6aff',
+            height: 40,
+            justifyContent: 'center',
+            width: DeviceWidth - 20,
+            alignSelf: 'center',
+            borderRadius: 5,
+          }}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            GO BACK
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -160,8 +222,8 @@ const MenuTypeRank = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#eee',
     ...Platform.select({
       ios: {
@@ -169,6 +231,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+
   title: {
     fontSize: 15,
     // paddingVertical: 20,
@@ -224,6 +287,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#222222',
     // fontWeight: 'bold',
+  },
+
+  bottomView: {
+    width: '100%',
+    height: 50,
+    // backgroundColor: '#EE5407',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    // marginTop: -500,
   },
 });
 

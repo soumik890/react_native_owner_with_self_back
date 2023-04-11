@@ -246,7 +246,7 @@ function Rest({data}) {
         </View>
       </Modal>
 
-      <ScrollView style={{marginTop: -20}}>
+      <ScrollView style={{marginTop: -140}}>
         {AddFlag == false ? (
           Types.map((item, index) => {
             console.log(item);

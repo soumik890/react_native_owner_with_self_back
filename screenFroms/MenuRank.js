@@ -2,22 +2,20 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useContext} from 'react';
 import LogoTitle from '../screens/LogoTitle';
-import {useNavigation} from '@react-navigation/native';
 import {exportvalues} from '../contextApi/ContextTab';
-import {TextInput, Button} from 'react-native-paper';
-const Access = () => {
+import {useNavigation} from '@react-navigation/native';
+
+const MenuRank = () => {
   const navigation = useNavigation();
   const DeviceWidth = Dimensions.get('window').width;
   const DeviceHeight = Dimensions.get('window').height;
   const {Rest, setRest} = useContext(exportvalues);
   const {Brand, setBrand} = useContext(exportvalues);
-
-  // console.log();
   return (
     <View style={styles.container}>
       <LogoTitle />
@@ -29,7 +27,7 @@ const Access = () => {
             fontSize: 20,
             alignSelf: 'center',
           }}>
-          User Access
+          Menu Rank
         </Text>
       </View>
       <Text
@@ -79,7 +77,7 @@ const Access = () => {
   );
 };
 
-export default Access;
+export default MenuRank;
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},

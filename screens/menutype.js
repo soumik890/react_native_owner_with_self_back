@@ -604,20 +604,12 @@ const MenuType = ({route}) => {
                     selectMenuType(item);
                   }}
                   style={{
-                    // marginTop: 10,
-                    // marginLeft: 10,
-                    // marginBottom: 10,
                     margin: 2,
-                    // width: DeviceWidth - 20,
-                    // backgroundColor: '#38b05f',
-                    // backgroundColor: '#b7b7b7',
+
                     width: '95%',
                     alignSelf: 'center',
-                    // backgroundColor: '#fad06e',
                     backgroundColor: '#e7e1d1',
-                    // elevation: 15,
                     borderRadius: 5,
-                    // marginBottom: UpdateId == item?.Id ? 60 : 0,
                   }}>
                   <View
                     style={{
@@ -735,19 +727,7 @@ const MenuType = ({route}) => {
                           />
                         </TouchableOpacity>
                       ) : (
-                        <View>
-                          {/* <TouchableOpacity>
-                            <Image
-                              source={require('../assets/drag.png')}
-                              style={{
-                                height: 23,
-                                width: 15,
-                                marginLeft: 30,
-                                marginTop: -5,
-                              }}
-                            />
-                          </TouchableOpacity> */}
-                        </View>
+                        <View></View>
                       )}
                     </View>
                   </View>
@@ -846,7 +826,7 @@ const MenuType = ({route}) => {
                               marginBottom: 5,
                             }}
                             style={{
-                              width: 70,
+                              width: 68,
                               alignSelf: 'center',
                               height: 20,
                               marginBottom: 10,
@@ -866,7 +846,7 @@ const MenuType = ({route}) => {
                               marginBottom: 5,
                             }}
                             style={{
-                              width: 60,
+                              width: 5,
                               alignSelf: 'center',
                               height: 20,
                               marginBottom: 10,
@@ -881,30 +861,6 @@ const MenuType = ({route}) => {
                             edit
                           </Button>
 
-                          {/* <Button
-                            labelStyle={{
-                              fontSize: 8,
-                              marginTop: 4,
-                              marginBottom: 5,
-                            }}
-                            style={{
-                              width: 80,
-                              alignSelf: 'center',
-                              height: 20,
-                              marginBottom: 10,
-                              // marginLeft: 5,
-                              marginRight: 5,
-                            }}
-                            mode="contained"
-                            color="pink"
-                            onPress={() => {
-                              AddMenu();
-                            }}
-                            
-                            >
-                            Add menu
-                          </Button> */}
-
                           <Button
                             labelStyle={{
                               fontSize: 8,
@@ -912,7 +868,7 @@ const MenuType = ({route}) => {
                               marginBottom: 5,
                             }}
                             style={{
-                              width: 70,
+                              width: 69,
                               alignSelf: 'center',
                               height: 20,
                               marginBottom: 10,
@@ -923,6 +879,28 @@ const MenuType = ({route}) => {
                               setTray({});
                             }}>
                             Cancel
+                          </Button>
+
+                          <Button
+                            labelStyle={{
+                              fontSize: 8,
+                              marginTop: 4,
+                              marginBottom: 5,
+                            }}
+                            style={{
+                              width: 105,
+                              alignSelf: 'center',
+                              height: 20,
+                              marginBottom: 10,
+                              marginLeft: 5,
+                              marginRight: 5,
+                            }}
+                            mode="contained"
+                            color="pink"
+                            onPress={() => {
+                              navigation.navigate('MenuRank');
+                            }}>
+                            Change Order
                           </Button>
                         </View>
                       ) : (
