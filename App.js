@@ -18,6 +18,7 @@ import Logs from './screenFroms/Logs';
 import MenuTypeRank from './screenFroms/MenutypeRank';
 import License from './screenFroms/License';
 import MenuRank from './screenFroms/MenuRank';
+import AccessDashboard from './screenFroms/AccessDashboard';
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -94,6 +95,11 @@ const App = () => {
             <Stack.Screen
               name="license"
               component={License}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="accessdashboard"
+              component={AccessDashboard}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

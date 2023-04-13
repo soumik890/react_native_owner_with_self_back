@@ -124,7 +124,7 @@ const MenuType = ({route}) => {
       console.log('response on insert new menutype', res.data.insertId);
 
       apiAxios1('cat', {
-        category: '@$DeveloperDefaultCategory$@',
+        category: 'general',
         menutype_id: res.data.insertId,
         brand_id: route.params.data.brand_id,
         restaurant_id: Rest.restaurant_id,
@@ -136,7 +136,7 @@ const MenuType = ({route}) => {
         rank_order: 1,
         action: 'create',
       }).then(res => {
-        console.log('@$DeveloperDefaultCategory$@ category created', res.data);
+        console.log('general category created', res.data);
 
         apiAxios1('log', {
           user_id: user,
@@ -194,7 +194,7 @@ const MenuType = ({route}) => {
       }).then(res => {
         // console.log('response data from cat', res.data);
         res.data.map(i => {
-          if (i.category == '@$DeveloperDefaultCategory$@') {
+          if (i.category == 'general') {
             setCat(i);
             setMenuType(item);
             console.log('Found the default', i);

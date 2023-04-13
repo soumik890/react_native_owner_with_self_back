@@ -719,31 +719,23 @@ function Brand() {
         </TouchableOpacity>
       </View>
       <ScrollView
-        style={{marginBottom: 10}}
+        // style={{marginBottom: 10}}
         keyboardShouldPersistTaps={'always'}>
         {Types.map((item, index) => {
           return (
             <View
               style={{
                 borderRadius: 5,
-                marginTop: 10,
+                // marginTop: 10,
                 justifyContent: 'flex-start',
               }}>
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 10,
-                  }}></View>
-              </View>
-
               {UpdateId == item?.brand_id ? (
                 <View style={{marginTop: 15}}>
                   <View>
                     <View>
                       <Text
                         style={{
-                          marginBottom: 10,
+                          // marginBottom: 10,
                           color: 'black',
                           fontWeight: 'bold',
                           marginLeft: 10,

@@ -71,6 +71,10 @@ function LogoTitle() {
     setIsOpen(false);
     navigation.navigate('brand');
   };
+  const AccessDashboardCaller = () => {
+    setIsOpen(false);
+    navigation.navigate('accessdashboard');
+  };
 
   const RestCaller = () => {
     setIsOpen(false);
@@ -118,6 +122,7 @@ function LogoTitle() {
           // source={require('../assets/menumaster.ico')}
           // source={require('../assets/nochilli.png')}
           source={require('../assets/logo.png')}
+          // source={require('../assets/meumaster_header.png')}
         />
         <Text
           style={{
@@ -129,12 +134,6 @@ function LogoTitle() {
           }}>
           Menu Master
         </Text>
-        {/* <TouchableOpacity onPress={() => setIsShowTextBox(true)}>
-          <Image
-            style={{height: 25, width: 25, marginTop: 10, marginLeft: 90}}
-            source={require('../assets/searchWhite.png')}
-          />
-        </TouchableOpacity> */}
       </View>
 
       <Modal
@@ -235,7 +234,7 @@ function LogoTitle() {
               <Button
                 labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
                 style={{
-                  width: 130,
+                  width: 162,
                   alignSelf: 'center',
                   height: 20,
                   marginBottom: 10,
@@ -243,25 +242,25 @@ function LogoTitle() {
                 mode="contained"
                 color="green"
                 onPress={BrandCaller}>
-                Go To Dashboards{' '}
+                Restaurant Dashboard{' '}
               </Button>
 
               <Text>{'\n'}</Text>
 
-              {/* <Button
+              <Button
                 labelStyle={{fontSize: 8, marginTop: 4, marginBottom: 5}}
                 style={{
-                  width: 130,
+                  width: 162,
                   alignSelf: 'center',
                   height: 20,
                   marginBottom: 10,
                 }}
                 mode="contained"
                 color="green"
-                onPress={() => navigation.navigate('access')}>
+                onPress={AccessDashboardCaller}>
                 {' '}
-                Go To Access{' '}
-              </Button> */}
+                Access Dashboard{' '}
+              </Button>
             </View>
           </View>
         </View>

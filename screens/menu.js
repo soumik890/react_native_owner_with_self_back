@@ -98,7 +98,7 @@ const Menu1 = ({brandInfo}) => {
       console.log(res.data);
 
       apiAxios1('log', {
-        user_id: '1',
+        user_id: user,
         restaurant_id: Rest.restaurant_id,
         restaurant: 'depends upon id',
         log: `Menu ${item.menu} in Menu Type ${MenuType.menu_type} is deleted by ${Email} `,
@@ -383,9 +383,9 @@ const Menu1 = ({brandInfo}) => {
                             style={{
                               width: 50,
                               height: 50,
-                              // marginLeft: 10,
+                              marginLeft: 10,
                               borderRadius: 5,
-                              marginLeft: 5,
+                              // marginLeft: 5,
                               marginTop: 5,
 
                               // marginRight: 20,
@@ -401,15 +401,46 @@ const Menu1 = ({brandInfo}) => {
                             });
                           }}>
                           <Image
-                            source={require('../assets/noimg.png')}
+                            source={require('../assets/noimage.png')}
                             style={{
                               width: 50,
                               height: 50,
-                              marginLeft: 5,
+                              marginLeft: 10,
+                              // marginLeft: 5,
                             }}
                           />
                         </TouchableOpacity>
                       )}
+
+                      <TouchableOpacity
+                        style={{marginBottom: 10}}
+                        onPress={() => {
+                          // UpdateMenu(item);
+                          AvailableCaller(item);
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            // width: 100,
+                            // marginLeft: 10,
+                            // backgroundColor:
+                            //   item.is_active == 1 ? 'green' : 'red',
+                            // borderRadius: 5,
+                            justifyContent: 'center',
+                          }}>
+                          {item.is_active == 1 ? (
+                            <Image
+                              source={require('../assets/available.png')}
+                              style={{width: 55, height: 18}}
+                            />
+                          ) : (
+                            <Image
+                              source={require('../assets/unavailable.png')}
+                              style={{width: 55, height: 18}}
+                            />
+                          )}
+                        </View>
+                      </TouchableOpacity>
                     </View>
                     <View
                       style={{
@@ -426,15 +457,15 @@ const Menu1 = ({brandInfo}) => {
                               : require('../assets/nonveg.png')
                           }
                           style={{
-                            width: 20,
-                            height: 20,
+                            width: 15,
+                            height: 15,
                             marginTop: 2,
                           }}
                         />
 
                         <Text
                           style={{
-                            marginBottom: 10,
+                            // marginBottom: 10,
                             color: 'black',
                             fontWeight: 'bold',
                             fontSize: 15,
@@ -470,7 +501,7 @@ const Menu1 = ({brandInfo}) => {
                         />
                       </View>
 
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={{flexDirection: 'column', marginLeft: 25}}>
                         <Text
                           style={{
                             // marginBottom: 10,
@@ -485,10 +516,10 @@ const Menu1 = ({brandInfo}) => {
                           style={{
                             marginBottom: 10,
                             color: 'black',
-                            textTransform: 'capitalize',
-                            // fontWeight: 'bold',
+                            fontWeight: 'bold',
+                            // marginLeft: -20,
                           }}>
-                          {item?.ingredients}
+                          {item?.price}/-
                         </Text>
                       </View>
                     </View>
@@ -542,51 +573,8 @@ const Menu1 = ({brandInfo}) => {
                               </MenuOption>
                             </MenuOptions>
                           </Menu>
-                          <TouchableOpacity
-                            onPress={() => {
-                              // UpdateMenu(item);
-                              AvailableCaller(item);
-                            }}>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                width: 100,
-                                marginLeft: -60,
-                                backgroundColor:
-                                  item.is_active == 1 ? 'green' : 'red',
-                                borderRadius: 10,
-                                justifyContent: 'center',
-                              }}>
-                              {item.is_active == 1 ? (
-                                <Text
-                                  style={{
-                                    color: 'white',
-                                    fontSize: 13,
-                                  }}>
-                                  Available
-                                </Text>
-                              ) : (
-                                <Text
-                                  style={{
-                                    color: 'white',
-                                    fontSize: 13,
-                                  }}>
-                                  Not Available
-                                </Text>
-                              )}
-                            </View>
-                          </TouchableOpacity>
                         </View>
                       </View>
-                      <Text
-                        style={{
-                          marginBottom: 10,
-                          color: 'black',
-                          fontWeight: 'bold',
-                          marginLeft: -20,
-                        }}>
-                        {item?.price}/-
-                      </Text>
                     </View>
                   </View>
 
